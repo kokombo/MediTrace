@@ -15,6 +15,7 @@ const CreateAccount = () => {
   const [lastName, setLastName] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [acceptPolicy, setAcceptPolicy] = useState<boolean>(false);
 
   return (
     <View style={styles.body}>
@@ -52,7 +53,11 @@ const CreateAccount = () => {
           onChangeText={setPassword}
         />
 
-        <CheckPrivacyPolicy />
+        <CheckPrivacyPolicy
+          value={acceptPolicy}
+          onValueChange={setAcceptPolicy}
+          isChecked={acceptPolicy}
+        />
       </View>
 
       <View style={{ marginTop: 40 }}>

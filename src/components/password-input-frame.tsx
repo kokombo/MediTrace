@@ -56,8 +56,9 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderWidth: 1,
     borderColor: COLORS.border,
-    height: 52,
+    height: 56,
     fontSize: SIZE.base,
+    fontWeight: "400",
   },
 
   label: {

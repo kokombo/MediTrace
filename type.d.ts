@@ -39,3 +39,9 @@ type AuthCTAType = {
   cta: string;
   onPress: () => void;
 };
+
+type CheckBoxType = {
+  value: boolean;
+  isChecked: boolean;
+  onValueChange: Dispatch<SetStateAction<boolean>>;
+};
