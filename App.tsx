@@ -3,6 +3,9 @@ import { RootNavigator } from "./src/navigations";
 import * as SplashScreen from "expo-splash-screen";
 import { useState, useEffect, useCallback } from "react";
 import { Alert } from "react-native";
+import { Splash } from "./src/screens";
+
+SplashScreen.preventAutoHideAsync();
 
 const App = () => {
   const [appIsReady, setAppIsReady] = useState<boolean>(false);
@@ -18,7 +21,7 @@ const App = () => {
   useEffect(() => {
     const prepare = async () => {
       try {
-        await new Promise((resolve) => setTimeout(resolve, 3000));
+        await new Promise((resolve) => setTimeout(resolve, 500));
       } catch (error: any) {
         Alert.alert(error.message);
       } finally {

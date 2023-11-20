@@ -1,11 +1,36 @@
-import { StyleSheet, Text, View } from "react-native";
-import React from "react";
+import { createStackNavigator } from "@react-navigation/stack";
+import { Onboarding } from "../screens";
+import { Animated } from "react-native";
+
+const Stack = createStackNavigator();
+
+const animation = new Animated.Value(0);
+
+animation.addListener(() => {
+  return;
+});
 
 const RootNavigator = () => {
   return (
-    <View>
-      <Text>RootNavigator</Text>
-    </View>
+    <Stack.Navigator
+      screenOptions={{
+        title: "",
+        gestureEnabled: false,
+        headerShadowVisible: false,
+        headerBackTitleVisible: false,
+      }}
+      screenListeners={{
+        focus: () => {
+          Animated.timing(animation, {
+            toValue: 1,
+            duration: 100,
+            useNativeDriver: true,
+          }).start();
+        },
+      }}
+    >
+      <Stack.Screen name="onboarding" component={Onboarding} options={{}} />
+    </Stack.Navigator>
   );
 };
 
