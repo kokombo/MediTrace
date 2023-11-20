@@ -1,3 +1,4 @@
-import meditracelogo from "../assets/meditracelogo.png";
+import meditracelogo from "../assets/icons/meditracelogo.png";
+import hidepassword from "../assets/icons/hidepassword.png";
 
-export default { meditracelogo };
+export default { meditracelogo, hidepassword };

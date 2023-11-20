@@ -4,6 +4,7 @@ import * as SplashScreen from "expo-splash-screen";
 import { useState, useEffect, useCallback } from "react";
 import { Alert } from "react-native";
 import { Splash } from "./src/screens";
+import { StatusBar } from "expo-status-bar";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -21,7 +22,7 @@ const App = () => {
   useEffect(() => {
     const prepare = async () => {
       try {
-        await new Promise((resolve) => setTimeout(resolve, 500));
+        await new Promise((resolve) => setTimeout(resolve, 1000));
       } catch (error: any) {
         Alert.alert(error.message);
       } finally {
@@ -45,6 +46,7 @@ const App = () => {
   return (
     <NavigationContainer theme={AppTheme}>
       <RootNavigator />
+      <StatusBar style="auto" />
     </NavigationContainer>
   );
 };

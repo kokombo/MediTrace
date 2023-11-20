@@ -1,8 +1,15 @@
 import { StyleSheet, View, Text } from "react-native";
 import { BlueButton, WhiteButton } from "../components";
 import { COLORS, PADDING, SIZE } from "../../constants";
+import {
+  NavigationProp,
+  useNavigation,
+  ParamListBase,
+} from "@react-navigation/native";
 
 const Onboarding = () => {
+  const navigation: NavigationProp<ParamListBase> = useNavigation();
+
   return (
     <View style={styles.body}>
       <View style={styles.info_container}>
@@ -17,7 +24,12 @@ const Onboarding = () => {
         <View style={styles.button_container}>
           <BlueButton label="Log in" onPress={() => {}} />
 
-          <WhiteButton label="Create account" onPress={() => {}} />
+          <WhiteButton
+            label="Create account"
+            onPress={() => {
+              navigation.navigate("createAccount");
+            }}
+          />
         </View>
       </View>
     </View>
@@ -37,7 +49,7 @@ const styles = StyleSheet.create({
     position: "absolute",
     alignSelf: "center",
     width: "100%",
-    bottom: 100,
+    bottom: 120,
   },
 
   text_container: {
