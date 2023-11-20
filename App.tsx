@@ -1,20 +1,49 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
+import { RootNavigator } from "./src/navigations";
+import * as SplashScreen from "expo-splash-screen";
+import { useState, useEffect, useCallback } from "react";
+import { Alert } from "react-native";
 
-export default function App() {
+const App = () => {
+  const [appIsReady, setAppIsReady] = useState<boolean>(false);
+
+  const AppTheme = {
+    ...DefaultTheme,
+    colors: {
+      ...DefaultTheme.colors,
+      background: "white",
+    },
+  };
+
+  useEffect(() => {
+    const prepare = async () => {
+      try {
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+      } catch (error: any) {
+        Alert.alert(error.message);
+      } finally {
+        setAppIsReady(true);
+      }
+    };
+
+    prepare();
+  }, []);
+
+  const layoutRootView = useCallback(async () => {
+    if (appIsReady) {
+      await SplashScreen.hideAsync();
+    }
+  }, [appIsReady]);
+
+  layoutRootView();
+
+  if (!appIsReady) return null;
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <NavigationContainer theme={AppTheme}>
+      <RootNavigator />
+    </NavigationContainer>
   );
-}
+};
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+export default App;
