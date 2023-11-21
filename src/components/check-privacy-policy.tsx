@@ -16,7 +16,7 @@ const CheckPrivacyPolicy = ({
         onValueChange={onValueChange}
         color={isChecked ? COLORS.blue : undefined}
       />
-      <Text style={styles.label}> I accept the terms and privacy policy</Text>
+      <Text style={styles.label}> I accept the terms and privacy policy.</Text>
     </View>
   );
 };

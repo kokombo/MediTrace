@@ -18,5 +18,6 @@ const styles = StyleSheet.create({
     fontSize: SIZE.lg,
     fontWeight: "700",
     color: COLORS.black,
+    letterSpacing: -0.01,
   },
 });

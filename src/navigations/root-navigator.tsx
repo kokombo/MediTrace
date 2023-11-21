@@ -1,7 +1,9 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import { Onboarding } from "../screens";
 import { Animated } from "react-native";
-import { CreateAccount } from "../auth";
+import { CreateAccount, LogIn } from "../auth";
+import { GoBack, Star } from "../components";
+import { PADDING } from "../../constants";
 
 const Stack = createStackNavigator();
 
@@ -19,6 +21,8 @@ const RootNavigator = () => {
         gestureEnabled: false,
         headerShadowVisible: false,
         headerBackTitleVisible: false,
+        headerLeftContainerStyle: { padding: PADDING.normal },
+        headerRightContainerStyle: { padding: PADDING.normal },
       }}
       screenListeners={{
         focus: () => {
@@ -35,7 +39,21 @@ const RootNavigator = () => {
       <Stack.Screen
         name="createAccount"
         component={CreateAccount}
-        options={{}}
+        options={{
+          headerLeft: () => <GoBack />,
+
+          headerRight: () => <Star />,
+        }}
+      />
+
+      <Stack.Screen
+        name="login"
+        component={LogIn}
+        options={{
+          headerLeft: () => <GoBack />,
+
+          headerRight: () => <Star />,
+        }}
       />
     </Stack.Navigator>
   );

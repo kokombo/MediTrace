@@ -9,6 +9,12 @@ import {
 } from "../components";
 import { PADDING } from "../../constants";
 import { useState } from "react";
+import Constants from "expo-constants";
+import {
+  useNavigation,
+  NavigationProp,
+  ParamListBase,
+} from "@react-navigation/native";
 
 const CreateAccount = () => {
   const [firstName, setFirstName] = useState<string>("");
@@ -16,6 +22,8 @@ const CreateAccount = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [acceptPolicy, setAcceptPolicy] = useState<boolean>(false);
+
+  const navigation: NavigationProp<ParamListBase> = useNavigation();
 
   return (
     <View style={styles.body}>
@@ -64,11 +72,13 @@ const CreateAccount = () => {
         <BlueButton label="Sign up" onPress={() => {}} />
       </View>
 
-      <View style={{ marginTop: 40 }}>
+      <View
+        style={{ position: "absolute", bottom: "7.75%", alignSelf: "center" }}
+      >
         <AuthCTA
           label="Already have an account? "
           cta="Log in"
-          onPress={() => {}}
+          onPress={() => navigation.navigate("login")}
         />
       </View>
     </View>
@@ -80,7 +90,8 @@ export default CreateAccount;
 const styles = StyleSheet.create({
   body: {
     flex: 1,
-    padding: PADDING.normal,
+    paddingHorizontal: PADDING.normal,
+    paddingTop: Constants.statusBarHeight,
   },
 
   form: {

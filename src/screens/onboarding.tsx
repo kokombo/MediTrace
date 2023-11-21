@@ -22,13 +22,14 @@ const Onboarding = () => {
         </View>
 
         <View style={styles.button_container}>
-          <BlueButton label="Log in" onPress={() => {}} />
+          <BlueButton
+            label="Log in"
+            onPress={() => navigation.navigate("login")}
+          />
 
           <WhiteButton
             label="Create account"
-            onPress={() => {
-              navigation.navigate("createAccount");
-            }}
+            onPress={() => navigation.navigate("createAccount")}
           />
         </View>
       </View>
