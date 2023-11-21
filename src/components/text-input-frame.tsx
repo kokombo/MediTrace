@@ -8,7 +8,6 @@ const TextInputFrame = ({
   placeholder,
   textContentType,
   onChangeText,
-  value,
 }: Input) => {
   return (
     <View style={styles.input_container}>
@@ -19,7 +18,6 @@ const TextInputFrame = ({
         textContentType={textContentType}
         onChangeText={onChangeText}
         style={styles.input}
-        value={value}
       />
     </View>
   );

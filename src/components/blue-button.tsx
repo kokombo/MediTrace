@@ -2,9 +2,16 @@ import { Pressable, StyleSheet, Text, Image } from "react-native";
 import { Button } from "../../type";
 import { COLORS, SIZE } from "../../constants";
 
-const BlueButton = ({ onPress, label, icon }: Button) => {
+const BlueButton = ({ onPress, label, icon, disabled }: Button) => {
   return (
-    <Pressable onPress={onPress} style={styles.button}>
+    <Pressable
+      onPress={onPress}
+      style={[
+        { backgroundColor: disabled ? COLORS.border : COLORS.blue },
+        styles.button,
+      ]}
+      disabled={disabled}
+    >
       {icon && (
         <Image
           source={icon!}
@@ -23,7 +30,7 @@ export default BlueButton;
 const styles = StyleSheet.create({
   button: {
     height: 56,
-    backgroundColor: COLORS.blue,
+
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 10,

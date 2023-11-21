@@ -15,6 +15,7 @@ import HomeHeaderLeft from "./home-header-left";
 import DormantSearchFrame from "./dormant-search-frame";
 import EmptyMedicationList from "./empty-medication-list";
 import SearchFrame from "./search-frame";
+import Loader from "./loader";
 
 export {
   BlueButton,
@@ -34,4 +35,5 @@ export {
   DormantSearchFrame,
   EmptyMedicationList,
   SearchFrame,
+  Loader,
 };

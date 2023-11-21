@@ -12,7 +12,7 @@ import { PasswordInput } from "../../type";
 
 const PasswordInputFrame = ({
   label,
-  value,
+
   onChangeText,
   placeholder,
 }: PasswordInput) => {
@@ -28,7 +28,6 @@ const PasswordInputFrame = ({
 
       <TextInput
         style={styles.input}
-        value={value}
         onChangeText={onChangeText}
         secureTextEntry={isPasswordVisible ? false : true}
         textContentType="password"

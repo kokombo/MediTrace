@@ -1,4 +1,4 @@
-import { SafeAreaView, StyleSheet, View } from "react-native";
+import { Alert, StyleSheet, View } from "react-native";
 import {
   AuthHeader,
   TextInputFrame,
@@ -6,6 +6,7 @@ import {
   PasswordInputFrame,
   CheckPrivacyPolicy,
   AuthCTA,
+  Loader,
 } from "../components";
 import { PADDING } from "../../constants";
 import { useState } from "react";
@@ -15,22 +16,55 @@ import {
   NavigationProp,
   ParamListBase,
 } from "@react-navigation/native";
+import { createAccount } from "../redux/slices/user";
+import { useDispatch, useSelector } from "react-redux";
+import { DispatchType, StateType } from "../redux/store";
+import { RouteProp } from "@react-navigation/native";
+
+// type Prop = {
+//     route: RouteProp<StackParamList, "searchresult">;
+//   };
+
+const initialState = {
+  first_name: "",
+  last_name: "",
+  email: "",
+  password: "",
+};
 
 const CreateAccount = () => {
-  const [firstName, setFirstName] = useState<string>("");
-  const [lastName, setLastName] = useState<string>("");
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [userData, setUserData] = useState(initialState);
   const [acceptPolicy, setAcceptPolicy] = useState<boolean>(false);
 
   const navigation: NavigationProp<ParamListBase> = useNavigation();
 
-  const SignUpAUser = () => {
-    navigation.navigate("verifyEmail");
+  const dispatch: DispatchType = useDispatch();
+  const { status, error } = useSelector((state: StateType) => state.user);
+
+  const handleInputChange = (name: string, value: string) => {
+    setUserData((prevData) => ({ ...prevData, [name]: value }));
   };
+
+  const canSignUp = Boolean(userData && acceptPolicy);
+
+  const SignUpAUser = () => {
+    dispatch(createAccount(userData));
+
+    if (status === "success") {
+      navigation.navigate("verifyEmail");
+    }
+  };
+
+  // if (status === "failed") {
+  //   return Alert.alert(error!);
+  // }
+
+  console.log(status, error);
 
   return (
     <View style={styles.body}>
+      {status === "loading" && <Loader />}
+
       <AuthHeader heading="Create account" />
 
       <View style={styles.form}>
@@ -38,31 +72,26 @@ const CreateAccount = () => {
           label="first name"
           placeholder="Enter your first name"
           textContentType={"givenName"}
-          value={firstName}
-          onChangeText={setFirstName}
+          onChangeText={(text) => handleInputChange("first_name", text)}
         />
 
         <TextInputFrame
           label="last name"
           placeholder="Enter your last name"
           textContentType={"familyName"}
-          value={lastName}
-          onChangeText={setLastName}
+          onChangeText={(text) => handleInputChange("last_name", text)}
         />
 
         <TextInputFrame
           label="email"
           placeholder="Enter your email address"
           textContentType={"emailAddress"}
-          value={email}
-          onChangeText={setEmail}
+          onChangeText={(text) => handleInputChange("email", text)}
         />
 
         <PasswordInputFrame
           label="password"
-          placeholder="Enter your password"
-          value={password}
-          onChangeText={setPassword}
+          onChangeText={(text) => handleInputChange("password", text)}
         />
 
         <CheckPrivacyPolicy
@@ -73,7 +102,11 @@ const CreateAccount = () => {
       </View>
 
       <View style={{ marginTop: 40 }}>
-        <BlueButton label="Sign up" onPress={SignUpAUser} />
+        <BlueButton
+          label="Sign up"
+          onPress={SignUpAUser}
+          disabled={status === "loading" || !canSignUp}
+        />
       </View>
 
       <View

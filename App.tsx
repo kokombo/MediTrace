@@ -5,6 +5,8 @@ import { useState, useEffect, useCallback } from "react";
 import { Alert } from "react-native";
 import { Splash } from "./src/screens";
 import { StatusBar } from "expo-status-bar";
+import { Provider } from "react-redux";
+import { store } from "./src/redux/store";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -45,8 +47,10 @@ const App = () => {
 
   return (
     <NavigationContainer theme={AppTheme}>
-      <RootNavigator />
-      <StatusBar style="auto" />
+      <Provider store={store}>
+        <RootNavigator />
+        <StatusBar style="auto" />
+      </Provider>
     </NavigationContainer>
   );
 };

@@ -6,6 +6,7 @@ import {
   AuthCTA,
   BlueButton,
   ForgetPassword,
+  Loader,
 } from "../components";
 import { useState } from "react";
 import { PADDING, icon } from "../../constants";
@@ -15,15 +16,35 @@ import {
   NavigationProp,
   ParamListBase,
 } from "@react-navigation/native";
+import { signIn } from "../redux/slices/user";
+import { useDispatch, useSelector } from "react-redux";
+import { DispatchType, StateType } from "../redux/store";
 
 const LogIn = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [userData, setUserData] = useState({ email: "", password: "" });
 
   const navigation: NavigationProp<ParamListBase> = useNavigation();
 
+  const dispatch: DispatchType = useDispatch();
+
+  const { status } = useSelector((state: StateType) => state.user);
+
+  const handleInputChange = (name: string, value: string) => {
+    setUserData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const signAUserIn = () => {
+    dispatch(signIn(userData));
+
+    if (status === "success") {
+      navigation.navigate("home");
+    }
+  };
+
   return (
     <View style={styles.body}>
+      {status === "loading" && <Loader />}
+
       <View style={styles.welcome_wrapper}>
         <AuthHeader heading="Welcome Back!" />
 
@@ -35,15 +56,13 @@ const LogIn = () => {
           label="email"
           placeholder="helloworld@gmail.com"
           textContentType={"emailAddress"}
-          value={email}
-          onChangeText={setEmail}
+          onChangeText={(text) => handleInputChange("email", text)}
         />
 
         <PasswordInputFrame
           label="password"
           placeholder="Enter your password"
-          value={password}
-          onChangeText={setPassword}
+          onChangeText={(text) => handleInputChange("password", text)}
         />
 
         <View style={{ alignSelf: "flex-end" }}>
@@ -52,10 +71,7 @@ const LogIn = () => {
       </View>
 
       <View style={{ marginTop: 40 }}>
-        <BlueButton
-          label="Log in"
-          onPress={() => navigation.navigate("home")}
-        />
+        <BlueButton label="Log in" onPress={signAUserIn} />
       </View>
 
       <View

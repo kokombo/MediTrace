@@ -14,13 +14,13 @@ type Button = {
   label: string;
   onPress: () => void | NavigationProp<ReactNavigation.RootParamList>;
   icon?: ImageSourcePropType;
+  disabled?: boolean;
 };
 
 type Input = {
   label: string;
   placeholder: string;
   textContentType: any;
-  value: string;
   onChangeText: (text: string) => void;
 };
 
@@ -30,7 +30,6 @@ type Heading = {
 
 type PasswordInput = {
   label: string;
-  value: string;
   onChangeText?: (text: string) => void;
   placeholder?: string;
 };
