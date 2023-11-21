@@ -1,19 +1,48 @@
-import { StyleSheet, View } from "react-native";
+import { StyleSheet, TextInput, View } from "react-native";
 import {
   DormantSearchFrame,
   EmptyMedicationList,
   BlueButton,
 } from "../components";
-import { PADDING } from "../../constants";
+import { PADDING, icon } from "../../constants";
+import { AddMedicationDetails, SearchMedication } from "../containers";
+import { useModal } from "../hooks";
 
 const Home = () => {
+  const {
+    addMedicationModalVisible,
+    closeAddMedicationModal,
+    openAddMedicationModal,
+    openSearchModal,
+    closeSearchModal,
+    searchModalVisible,
+  } = useModal();
+
   return (
     <View style={styles.body}>
-      <DormantSearchFrame />
+      <>
+        <DormantSearchFrame onPress={() => openSearchModal()} />
 
-      <EmptyMedicationList />
+        <EmptyMedicationList />
 
-      <BlueButton label="Add Medication" onPress={() => {}} />
+        <BlueButton
+          label="Add Medication"
+          icon={icon.pill}
+          onPress={() => openAddMedicationModal()}
+        />
+      </>
+
+      <>
+        <AddMedicationDetails
+          modalVisible={addMedicationModalVisible}
+          closeModal={closeAddMedicationModal}
+        />
+
+        <SearchMedication
+          modalVisible={searchModalVisible}
+          closeModal={closeSearchModal}
+        />
+      </>
     </View>
   );
 };

@@ -1,10 +1,18 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text, Image } from "react-native";
 import { Button } from "../../type";
 import { COLORS, SIZE } from "../../constants";
 
-const BlueButton = ({ onPress, label }: Button) => {
+const BlueButton = ({ onPress, label, icon }: Button) => {
   return (
     <Pressable onPress={onPress} style={styles.button}>
+      {icon && (
+        <Image
+          source={icon!}
+          resizeMode="contain"
+          style={{ height: 24, width: 24 }}
+        />
+      )}
+
       <Text style={styles.label}>{label} </Text>
     </Pressable>
   );
@@ -19,6 +27,8 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 10,
+    flexDirection: "row",
+    gap: 5,
   },
 
   label: {

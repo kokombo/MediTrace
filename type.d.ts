@@ -1,4 +1,4 @@
-import { ImageSourcePropType } from "react-native";
+import { ImageProps, ImageSourcePropType } from "react-native";
 import { NavigationProp } from "@react-navigation/native";
 
 type User = {
@@ -13,6 +13,7 @@ type User = {
 type Button = {
   label: string;
   onPress: () => void | NavigationProp<ReactNavigation.RootParamList>;
+  icon?: ImageSourcePropType;
 };
 
 type Input = {
@@ -44,4 +45,20 @@ type CheckBoxType = {
   value: boolean;
   isChecked: boolean;
   onValueChange: Dispatch<SetStateAction<boolean>>;
+};
+
+type MedicationData = {
+  id: string;
+  drugName: string;
+  time: string;
+};
+
+type MedicationModal = {
+  modalVisible: boolean;
+  closeModal: () => void;
+};
+
+type Search = {
+  value: string;
+  onChangeText: (text: string) => void;
 };

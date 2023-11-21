@@ -1,9 +1,9 @@
 import { StyleSheet, Text, Image, View, Pressable } from "react-native";
 import { COLORS, SIZE, icon } from "../../constants";
 
-const DormantSearchFrame = () => {
+const DormantSearchFrame = ({ onPress }: { onPress: () => void }) => {
   return (
-    <Pressable onPress={() => {}}>
+    <Pressable onPress={onPress}>
       <View style={styles.input}>
         <Text style={styles.label}>Search</Text>
       </View>
@@ -26,6 +26,7 @@ const styles = StyleSheet.create({
     borderColor: COLORS.searchborder,
     height: 50,
     justifyContent: "center",
+    fontSize: SIZE.base,
   },
 
   icon: {
