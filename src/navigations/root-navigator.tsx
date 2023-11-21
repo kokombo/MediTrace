@@ -1,8 +1,8 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { Onboarding } from "../screens";
+import { Home, Onboarding } from "../screens";
 import { Animated } from "react-native";
-import { CreateAccount, LogIn } from "../auth";
-import { GoBack, Star } from "../components";
+import { CreateAccount, LogIn, VerifyEmail } from "../auth";
+import { GoBack, HomeHeaderLeft, NotificationBell, Star } from "../components";
 import { PADDING } from "../../constants";
 
 const Stack = createStackNavigator();
@@ -53,6 +53,28 @@ const RootNavigator = () => {
           headerLeft: () => <GoBack />,
 
           headerRight: () => <Star />,
+        }}
+      />
+
+      <Stack.Screen
+        name="verifyEmail"
+        component={VerifyEmail}
+        options={{
+          headerLeft: () => <GoBack />,
+
+          headerRight: () => <Star />,
+        }}
+      />
+
+      <Stack.Screen
+        name="home"
+        component={Home}
+        options={{
+          headerLeft: () => <HomeHeaderLeft />,
+
+          headerRight: () => <NotificationBell />,
+
+          headerStyle: { height: 100 },
         }}
       />
     </Stack.Navigator>

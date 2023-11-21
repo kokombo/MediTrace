@@ -52,7 +52,10 @@ const LogIn = () => {
       </View>
 
       <View style={{ marginTop: 40 }}>
-        <BlueButton label="Log in" onPress={() => {}} />
+        <BlueButton
+          label="Log in"
+          onPress={() => navigation.navigate("home")}
+        />
       </View>
 
       <View

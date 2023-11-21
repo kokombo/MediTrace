@@ -5,6 +5,8 @@ export const COLORS = {
   white: "#FFFFFF",
   gray: "#747474",
   border: "#D8DADC",
+  searchborder: "#898B8C",
+  placeholder: "#A0A2A3",
 };
 
 export const SIZE = {
@@ -12,6 +14,7 @@ export const SIZE = {
   sm: 14,
   lg: 30,
   xl: 32,
+  md: 20,
 };
 
 export const PADDING = {

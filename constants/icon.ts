@@ -4,6 +4,11 @@ import policychecked from "../assets/icons/policychecked.png";
 import backarrow from "../assets/icons/backarrow.png";
 import star from "../assets/icons/star.png";
 import wave from "../assets/icons/wave.png";
+import bell from "../assets/icons/bell.png";
+import profilepicture from "../assets/icons/profilepicture.png";
+import search from "../assets/icons/search.png";
+
+import medication from "../assets/illustrations/medication.png";
 
 export default {
   meditracelogo,
@@ -12,4 +17,9 @@ export default {
   backarrow,
   star,
   wave,
+  bell,
+  profilepicture,
+  search,
+
+  medication,
 };

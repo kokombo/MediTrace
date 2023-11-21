@@ -1,4 +1,4 @@
-import { StyleSheet, View } from "react-native";
+import { SafeAreaView, StyleSheet, View } from "react-native";
 import {
   AuthHeader,
   TextInputFrame,
@@ -24,6 +24,10 @@ const CreateAccount = () => {
   const [acceptPolicy, setAcceptPolicy] = useState<boolean>(false);
 
   const navigation: NavigationProp<ParamListBase> = useNavigation();
+
+  const SignUpAUser = () => {
+    navigation.navigate("verifyEmail");
+  };
 
   return (
     <View style={styles.body}>
@@ -69,7 +73,7 @@ const CreateAccount = () => {
       </View>
 
       <View style={{ marginTop: 40 }}>
-        <BlueButton label="Sign up" onPress={() => {}} />
+        <BlueButton label="Sign up" onPress={SignUpAUser} />
       </View>
 
       <View
