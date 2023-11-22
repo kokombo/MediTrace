@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { User } from "../../../type";
+import { ErrorResponse, User } from "../../../type";
 import axios from "axios";
 
 const BASE_URL = "https://meditrace.onrender.com/api/v1/auth";
@@ -26,10 +26,6 @@ type UserLoginData = {
   password: string;
 };
 
-type ErrorResponse = {
-  message: string;
-};
-
 const initialState: UserType = {
   user: null,
   status: "idle",
@@ -46,7 +42,7 @@ export const createAccount = createAsyncThunk(
     return await axios
       .post(`${BASE_URL}/register`, userData)
       .then((res) => {
-        return res.data;
+        return res.data.user_data;
       })
       .catch((error) => {
         if (error.response && error.response.data) {
@@ -67,7 +63,7 @@ export const signIn = createAsyncThunk(
     return await axios
       .post(`${BASE_URL}/login`, userData)
       .then((res) => {
-        return res.data;
+        return res.data.user_data;
       })
       .catch((error) => {
         if (error.response && error.response.data) {

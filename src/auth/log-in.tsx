@@ -20,6 +20,7 @@ import {
 import { signIn } from "../redux/slices/user";
 import { useDispatch, useSelector } from "react-redux";
 import { DispatchType, StateType } from "../redux/store";
+import { resendOTP } from "../redux/slices/verify-email-slice";
 
 const initalState = {
   email: "",
@@ -33,7 +34,7 @@ const LogIn = () => {
 
   const dispatch: DispatchType = useDispatch();
 
-  const { status, error, isErrorActive } = useSelector(
+  const { status, error, isErrorActive, user } = useSelector(
     (state: StateType) => state.user
   );
 
@@ -44,15 +45,19 @@ const LogIn = () => {
   const canLogin = Boolean(userData.email && userData.password);
 
   const signAUserIn = () => {
-    return navigation.navigate("home");
-
-    // dispatch(signIn(userData));
+    dispatch(signIn(userData));
   };
 
   useEffect(() => {
     if (status === "success") {
       setUserData((prev) => ({ ...prev, password: "" }));
-      return navigation.navigate("home");
+
+      if (user?.email_confirmed) {
+        return navigation.navigate("home");
+      } else {
+        dispatch(resendOTP({ email: userData.email }));
+        return navigation.navigate("verifyEmail");
+      }
     }
   }, [status]);
 

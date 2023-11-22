@@ -1,9 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./slices/user";
+import verifyEmailSlice from "./slices/verify-email-slice";
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
+    verification: verifyEmailSlice,
   },
 
   middleware: (getDefaultMiddleware) =>

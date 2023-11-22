@@ -2,13 +2,14 @@ import { ImageProps, ImageSourcePropType } from "react-native";
 import { NavigationProp } from "@react-navigation/native";
 
 type User = {
-  uid: string;
+  id: string;
   first_name: string;
   last_name: string;
   email: string;
-  picture: ImageSourcePropType;
+  profile_picture: ImageSourcePropType;
   token: string;
   email_confirmed: string;
+  role: string;
 };
 
 type Button = {
@@ -73,4 +74,8 @@ type Medication = {
   name: string;
   treatment: string;
   color: string;
+};
+
+type ErrorResponse = {
+  message: string;
 };

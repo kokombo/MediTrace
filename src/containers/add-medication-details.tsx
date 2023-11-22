@@ -96,12 +96,6 @@ const AddMedicationDetails = ({
               </View>
             </View>
 
-            <MedicationCard
-              treatment="Malaria medication"
-              name="Amatem Fort Artemether Lumefantrine"
-              color="#F44242"
-            />
-
             <BlueButton label="Create Reminder" onPress={() => {}} />
           </View>
         </ScrollView>

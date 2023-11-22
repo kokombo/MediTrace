@@ -1,22 +1,56 @@
 import { StyleSheet, Text, View, SafeAreaView } from "react-native";
-import { AuthHeader, BlueButton } from "../components";
+import { AuthHeader, BlueButton, Error } from "../components";
 import {
   CodeField,
   Cursor,
   useBlurOnFulfill,
   useClearByFocusCell,
 } from "react-native-confirmation-code-field";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { COLORS, SIZE, PADDING } from "../../constants";
 import Constants from "expo-constants";
+import {
+  useNavigation,
+  NavigationProp,
+  ParamListBase,
+} from "@react-navigation/native";
+import { verifyEmail } from "../redux/slices/verify-email-slice";
+import { useDispatch, useSelector } from "react-redux";
+import { DispatchType, StateType } from "../redux/store";
 
 const VerifyEmail = () => {
   const [value, setValue] = useState("");
-  const ref = useBlurOnFulfill({ value, cellCount: 5 });
+  const ref = useBlurOnFulfill({ value, cellCount: 6 });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
   });
+
+  const navigation: NavigationProp<ParamListBase> = useNavigation();
+
+  const dispatch: DispatchType = useDispatch();
+
+  const canClickVerifyButton = Boolean(value.length === 6);
+
+  const { data, status, error } = useSelector(
+    (state: StateType) => state.verification
+  );
+
+  const { user } = useSelector((state: StateType) => state.user);
+
+  const verificationDetails = { otp: value, email: user?.email as string };
+
+  const verifyUserEmail = () => {
+    dispatch(verifyEmail(verificationDetails));
+  };
+
+  useEffect(() => {
+    if (status === "success") {
+      return navigation.navigate("home");
+    }
+  }, [status]);
+
+  console.log(data);
 
   return (
     <View style={styles.body}>
@@ -28,8 +62,14 @@ const VerifyEmail = () => {
             We've sent a verification code to
           </Text>
 
-          <Text style={{ fontSize: SIZE.base, fontWeight: "bold" }}>
-            helloworld@gmail.com
+          <Text
+            style={{
+              fontSize: SIZE.base,
+              fontWeight: "bold",
+              flexWrap: "wrap",
+            }}
+          >
+            {user?.email}
           </Text>
         </View>
       </View>
@@ -40,7 +80,7 @@ const VerifyEmail = () => {
           {...props}
           value={value}
           onChangeText={setValue}
-          cellCount={5}
+          cellCount={6}
           rootStyle={styles.code_field_container}
           keyboardType="number-pad"
           textContentType="oneTimeCode"
@@ -66,7 +106,13 @@ const VerifyEmail = () => {
         />
       </View>
 
-      <BlueButton label="Verify" onPress={() => {}} />
+      {status === "failed" && error ? <Error message={error} /> : null}
+
+      <BlueButton
+        label="Verify"
+        onPress={verifyUserEmail}
+        disabled={status === "loading" || !canClickVerifyButton}
+      />
     </View>
   );
 };
@@ -84,6 +130,7 @@ const styles = StyleSheet.create({
   subheading_wrapper: {
     flexDirection: "row",
     gap: 1,
+    flex: 1,
   },
 
   prompt_wrapper: {
