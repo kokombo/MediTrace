@@ -33,7 +33,9 @@ const LogIn = () => {
 
   const dispatch: DispatchType = useDispatch();
 
-  const { status, error } = useSelector((state: StateType) => state.user);
+  const { status, error, isErrorActive } = useSelector(
+    (state: StateType) => state.user
+  );
 
   const handleInputChange = (name: string, value: string) => {
     setUserData((prevData) => ({ ...prevData, [name]: value }));
@@ -47,6 +49,7 @@ const LogIn = () => {
 
   useEffect(() => {
     if (status === "success") {
+      setUserData((prev) => ({ ...prev, password: "" }));
       return navigation.navigate("home");
     }
   }, [status]);
@@ -73,9 +76,10 @@ const LogIn = () => {
           label="password"
           placeholder="Enter your password"
           onChangeText={(text) => handleInputChange("password", text)}
+          isErrorActive={isErrorActive}
         />
 
-        {status === "failed" && error ? (
+        {status === "failed" && error.loginError ? (
           <View style={{ position: "absolute", bottom: 15 }}>
             <AuthError message={error.loginError} />
           </View>

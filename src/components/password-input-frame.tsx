@@ -14,6 +14,7 @@ const PasswordInputFrame = ({
   label,
   onChangeText,
   placeholder,
+  isErrorActive,
 }: PasswordInput) => {
   const [isPasswordVisible, setPasswordIsVisible] = useState(false);
   const [isInputFocused, setIsInputFocused] = useState(false);
@@ -32,7 +33,13 @@ const PasswordInputFrame = ({
         textContentType="password"
         placeholder={placeholder}
         style={[
-          { borderColor: isInputFocused ? COLORS.blue : COLORS.border },
+          {
+            borderColor: isErrorActive
+              ? COLORS.red
+              : isInputFocused
+              ? COLORS.blue
+              : COLORS.border,
+          },
           styles.input,
         ]}
         onFocus={() => setIsInputFocused(true)}

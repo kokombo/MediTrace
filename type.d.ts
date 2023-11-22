@@ -33,6 +33,7 @@ type PasswordInput = {
   label: string;
   onChangeText?: (text: string) => void;
   placeholder?: string;
+  isErrorActive?: boolean;
 };
 
 type AuthCTAType = {

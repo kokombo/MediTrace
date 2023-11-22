@@ -1,5 +1,4 @@
 import { StyleSheet, Text, View } from "react-native";
-import React from "react";
 import { COLORS, SIZE } from "../../constants";
 import { useSelector } from "react-redux";
 import { StateType } from "../redux/store";

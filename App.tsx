@@ -24,7 +24,7 @@ const App = () => {
   useEffect(() => {
     const prepare = async () => {
       try {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
+        await new Promise((resolve) => setTimeout(resolve, 2000));
       } catch (error: any) {
         Alert.alert(error.message);
       } finally {

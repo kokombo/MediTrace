@@ -11,6 +11,7 @@ type UserType = {
     registerError: string | null;
     loginError: string | null;
   };
+  isErrorActive: boolean;
 };
 
 type UserRegistrationData = {
@@ -36,6 +37,7 @@ const initialState: UserType = {
     loginError: null,
     registerError: null,
   },
+  isErrorActive: false,
 };
 
 export const createAccount = createAsyncThunk(
@@ -86,6 +88,7 @@ const userSlice = createSlice({
   reducers: {
     clearErrorMessage: (state, action) => {
       state.error = { registerError: "", loginError: "" };
+      state.isErrorActive = false;
     },
   },
   extraReducers: (builder) => {
@@ -100,6 +103,7 @@ const userSlice = createSlice({
       })
       .addCase(createAccount.rejected, (state, action) => {
         state.status = "failed";
+        state.isErrorActive = true;
         state.error.registerError = action.payload as string;
       })
       .addCase(signIn.pending, (state, action) => {
@@ -112,6 +116,7 @@ const userSlice = createSlice({
       })
       .addCase(signIn.rejected, (state, action) => {
         state.status = "failed";
+        state.isErrorActive = true;
         state.error.loginError = action.payload as string;
       });
   },

@@ -7,6 +7,7 @@ export const COLORS = {
   border: "#D8DADC",
   searchborder: "#898B8C",
   placeholder: "#A0A2A3",
+  red: "#FF0000",
 };
 
 export const SIZE = {

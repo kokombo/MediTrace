@@ -17,7 +17,7 @@ const AuthError = ({ message }: { message: string | null }) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       dispatch(clearErrorMessage(message));
-    }, 10000);
+    }, 7000);
 
     return () => clearTimeout(timer);
   }, [message]);
