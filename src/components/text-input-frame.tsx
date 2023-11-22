@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TextInput } from "react-native";
-import React from "react";
+import React, { useState } from "react";
 import { Input } from "../../type";
 import { COLORS, SIZE } from "../../constants";
 
@@ -9,6 +9,8 @@ const TextInputFrame = ({
   textContentType,
   onChangeText,
 }: Input) => {
+  const [isInputFocused, setIsInputFocused] = useState(false);
+
   return (
     <View style={styles.input_container}>
       <Text style={styles.label}> {label} </Text>
@@ -17,7 +19,12 @@ const TextInputFrame = ({
         placeholder={placeholder}
         textContentType={textContentType}
         onChangeText={onChangeText}
-        style={styles.input}
+        style={[
+          { borderColor: isInputFocused ? COLORS.blue : COLORS.border },
+          styles.input,
+        ]}
+        onFocus={() => setIsInputFocused(true)}
+        onBlur={() => setIsInputFocused(false)}
       />
     </View>
   );
@@ -34,7 +41,7 @@ const styles = StyleSheet.create({
     width: "100%",
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: COLORS.border,
+
     height: 56,
     fontSize: SIZE.base,
     fontWeight: "400",

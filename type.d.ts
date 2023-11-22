@@ -3,11 +3,12 @@ import { NavigationProp } from "@react-navigation/native";
 
 type User = {
   uid: string;
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   email: string;
   picture: ImageSourcePropType;
-  refreshToken: string;
+  token: string;
+  email_confirmed: string;
 };
 
 type Button = {

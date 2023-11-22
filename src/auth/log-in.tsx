@@ -1,4 +1,4 @@
-import { Image, StyleSheet, Text, View } from "react-native";
+import { Image, StyleSheet, View } from "react-native";
 import {
   TextInputFrame,
   PasswordInputFrame,
@@ -7,8 +7,9 @@ import {
   BlueButton,
   ForgetPassword,
   Loader,
+  AuthError,
 } from "../components";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { PADDING, icon } from "../../constants";
 import Constants from "expo-constants";
 import {
@@ -20,26 +21,35 @@ import { signIn } from "../redux/slices/user";
 import { useDispatch, useSelector } from "react-redux";
 import { DispatchType, StateType } from "../redux/store";
 
+const initalState = {
+  email: "",
+  password: "",
+};
+
 const LogIn = () => {
-  const [userData, setUserData] = useState({ email: "", password: "" });
+  const [userData, setUserData] = useState(initalState);
 
   const navigation: NavigationProp<ParamListBase> = useNavigation();
 
   const dispatch: DispatchType = useDispatch();
 
-  const { status } = useSelector((state: StateType) => state.user);
+  const { status, error } = useSelector((state: StateType) => state.user);
 
   const handleInputChange = (name: string, value: string) => {
     setUserData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const canLogin = Boolean(userData.email && userData.password);
+
   const signAUserIn = () => {
     dispatch(signIn(userData));
-
-    if (status === "success") {
-      navigation.navigate("home");
-    }
   };
+
+  useEffect(() => {
+    if (status === "success") {
+      return navigation.navigate("home");
+    }
+  }, [status]);
 
   return (
     <View style={styles.body}>
@@ -65,13 +75,23 @@ const LogIn = () => {
           onChangeText={(text) => handleInputChange("password", text)}
         />
 
+        {status === "failed" && error ? (
+          <View style={{ position: "absolute", bottom: 15 }}>
+            <AuthError message={error.loginError} />
+          </View>
+        ) : null}
+
         <View style={{ alignSelf: "flex-end" }}>
           <ForgetPassword />
         </View>
       </View>
 
       <View style={{ marginTop: 40 }}>
-        <BlueButton label="Log in" onPress={signAUserIn} />
+        <BlueButton
+          label="Log in"
+          onPress={signAUserIn}
+          disabled={status === "loading" || !canLogin}
+        />
       </View>
 
       <View

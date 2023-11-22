@@ -1,4 +1,4 @@
-import { Alert, StyleSheet, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import {
   AuthHeader,
   TextInputFrame,
@@ -7,9 +7,10 @@ import {
   CheckPrivacyPolicy,
   AuthCTA,
   Loader,
+  AuthError,
 } from "../components";
 import { PADDING } from "../../constants";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Constants from "expo-constants";
 import {
   useNavigation,
@@ -19,17 +20,13 @@ import {
 import { createAccount } from "../redux/slices/user";
 import { useDispatch, useSelector } from "react-redux";
 import { DispatchType, StateType } from "../redux/store";
-import { RouteProp } from "@react-navigation/native";
-
-// type Prop = {
-//     route: RouteProp<StackParamList, "searchresult">;
-//   };
 
 const initialState = {
   first_name: "",
   last_name: "",
   email: "",
   password: "",
+  role: "user",
 };
 
 const CreateAccount = () => {
@@ -45,21 +42,23 @@ const CreateAccount = () => {
     setUserData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const canSignUp = Boolean(userData && acceptPolicy);
+  const canSignUp = Boolean(
+    userData.first_name &&
+      userData.last_name &&
+      userData.email &&
+      userData.password &&
+      acceptPolicy
+  );
 
   const SignUpAUser = () => {
     dispatch(createAccount(userData));
-
-    if (status === "success") {
-      navigation.navigate("verifyEmail");
-    }
   };
 
-  // if (status === "failed") {
-  //   return Alert.alert(error!);
-  // }
-
-  console.log(status, error);
+  useEffect(() => {
+    if (status === "success") {
+      return navigation.navigate("verifyEmail");
+    }
+  }, [status]);
 
   return (
     <View style={styles.body}>
@@ -99,6 +98,10 @@ const CreateAccount = () => {
           onValueChange={setAcceptPolicy}
           isChecked={acceptPolicy}
         />
+
+        {status === "failed" && error ? (
+          <AuthError message={error.registerError} />
+        ) : null}
       </View>
 
       <View style={{ marginTop: 40 }}>

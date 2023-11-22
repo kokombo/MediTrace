@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { getCurrentUser } from "../api";
 import { User } from "../../../type";
 import axios from "axios";
 
@@ -8,7 +7,10 @@ const BASE_URL = "https://meditrace.onrender.com/api/v1/auth";
 type UserType = {
   user: User | null;
   status: "idle" | "loading" | "success" | "failed";
-  error: string | null | undefined;
+  error: {
+    registerError: string | null;
+    loginError: string | null;
+  };
 };
 
 type UserRegistrationData = {
@@ -18,67 +20,87 @@ type UserRegistrationData = {
   password: string;
 };
 
+type UserLoginData = {
+  email: string;
+  password: string;
+};
+
+type ErrorResponse = {
+  message: string;
+};
+
 const initialState: UserType = {
   user: null,
   status: "idle",
-  error: null,
+  error: {
+    loginError: null,
+    registerError: null,
+  },
 };
-
-export const getCurrentUserAsync = createAsyncThunk(
-  "user/getCurrentUser",
-  async () => {
-    try {
-      const res = await getCurrentUser();
-      return res.data;
-    } catch (error) {
-      return error;
-    }
-  }
-);
 
 export const createAccount = createAsyncThunk(
   "user/createAccount",
-  async (userData: UserRegistrationData) => {
-    const res = await axios.post(`${BASE_URL}/register`, userData);
-    return res.data;
+  async (userData: UserRegistrationData, { rejectWithValue }) => {
+    return await axios
+      .post(`${BASE_URL}/register`, userData)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((error) => {
+        if (error.response && error.response.data) {
+          const errorResponse: ErrorResponse = error.response.data;
+          return rejectWithValue(
+            errorResponse.message || "An error occured, please try again!"
+          );
+        } else {
+          return rejectWithValue("An error occurred, please try again!");
+        }
+      });
   }
 );
 
 export const signIn = createAsyncThunk(
   "user/signIn",
-  async (userData: Partial<UserRegistrationData>) => {
-    const res = await axios.post(`${BASE_URL}/login`, userData);
-    return res.data;
+  async (userData: UserLoginData, { rejectWithValue }) => {
+    return await axios
+      .post(`${BASE_URL}/login`, userData)
+      .then((res) => {
+        return res.data;
+      })
+      .catch((error) => {
+        if (error.response && error.response.data) {
+          const errorResponse: ErrorResponse = error.response.data;
+          return rejectWithValue(
+            errorResponse.message || "An error occured, please try again"
+          );
+        } else {
+          return rejectWithValue("An error occurred, please try again");
+        }
+      });
   }
 );
 
 const userSlice = createSlice({
   name: "user",
   initialState,
-  reducers: {},
+  reducers: {
+    clearErrorMessage: (state, action) => {
+      state.error = { registerError: "", loginError: "" };
+    },
+  },
   extraReducers: (builder) => {
     builder
-      .addCase(getCurrentUserAsync.pending, (state, action) => {
-        state.status = "loading";
-      })
-      .addCase(getCurrentUserAsync.fulfilled, (state, action) => {
-        state.status = "success";
-        state.user = action.payload;
-      })
-      .addCase(getCurrentUserAsync.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.error.message;
-      })
       .addCase(createAccount.pending, (state, action) => {
         state.status = "loading";
       })
       .addCase(createAccount.fulfilled, (state, action) => {
         state.status = "success";
         state.user = action.payload;
+        state.error.registerError = null;
       })
       .addCase(createAccount.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message;
+        state.error.registerError = action.payload as string;
       })
       .addCase(signIn.pending, (state, action) => {
         state.status = "loading";
@@ -86,12 +108,15 @@ const userSlice = createSlice({
       .addCase(signIn.fulfilled, (state, action) => {
         state.status = "success";
         state.user = action.payload;
+        state.error.loginError = null;
       })
       .addCase(signIn.rejected, (state, action) => {
         state.status = "failed";
-        state.error = action.error.message;
+        state.error.loginError = action.payload as string;
       });
   },
 });
+
+export const { clearErrorMessage } = userSlice.actions;
 
 export default userSlice.reducer;

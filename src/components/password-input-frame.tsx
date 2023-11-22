@@ -12,11 +12,11 @@ import { PasswordInput } from "../../type";
 
 const PasswordInputFrame = ({
   label,
-
   onChangeText,
   placeholder,
 }: PasswordInput) => {
-  const [isPasswordVisible, setPasswordIsVisible] = useState<Boolean>(false);
+  const [isPasswordVisible, setPasswordIsVisible] = useState(false);
+  const [isInputFocused, setIsInputFocused] = useState(false);
 
   const togglePasswordIcon = () => {
     setPasswordIsVisible((prev) => !prev);
@@ -27,11 +27,16 @@ const PasswordInputFrame = ({
       <Text style={styles.label}>{label} </Text>
 
       <TextInput
-        style={styles.input}
         onChangeText={onChangeText}
         secureTextEntry={isPasswordVisible ? false : true}
         textContentType="password"
         placeholder={placeholder}
+        style={[
+          { borderColor: isInputFocused ? COLORS.blue : COLORS.border },
+          styles.input,
+        ]}
+        onFocus={() => setIsInputFocused(true)}
+        onBlur={() => setIsInputFocused(false)}
       />
 
       <TouchableOpacity style={styles.visibility} onPress={togglePasswordIcon}>
@@ -54,7 +59,6 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
     borderWidth: 1,
-    borderColor: COLORS.border,
     height: 56,
     fontSize: SIZE.base,
     fontWeight: "400",

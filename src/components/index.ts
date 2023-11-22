@@ -16,6 +16,8 @@ import DormantSearchFrame from "./dormant-search-frame";
 import EmptyMedicationList from "./empty-medication-list";
 import SearchFrame from "./search-frame";
 import Loader from "./loader";
+import Error from "./error";
+import AuthError from "./auth-error";
 
 export {
   BlueButton,
@@ -36,4 +38,6 @@ export {
   EmptyMedicationList,
   SearchFrame,
   Loader,
+  Error,
+  AuthError,
 };
