@@ -18,6 +18,9 @@ import SearchFrame from "./search-frame";
 import Loader from "./loader";
 import Error from "./error";
 import AuthError from "./auth-error";
+import Select from "./select";
+import CombinedDropdownInput from "./combined-dropdown-input";
+import MedicationCard from "./medication-card";
 
 export {
   BlueButton,
@@ -40,4 +43,7 @@ export {
   Loader,
   Error,
   AuthError,
+  Select,
+  CombinedDropdownInput,
+  MedicationCard,
 };

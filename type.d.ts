@@ -63,3 +63,14 @@ type Search = {
   value: string;
   onChangeText: (text: string) => void;
 };
+
+type SelectType = {
+  label: string;
+  value: string;
+};
+
+type Medication = {
+  name: string;
+  treatment: string;
+  color: string;
+};

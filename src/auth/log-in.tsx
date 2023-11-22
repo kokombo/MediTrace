@@ -44,7 +44,9 @@ const LogIn = () => {
   const canLogin = Boolean(userData.email && userData.password);
 
   const signAUserIn = () => {
-    dispatch(signIn(userData));
+    return navigation.navigate("home");
+
+    // dispatch(signIn(userData));
   };
 
   useEffect(() => {
