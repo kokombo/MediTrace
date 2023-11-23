@@ -1,9 +1,16 @@
 import { Pressable, Image } from "react-native";
 import { icon } from "../../constants";
+import {
+  useNavigation,
+  NavigationProp,
+  ParamListBase,
+} from "@react-navigation/native";
 
 const NotificationBell = () => {
+  const navigation: NavigationProp<ParamListBase> = useNavigation();
+
   return (
-    <Pressable>
+    <Pressable onPress={() => navigation.navigate("notification")}>
       <Image
         source={icon.bell}
         resizeMode="contain"

@@ -8,6 +8,7 @@ import bell from "../assets/icons/bell.png";
 import profilepicture from "../assets/icons/profilepicture.png";
 import search from "../assets/icons/search.png";
 import pill from "../assets/icons/pill.png";
+import plus from "../assets/icons/plus.png";
 
 import medication from "../assets/illustrations/medication.png";
 import emailverified from "../assets/illustrations/emailverified.png";
@@ -24,6 +25,7 @@ export default {
   profilepicture,
   search,
   pill,
+  plus,
 
   medication,
   emailverified,

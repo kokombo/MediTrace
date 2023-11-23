@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { ErrorResponse, User } from "../../../type";
+import { ErrorResponse } from "../../../type";
 import axios from "axios";
 
 const BASE_URL = "https://meditrace.onrender.com/api/v1/auth";
@@ -44,6 +44,7 @@ export const verifyEmail = createAsyncThunk(
       .catch((error) => {
         if (error.response && error.response.data) {
           const errorResponse: ErrorResponse = error.response.data;
+
           return rejectWithValue(
             errorResponse.message || "Something went wrong, please try again"
           );
@@ -65,6 +66,7 @@ export const resendOTP = createAsyncThunk(
       .catch((error) => {
         if (error.response && error.response.data) {
           const errorResponse: ErrorResponse = error.response.data;
+
           return rejectWithValue(
             errorResponse.message || "Something went wrong, please try again"
           );
@@ -78,7 +80,11 @@ export const resendOTP = createAsyncThunk(
 const verifyEmailSlice = createSlice({
   name: "verification",
   initialState,
-  reducers: {},
+  reducers: {
+    clearVerificationErrorMessage: (state, action) => {
+      state.error = { verifyEmailError: "", resendOTPError: "" };
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(verifyEmail.pending, (state, action) => {
@@ -86,6 +92,8 @@ const verifyEmailSlice = createSlice({
       })
       .addCase(verifyEmail.fulfilled, (state, action) => {
         state.status.verifyEmail = "success";
+        state.data = action.payload;
+        state.error.verifyEmailError = null;
       })
       .addCase(verifyEmail.rejected, (state, action) => {
         state.status.verifyEmail = "failed";
@@ -94,6 +102,7 @@ const verifyEmailSlice = createSlice({
       .addCase(resendOTP.fulfilled, (state, action) => {
         state.status.resendOTP = "success";
         state.data = action.payload;
+        state.error.resendOTPError = null;
       })
       .addCase(resendOTP.rejected, (state, action) => {
         state.status.resendOTP = "failed";

@@ -6,11 +6,11 @@ import { StateType } from "../redux/store";
 const UserWelcomeGreeting = () => {
   const { user } = useSelector((state: StateType) => state.user);
 
-  console.log(user);
-
   return (
     <View style={styles.wrapper}>
-      <Text style={styles.name}>Hello Samuel,</Text>
+      <Text style={styles.name}>
+        Hello {user?.first_name} {user?.last_name},
+      </Text>
 
       <Text style={styles.welcome_prompt}>Welcome back</Text>
     </View>

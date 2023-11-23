@@ -75,7 +75,7 @@ const VerifyEmail = () => {
   return (
     <View style={styles.body}>
       <View style={styles.prompt_wrapper}>
-        <AuthHeader heading="Verify Your Email Address" />
+        <AuthHeader heading="Verify Your Email To Continue" />
 
         <View style={styles.subheading_wrapper}>
           <Text
@@ -84,7 +84,7 @@ const VerifyEmail = () => {
               fontWeight: "400",
             }}
           >
-            We've sent a verification code to
+            We have sent a verification code to
           </Text>
 
           <Text
@@ -116,7 +116,7 @@ const VerifyEmail = () => {
               style={{
                 borderWidth: 1,
                 borderColor: isFocused ? COLORS.blue : COLORS.border,
-                width: 63,
+                width: "20%",
                 height: 72,
                 borderRadius: 15,
                 alignItems: "center",

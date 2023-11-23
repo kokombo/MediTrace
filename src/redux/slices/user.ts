@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { ErrorResponse, User } from "../../../type";
 import axios from "axios";
+import { StateType } from "../store";
 
 const BASE_URL = "https://meditrace.onrender.com/api/v1/auth";
 
@@ -15,6 +16,7 @@ type UserType = {
     loginError: string | null;
   };
   isErrorActive: boolean;
+  picture: string | null;
 };
 
 type UserRegistrationData = {
@@ -40,6 +42,7 @@ const initialState: UserType = {
     registerError: null,
   },
   isErrorActive: false,
+  picture: "",
 };
 
 export const createAccount = createAsyncThunk(
@@ -84,6 +87,30 @@ export const signIn = createAsyncThunk(
   }
 );
 
+export const uploadProfilePicture = createAsyncThunk(
+  "user/uploadProfilePicture",
+  async (file: File, { getState }) => {
+    const state = getState() as StateType;
+
+    const token = state.user.user?.accessToken;
+
+    const formData = new FormData();
+
+    formData.append("file", file);
+
+    return axios
+      .patch(`${BASE_URL}/upload`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res) => {
+        return res.data.picture_url;
+      });
+  }
+);
+
 const userSlice = createSlice({
   name: "user",
   initialState,
@@ -105,7 +132,6 @@ const userSlice = createSlice({
       })
       .addCase(createAccount.rejected, (state, action) => {
         state.status.register = "failed";
-        state.isErrorActive = true;
         state.error.registerError = action.payload as string;
       })
       .addCase(signIn.pending, (state, action) => {
@@ -118,8 +144,10 @@ const userSlice = createSlice({
       })
       .addCase(signIn.rejected, (state, action) => {
         state.status.login = "failed";
-        state.isErrorActive = true;
         state.error.loginError = action.payload as string;
+      })
+      .addCase(uploadProfilePicture.fulfilled, (state, action) => {
+        state.picture = action.payload;
       });
   },
 });

@@ -48,8 +48,6 @@ const LogIn = () => {
     dispatch(signIn(userData));
   };
 
-  console.log(user);
-
   useEffect(() => {
     if (status.login === "success") {
       setUserData((prev) => ({ ...prev, password: "" }));

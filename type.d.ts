@@ -6,8 +6,9 @@ type User = {
   first_name: string;
   last_name: string;
   email: string;
-  profile_picture: ImageSourcePropType;
-  token: string;
+  profile_picture: string;
+  refreshToken: string;
+  accessToken: string;
   email_confirmed: boolean;
   role: string;
 };
