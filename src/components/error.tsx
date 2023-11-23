@@ -10,9 +10,7 @@ const Error = ({ message }: { message: string }) => {
 
   const { triggerVibration } = useHaptic();
 
-  if (message) {
-    triggerVibration();
-  }
+  if (message) [triggerVibration()];
 
   useEffect(() => {
     const timer = setTimeout(() => {

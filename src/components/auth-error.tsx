@@ -10,10 +10,6 @@ const AuthError = ({ message }: { message: string | null }) => {
 
   const { triggerVibration } = useHaptic();
 
-  if (message) {
-    triggerVibration();
-  }
-
   useEffect(() => {
     const timer = setTimeout(() => {
       dispatch(clearErrorMessage(message));

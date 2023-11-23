@@ -48,14 +48,16 @@ const LogIn = () => {
     dispatch(signIn(userData));
   };
 
+  console.log(user);
+
   useEffect(() => {
-    if (status === "success") {
+    if (status.login === "success") {
       setUserData((prev) => ({ ...prev, password: "" }));
 
-      if (user && user?.email_confirmed) {
+      if (user !== null && user?.email_confirmed) {
         return navigation.navigate("home");
       } else {
-        dispatch(resendOTP({ email: user?.email as string }));
+        dispatch(resendOTP({ email: user?.email! }));
 
         return navigation.navigate("verifyEmail");
       }
@@ -64,7 +66,7 @@ const LogIn = () => {
 
   return (
     <View style={styles.body}>
-      {status === "loading" && <Loader />}
+      {status.login === "loading" && <Loader />}
 
       <View style={styles.welcome_wrapper}>
         <AuthHeader heading="Welcome Back!" />
@@ -87,7 +89,7 @@ const LogIn = () => {
           isErrorActive={isErrorActive}
         />
 
-        {status === "failed" && error.loginError ? (
+        {status.login === "failed" && error.loginError ? (
           <View style={{ position: "absolute", bottom: 15 }}>
             <AuthError message={error.loginError} />
           </View>
@@ -102,7 +104,7 @@ const LogIn = () => {
         <BlueButton
           label="Log in"
           onPress={signAUserIn}
-          disabled={status === "loading" || !canLogin}
+          disabled={status.login === "loading" || !canLogin}
         />
       </View>
 

@@ -6,7 +6,10 @@ const BASE_URL = "https://meditrace.onrender.com/api/v1/auth";
 
 type UserType = {
   user: User | null;
-  status: "idle" | "loading" | "success" | "failed";
+  status: {
+    register: "idle" | "loading" | "success" | "failed";
+    login: "idle" | "loading" | "success" | "failed";
+  };
   error: {
     registerError: string | null;
     loginError: string | null;
@@ -28,7 +31,10 @@ type UserLoginData = {
 
 const initialState: UserType = {
   user: null,
-  status: "idle",
+  status: {
+    login: "idle",
+    register: "idle",
+  },
   error: {
     loginError: null,
     registerError: null,
@@ -90,28 +96,28 @@ const userSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(createAccount.pending, (state, action) => {
-        state.status = "loading";
+        state.status.register = "loading";
       })
       .addCase(createAccount.fulfilled, (state, action) => {
-        state.status = "success";
+        state.status.register = "success";
         state.user = action.payload;
         state.error.registerError = null;
       })
       .addCase(createAccount.rejected, (state, action) => {
-        state.status = "failed";
+        state.status.register = "failed";
         state.isErrorActive = true;
         state.error.registerError = action.payload as string;
       })
       .addCase(signIn.pending, (state, action) => {
-        state.status = "loading";
+        state.status.login = "loading";
       })
       .addCase(signIn.fulfilled, (state, action) => {
-        state.status = "success";
+        state.status.login = "success";
         state.user = action.payload;
         state.error.loginError = null;
       })
       .addCase(signIn.rejected, (state, action) => {
-        state.status = "failed";
+        state.status.login = "failed";
         state.isErrorActive = true;
         state.error.loginError = action.payload as string;
       });

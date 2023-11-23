@@ -7,6 +7,7 @@ import { Splash } from "./src/screens";
 import { StatusBar } from "expo-status-bar";
 import { Provider } from "react-redux";
 import { store } from "./src/redux/store";
+import Toast from "react-native-toast-message";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -49,6 +50,7 @@ const App = () => {
     <NavigationContainer theme={AppTheme}>
       <Provider store={store}>
         <RootNavigator />
+        <Toast />
         <StatusBar style="auto" />
       </Provider>
     </NavigationContainer>

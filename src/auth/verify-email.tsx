@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, SafeAreaView } from "react-native";
-import { AuthHeader, BlueButton, Error } from "../components";
+import { StyleSheet, Text, View } from "react-native";
+import { AuthError, AuthHeader, BlueButton } from "../components";
 import {
   CodeField,
   Cursor,
@@ -14,24 +14,30 @@ import {
   NavigationProp,
   ParamListBase,
 } from "@react-navigation/native";
-import { verifyEmail } from "../redux/slices/verify-email-slice";
+import { verifyEmail, resendOTP } from "../redux/slices/verify-email-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { DispatchType, StateType } from "../redux/store";
 import ResendOTP from "./resend-otp";
+import { useCountdownTimer, useHaptic } from "../hooks";
+import Toast from "react-native-toast-message";
 
 const VerifyEmail = () => {
   const [value, setValue] = useState("");
-  const ref = useBlurOnFulfill({ value, cellCount: 5 });
+  const ref = useBlurOnFulfill({ value, cellCount: 4 });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
   });
 
+  const { newTime, setTime } = useCountdownTimer(60);
+
+  const { triggerVibration } = useHaptic();
+
   const navigation: NavigationProp<ParamListBase> = useNavigation();
 
   const dispatch: DispatchType = useDispatch();
 
-  const canClickVerifyButton = Boolean(value.length === 5);
+  const canClickVerifyButton = Boolean(value.length === 4);
 
   const { status, error } = useSelector(
     (state: StateType) => state.verification
@@ -42,16 +48,29 @@ const VerifyEmail = () => {
   const verificationDetails = { otp: value, email: user?.email! };
 
   const verifyUserEmail = () => {
-    return navigation.navigate("verified");
-
-    // dispatch(verifyEmail(verificationDetails));
+    dispatch(verifyEmail(verificationDetails));
   };
 
   useEffect(() => {
-    if (status === "success") {
+    if (status.verifyEmail === "success") {
       return navigation.navigate("verified");
     }
   }, [status]);
+
+  const resendOTPToUser = () => {
+    triggerVibration();
+
+    if (status.resendOTP === "success") {
+      Toast.show({
+        text1: "Another code has been sent to",
+        text2: `${user?.email}`,
+      });
+
+      dispatch(resendOTP({ email: user?.email! }));
+
+      setTime(60);
+    }
+  };
 
   return (
     <View style={styles.body}>
@@ -72,7 +91,6 @@ const VerifyEmail = () => {
             style={{
               fontSize: SIZE.base,
               fontWeight: "bold",
-              flexWrap: "wrap",
               color: COLORS.black,
             }}
           >
@@ -81,13 +99,13 @@ const VerifyEmail = () => {
         </View>
       </View>
 
-      <View>
+      <View style={{ gap: 10 }}>
         <CodeField
           ref={ref}
           {...props}
           value={value}
           onChangeText={setValue}
-          cellCount={5}
+          cellCount={4}
           rootStyle={styles.code_field_container}
           keyboardType="number-pad"
           textContentType="oneTimeCode"
@@ -111,19 +129,38 @@ const VerifyEmail = () => {
             </View>
           )}
         />
+
+        {status.verifyEmail === "failed" && error.verifyEmailError ? (
+          <AuthError message={error.verifyEmailError} />
+        ) : null}
       </View>
 
-      {status === "failed" && error ? <Error message={error} /> : null}
-
       <View style={{ gap: 24 }}>
-        <View style={{ alignItems: "center" }}>
-          <ResendOTP label="Send code again in" email={user?.email!} />
+        <View
+          style={{
+            alignItems: "center",
+            flexDirection: "row",
+            alignSelf: "center",
+          }}
+        >
+          {newTime === "00" ? (
+            <ResendOTP label="Resend Code" onPress={resendOTPToUser} />
+          ) : (
+            <Text
+              style={{
+                fontSize: SIZE.base,
+                fontWeight: "600",
+              }}
+            >
+              Send code again in 00:{newTime}
+            </Text>
+          )}
         </View>
 
         <BlueButton
           label="Verify"
           onPress={verifyUserEmail}
-          disabled={status === "loading" || !canClickVerifyButton}
+          disabled={status.verifyEmail === "loading" || !canClickVerifyButton}
         />
       </View>
     </View>
@@ -141,9 +178,7 @@ const styles = StyleSheet.create({
   },
 
   subheading_wrapper: {
-    flexDirection: "row",
-    gap: 1,
-    alignItems: "center",
+    gap: 2,
   },
 
   prompt_wrapper: {

@@ -6,8 +6,14 @@ const BASE_URL = "https://meditrace.onrender.com/api/v1/auth";
 
 type InitialState = {
   data: any;
-  status: "idle" | "loading" | "success" | "failed";
-  error: string | null;
+  status: {
+    verifyEmail: "idle" | "loading" | "success" | "failed";
+    resendOTP: "idle" | "loading" | "success" | "failed";
+  };
+  error: {
+    verifyEmailError: string | null;
+    resendOTPError: string | null;
+  };
 };
 
 type EmailVerificationData = {
@@ -17,8 +23,14 @@ type EmailVerificationData = {
 
 const initialState: InitialState = {
   data: null,
-  status: "idle",
-  error: null,
+  status: {
+    verifyEmail: "idle",
+    resendOTP: "idle",
+  },
+  error: {
+    verifyEmailError: null,
+    resendOTPError: null,
+  },
 };
 
 export const verifyEmail = createAsyncThunk(
@@ -70,22 +82,22 @@ const verifyEmailSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(verifyEmail.pending, (state, action) => {
-        state.status = "loading";
+        state.status.verifyEmail = "loading";
       })
       .addCase(verifyEmail.fulfilled, (state, action) => {
-        state.status = "success";
+        state.status.verifyEmail = "success";
       })
       .addCase(verifyEmail.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload as string;
+        state.status.verifyEmail = "failed";
+        state.error.verifyEmailError = action.payload as string;
       })
       .addCase(resendOTP.fulfilled, (state, action) => {
-        state.status = "success";
+        state.status.resendOTP = "success";
         state.data = action.payload;
       })
       .addCase(resendOTP.rejected, (state, action) => {
-        state.status = "failed";
-        state.error = action.payload as string;
+        state.status.resendOTP = "failed";
+        state.error.resendOTPError = action.payload as string;
       });
   },
 });

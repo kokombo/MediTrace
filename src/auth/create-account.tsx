@@ -26,7 +26,7 @@ const initialState = {
   last_name: "",
   email: "",
   password: "",
-  role: "user",
+  role: "patient",
 };
 
 const CreateAccount = () => {
@@ -51,20 +51,18 @@ const CreateAccount = () => {
   );
 
   const SignUpAUser = () => {
-    return navigation.navigate("verifyEmail");
-
-    // dispatch(createAccount(userData));
+    dispatch(createAccount(userData));
   };
 
   useEffect(() => {
-    if (status === "success") {
+    if (status.register === "success") {
       return navigation.navigate("verifyEmail");
     }
   }, [status]);
 
   return (
     <View style={styles.body}>
-      {status === "loading" && <Loader />}
+      {status.register === "loading" && <Loader />}
 
       <AuthHeader heading="Create account" />
 
@@ -101,7 +99,7 @@ const CreateAccount = () => {
           isChecked={acceptPolicy}
         />
 
-        {status === "failed" && error ? (
+        {status.register === "failed" && error.registerError ? (
           <AuthError message={error.registerError} />
         ) : null}
       </View>
@@ -110,7 +108,7 @@ const CreateAccount = () => {
         <BlueButton
           label="Sign up"
           onPress={SignUpAUser}
-          disabled={status === "loading" || !canSignUp}
+          disabled={status.register === "loading" || !canSignUp}
         />
       </View>
 
