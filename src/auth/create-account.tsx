@@ -51,7 +51,9 @@ const CreateAccount = () => {
   );
 
   const SignUpAUser = () => {
-    dispatch(createAccount(userData));
+    return navigation.navigate("verifyEmail");
+
+    // dispatch(createAccount(userData));
   };
 
   useEffect(() => {

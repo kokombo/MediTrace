@@ -19,6 +19,7 @@ export const SIZE = {
   xl: 32,
   md: 20,
   xsm: 12,
+  mdl: 24,
 };
 
 export const PADDING = {

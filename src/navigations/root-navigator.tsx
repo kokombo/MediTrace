@@ -1,5 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { Home, Onboarding } from "../screens";
+import { EmailVerificationSuccess, Home, Onboarding } from "../screens";
 import { Animated } from "react-native";
 import { CreateAccount, LogIn, VerifyEmail } from "../auth";
 import { GoBack, HomeHeaderLeft, NotificationBell, Star } from "../components";
@@ -73,6 +73,18 @@ const RootNavigator = () => {
           headerLeft: () => <HomeHeaderLeft />,
 
           headerRight: () => <NotificationBell />,
+
+          headerStyle: { height: 100 },
+        }}
+      />
+
+      <Stack.Screen
+        name="verified"
+        component={EmailVerificationSuccess}
+        options={{
+          headerLeftContainerStyle: { display: "none" },
+
+          headerRight: () => <Star />,
 
           headerStyle: { height: 100 },
         }}

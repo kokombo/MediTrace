@@ -52,14 +52,15 @@ const LogIn = () => {
     if (status === "success") {
       setUserData((prev) => ({ ...prev, password: "" }));
 
-      if (user?.email_confirmed) {
+      if (user && user?.email_confirmed) {
         return navigation.navigate("home");
       } else {
-        dispatch(resendOTP({ email: userData.email }));
+        dispatch(resendOTP({ email: user?.email as string }));
+
         return navigation.navigate("verifyEmail");
       }
     }
-  }, [status]);
+  }, [user, status]);
 
   return (
     <View style={styles.body}>

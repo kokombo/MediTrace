@@ -17,10 +17,11 @@ import {
 import { verifyEmail } from "../redux/slices/verify-email-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { DispatchType, StateType } from "../redux/store";
+import ResendOTP from "./resend-otp";
 
 const VerifyEmail = () => {
   const [value, setValue] = useState("");
-  const ref = useBlurOnFulfill({ value, cellCount: 6 });
+  const ref = useBlurOnFulfill({ value, cellCount: 5 });
   const [props, getCellOnLayoutHandler] = useClearByFocusCell({
     value,
     setValue,
@@ -30,27 +31,27 @@ const VerifyEmail = () => {
 
   const dispatch: DispatchType = useDispatch();
 
-  const canClickVerifyButton = Boolean(value.length === 6);
+  const canClickVerifyButton = Boolean(value.length === 5);
 
-  const { data, status, error } = useSelector(
+  const { status, error } = useSelector(
     (state: StateType) => state.verification
   );
 
   const { user } = useSelector((state: StateType) => state.user);
 
-  const verificationDetails = { otp: value, email: user?.email as string };
+  const verificationDetails = { otp: value, email: user?.email! };
 
   const verifyUserEmail = () => {
-    dispatch(verifyEmail(verificationDetails));
+    return navigation.navigate("verified");
+
+    // dispatch(verifyEmail(verificationDetails));
   };
 
   useEffect(() => {
     if (status === "success") {
-      return navigation.navigate("home");
+      return navigation.navigate("verified");
     }
   }, [status]);
-
-  console.log(data);
 
   return (
     <View style={styles.body}>
@@ -58,7 +59,12 @@ const VerifyEmail = () => {
         <AuthHeader heading="Verify Your Email Address" />
 
         <View style={styles.subheading_wrapper}>
-          <Text style={{ fontSize: SIZE.base, fontWeight: "400" }}>
+          <Text
+            style={{
+              fontSize: SIZE.base,
+              fontWeight: "400",
+            }}
+          >
             We've sent a verification code to
           </Text>
 
@@ -67,6 +73,7 @@ const VerifyEmail = () => {
               fontSize: SIZE.base,
               fontWeight: "bold",
               flexWrap: "wrap",
+              color: COLORS.black,
             }}
           >
             {user?.email}
@@ -80,7 +87,7 @@ const VerifyEmail = () => {
           {...props}
           value={value}
           onChangeText={setValue}
-          cellCount={6}
+          cellCount={5}
           rootStyle={styles.code_field_container}
           keyboardType="number-pad"
           textContentType="oneTimeCode"
@@ -108,11 +115,17 @@ const VerifyEmail = () => {
 
       {status === "failed" && error ? <Error message={error} /> : null}
 
-      <BlueButton
-        label="Verify"
-        onPress={verifyUserEmail}
-        disabled={status === "loading" || !canClickVerifyButton}
-      />
+      <View style={{ gap: 24 }}>
+        <View style={{ alignItems: "center" }}>
+          <ResendOTP label="Send code again in" email={user?.email!} />
+        </View>
+
+        <BlueButton
+          label="Verify"
+          onPress={verifyUserEmail}
+          disabled={status === "loading" || !canClickVerifyButton}
+        />
+      </View>
     </View>
   );
 };
@@ -130,7 +143,7 @@ const styles = StyleSheet.create({
   subheading_wrapper: {
     flexDirection: "row",
     gap: 1,
-    flex: 1,
+    alignItems: "center",
   },
 
   prompt_wrapper: {

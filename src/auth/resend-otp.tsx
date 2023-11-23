@@ -1,10 +1,20 @@
-import { StyleSheet, Text, View } from "react-native";
+import { Pressable, StyleSheet, Text } from "react-native";
+import { SIZE } from "../../constants";
+import { resendOTP } from "../redux/slices/verify-email-slice";
+import { useDispatch } from "react-redux";
+import { DispatchType } from "../redux/store";
 
-const ResendOTP = () => {
+const ResendOTP = ({ label, email }: { label: string; email: string }) => {
+  const dispatch: DispatchType = useDispatch();
+
+  const resendOTPToUser = () => {
+    dispatch(resendOTP({ email }));
+  };
+
   return (
-    <View>
-      <Text>ResendOTP</Text>
-    </View>
+    <Pressable onPress={resendOTPToUser}>
+      <Text style={{ fontSize: SIZE.base, fontWeight: "600" }}>{label} </Text>
+    </Pressable>
   );
 };
 

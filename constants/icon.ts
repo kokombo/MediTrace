@@ -10,6 +10,8 @@ import search from "../assets/icons/search.png";
 import pill from "../assets/icons/pill.png";
 
 import medication from "../assets/illustrations/medication.png";
+import emailverified from "../assets/illustrations/emailverified.png";
+import exploreapp from "../assets/illustrations/exploreapp.png";
 
 export default {
   meditracelogo,
@@ -24,4 +26,6 @@ export default {
   pill,
 
   medication,
+  emailverified,
+  exploreapp,
 };

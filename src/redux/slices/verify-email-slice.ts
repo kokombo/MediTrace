@@ -46,7 +46,7 @@ export const resendOTP = createAsyncThunk(
   "verification/resendOTP",
   async (email: { email: string }, { rejectWithValue }) => {
     return axios
-      .post(`${BASE_URL}/confirm_otp`, email)
+      .post(`${BASE_URL}/resend_otp`, email)
       .then((res) => {
         return res.data;
       })

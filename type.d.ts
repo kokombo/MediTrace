@@ -8,7 +8,7 @@ type User = {
   email: string;
   profile_picture: ImageSourcePropType;
   token: string;
-  email_confirmed: string;
+  email_confirmed: boolean;
   role: string;
 };
 
