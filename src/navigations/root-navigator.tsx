@@ -79,8 +79,6 @@ const RootNavigator = () => {
           headerLeft: () => <HomeHeaderLeft />,
 
           headerRight: () => <NotificationBell />,
-
-          headerStyle: { height: 100 },
         }}
       />
 
@@ -91,8 +89,6 @@ const RootNavigator = () => {
           headerLeftContainerStyle: { display: "none" },
 
           headerRight: () => <Star />,
-
-          headerStyle: { height: 100 },
         }}
       />
 
@@ -103,8 +99,6 @@ const RootNavigator = () => {
           headerLeft: () => <GoBack />,
 
           title: "Notifications",
-
-          headerStyle: { height: 100 },
         }}
       />
 
@@ -115,8 +109,6 @@ const RootNavigator = () => {
           headerLeftContainerStyle: { display: "none" },
 
           title: "",
-
-          headerStyle: { height: 100 },
         }}
       />
     </Stack.Navigator>

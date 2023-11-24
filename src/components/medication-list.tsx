@@ -13,9 +13,27 @@ const MedicationList = () => {
 
   const { data } = useSelector((state: StateType) => state.medication);
 
-  const renderMedicationCard: ListRenderItem<Medication> = ({ item }) => (
-    <MedicationCard item={item} />
-  );
+  const renderMedicationCard: ListRenderItem<Medication> = ({
+    item,
+    index,
+  }) => {
+    const borderColors = ["#4285F4", "#F44242", "#FFE600"];
+
+    const miniCardColors = ["#F3F8FF", "#FFEEEE", "#FFFCE1"];
+
+    const borderColor = borderColors[index % borderColors.length];
+
+    const miniCardBackgroundColor =
+      miniCardColors[index % miniCardColors.length];
+
+    return (
+      <MedicationCard
+        item={item}
+        borderColor={borderColor}
+        miniCardBackgroundColor={miniCardBackgroundColor}
+      />
+    );
+  };
 
   return (
     <View style={styles.body}>
@@ -23,6 +41,7 @@ const MedicationList = () => {
         data={data}
         renderItem={renderMedicationCard}
         keyExtractor={(item: Medication) => item.id?.toString()}
+        showsVerticalScrollIndicator={false}
         contentContainerStyle={{ gap: 12 }}
         ListHeaderComponent={
           <View style={{ gap: 32 }}>

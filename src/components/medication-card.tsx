@@ -4,23 +4,32 @@ import { SIZE } from "../../constants";
 import { scheduleNotification } from "../utilities";
 import { useEffect } from "react";
 
-const MedicationCard = ({ item }: { item: Medication }) => {
+const MedicationCard = ({
+  item,
+  borderColor,
+  miniCardBackgroundColor,
+}: {
+  item: Medication;
+  borderColor: string;
+  miniCardBackgroundColor: string;
+}) => {
   const title = item.name;
   const body = item.treatment;
-  const triggerTime = 20;
+  const triggerTime = 10;
+  const sound = "../../assets/sounds/notification-sound1.mp3";
 
-  useEffect(() => {
-    const handleScheduleNotification = async () => {
-      await scheduleNotification(title, body, triggerTime);
-    };
+  // useEffect(() => {
+  //   const handleScheduleNotification = async () => {
+  //     await scheduleNotification(title, body, triggerTime, sound);
+  //   };
 
-    handleScheduleNotification();
-  }, []);
+  //   handleScheduleNotification();
+  // }, []);
 
   return (
     <Pressable
       style={{
-        borderColor: item.color,
+        borderColor: borderColor,
         borderWidth: 2,
         height: 125,
         borderRadius: 10,
@@ -34,7 +43,7 @@ const MedicationCard = ({ item }: { item: Medication }) => {
           style={{
             width: 2,
             height: 38,
-            backgroundColor: item.color,
+            backgroundColor: borderColor,
           }}
         />
 
@@ -62,7 +71,7 @@ const MedicationCard = ({ item }: { item: Medication }) => {
 
       <View
         style={{
-          backgroundColor: item.color,
+          backgroundColor: miniCardBackgroundColor,
           borderRadius: 24,
           paddingVertical: 8,
           paddingHorizontal: 16,

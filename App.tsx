@@ -9,38 +9,14 @@ import { Provider } from "react-redux";
 import { store } from "./src/redux/store";
 import Toast from "react-native-toast-message";
 import * as Notifications from "expo-notifications";
-import * as TaskManager from "expo-task-manager";
-
-const info = { title: "Wakeup", body: "Wake up now" };
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
     shouldShowAlert: true,
     shouldPlaySound: true,
-    shouldSetBadge: true,
+    shouldSetBadge: false,
   }),
 });
-
-// TaskManager.defineTask(
-//   "backgroundNotificationTask",
-//   async ({ data, error }) => {
-//     if (error) {
-//       return;
-//     }
-
-//     if (data) {
-//       const { title, body } = data;
-
-//       //@ts-ignore
-//       await Notifications.scheduleNotificationAsync({
-//         content: {
-//           title,
-//           body,
-//         },
-//       });
-//     }
-//   }
-// );
 
 SplashScreen.preventAutoHideAsync();
 
@@ -55,17 +31,6 @@ const App = () => {
       background: "white",
     },
   };
-
-  // useEffect(() => {
-  //   const backgroundSubscription =
-  //     Notifications.addNotificationReceivedListener((notification) => {
-  //       setNotification(notification);
-  //     });
-
-  //   return () => {
-  //     Notifications.removeNotificationSubscription(backgroundSubscription);
-  //   };
-  // }, []);
 
   useEffect(() => {
     const prepareApp = async () => {

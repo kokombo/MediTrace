@@ -5,6 +5,7 @@ import {
   Modal,
   SafeAreaView,
   TextInput,
+  Alert,
 } from "react-native";
 import { useState } from "react";
 import { MedicationModal } from "../../type";
@@ -12,6 +13,10 @@ import { COLORS, PADDING } from "../../constants";
 import { BlueButton, Select, CombinedDropdownInput } from "../components";
 import { ScrollView } from "react-native-gesture-handler";
 import * as Notifications from "expo-notifications";
+import { useDispatch } from "react-redux";
+import { DispatchType } from "../redux/store";
+import { setNotification } from "../redux/slices/notification-slice";
+import { requestPermissionsAsync } from "../utilities";
 
 const AddMedicationDetails = ({
   modalVisible,
@@ -19,17 +24,32 @@ const AddMedicationDetails = ({
 }: MedicationModal) => {
   const [medicationReminderInfo, setMedicationReminderInfo] = useState("");
 
-  const createMedicationReminder = () => {
-    Notifications.scheduleNotificationAsync({
-      content: {
-        title: "Look at that notification",
-        body: "I'm so proud of myself!",
-      },
-      trigger: {
-        seconds: 60 * 20,
-        repeats: true,
-      },
-    });
+  const dispatch: DispatchType = useDispatch();
+
+  const createMedicationReminder = async () => {
+    const permission = await requestPermissionsAsync();
+
+    if (permission.granted) {
+      await Notifications.scheduleNotificationAsync({
+        content: {
+          title: "Look at that notification",
+          body: "I'm so proud of myself!",
+          sound: "../../assets/sounds/notification-sound4.wav",
+        },
+        trigger: {
+          seconds: 5,
+        },
+      })
+        .then((res) => {
+          dispatch(setNotification(res));
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } else {
+      Alert.alert("Permission is needed to set reminder");
+    }
+    closeModal();
   };
 
   return (
@@ -108,7 +128,10 @@ const AddMedicationDetails = ({
               </View>
             </View>
 
-            <BlueButton label="Create Reminder" onPress={() => {}} />
+            <BlueButton
+              label="Create Reminder"
+              onPress={async () => await createMedicationReminder()}
+            />
           </View>
         </ScrollView>
       </SafeAreaView>

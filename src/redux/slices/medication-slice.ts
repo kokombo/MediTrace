@@ -12,14 +12,41 @@ const initialState: InitialState = {
       time: "2",
       name: "Paracetamol",
       treatment: "headache",
-      color: "red",
     },
+
     {
       id: "2",
       time: "30",
       name: "Novagin",
       treatment: "Stomach ache",
-      color: "blue",
+    },
+
+    {
+      id: "3",
+      time: "2",
+      name: "Paracetamol",
+      treatment: "headache",
+    },
+
+    {
+      id: "4",
+      time: "30",
+      name: "Novagin",
+      treatment: "Stomach ache",
+    },
+
+    {
+      id: "5",
+      time: "2",
+      name: "Paracetamol",
+      treatment: "headache",
+    },
+
+    {
+      id: "6",
+      time: "30",
+      name: "Novagin",
+      treatment: "Stomach ache",
     },
   ],
 };

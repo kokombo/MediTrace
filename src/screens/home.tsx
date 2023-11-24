@@ -6,8 +6,25 @@ import { useModal } from "../hooks";
 import { useSelector } from "react-redux";
 import { StateType } from "../redux/store";
 import MedicationList from "../components/medication-list";
+import * as Notifications from "expo-notifications";
+import { useEffect } from "react";
 
 const Home = () => {
+  const { data: notifications } = useSelector(
+    (state: StateType) => state.notification
+  );
+
+  useEffect(() => {
+    const backgroundSubscription =
+      Notifications.addNotificationReceivedListener((notification) => {
+        console.log("notification received", notification);
+      });
+
+    return () => {
+      Notifications.removeNotificationSubscription(backgroundSubscription);
+    };
+  }, [notifications]);
+
   const {
     addMedicationModalVisible,
     closeAddMedicationModal,
@@ -29,8 +46,8 @@ const Home = () => {
               width: 103,
               alignSelf: "flex-end",
               position: "absolute",
-              bottom: 60,
-              right: 15,
+              bottom: 50,
+              right: 20,
             }}
           >
             <BlueButton

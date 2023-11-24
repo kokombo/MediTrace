@@ -31,15 +31,20 @@
       [
         "expo-image-picker",
         {
-          "photosPermission": "The app accesses your photos to let you share them with your friends."
+          "photosPermission": "The app accesses your photos to upload a profile image."
         }
       ],
       [
         "expo-notifications",
         {
-          "icon": "./local/assets/notification-icon.png",
+          "icon": "./assets/icons/profilepicture.png",
           "color": "#ffffff",
-          "sounds": ["./assets/sounds/notification-sound1.mp3"]
+          "sounds": [
+            "./assets/sounds/notification-sound1.mp3",
+            "./assets/sounds/notification-sound2.mp3",
+            "./assets/sounds/notification-sound4.wav",
+            "./assets/sounds/notification-sound5.wav"
+          ]
         }
       ]
     ]

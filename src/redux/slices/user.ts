@@ -99,7 +99,7 @@ export const uploadProfilePicture = createAsyncThunk(
     formData.append("file", file);
 
     return axios
-      .patch(`${BASE_URL}/upload`, formData, {
+      .patch("https://meditrace.onrender.com/upload", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,

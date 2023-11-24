@@ -15,7 +15,10 @@ type User = {
 
 type Button = {
   label: string;
-  onPress: () => void | NavigationProp<ReactNavigation.RootParamList>;
+  onPress: () =>
+    | void
+    | NavigationProp<ReactNavigation.RootParamList>
+    | Promise<void>;
   icon?: ImageSourcePropType;
   disabled?: boolean;
 };
@@ -76,7 +79,6 @@ type Medication = {
   time: string;
   name: string;
   treatment: string;
-  color: string;
 };
 
 type ErrorResponse = {
@@ -86,4 +88,8 @@ type ErrorResponse = {
 type Patient = {
   id: string;
   name: string;
+};
+
+type Notification = {
+  notification: string;
 };
