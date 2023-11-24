@@ -22,12 +22,12 @@ export const useSelectProfilePicture = () => {
 
       const file: File = {
         //@ts-ignore
-        uri: selectedImage,
-        name: selectedImage,
+        uri: res.assets[0].uri,
+        name: res.assets[0].uri,
         type: "image/jpeg",
       };
 
-      if (selectedImage) {
+      if (res.assets[0].uri) {
         dispatch(uploadProfilePicture(file));
       }
     }

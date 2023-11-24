@@ -51,7 +51,7 @@ export const createAccount = createAsyncThunk(
     return await axios
       .post(`${BASE_URL}/register`, userData)
       .then((res) => {
-        return res.data.user_data;
+        return res.data.userData;
       })
       .catch((error) => {
         if (error.response && error.response.data) {
@@ -72,7 +72,7 @@ export const signIn = createAsyncThunk(
     return await axios
       .post(`${BASE_URL}/login`, userData)
       .then((res) => {
-        return res.data.user_data;
+        return res.data.userData;
       })
       .catch((error) => {
         if (error.response && error.response.data) {
@@ -89,7 +89,7 @@ export const signIn = createAsyncThunk(
 
 export const uploadProfilePicture = createAsyncThunk(
   "user/uploadProfilePicture",
-  async (file: File, { getState }) => {
+  async (file: File, { getState, rejectWithValue }) => {
     const state = getState() as StateType;
 
     const token = state.user.user?.accessToken;
@@ -107,6 +107,16 @@ export const uploadProfilePicture = createAsyncThunk(
       })
       .then((res) => {
         return res.data.picture_url;
+      })
+      .catch((error) => {
+        if (error.response && error.response.data) {
+          const errorResponse: ErrorResponse = error.response.data;
+          return rejectWithValue(
+            errorResponse.message || "An error occured, please try again"
+          );
+        } else {
+          return rejectWithValue("An error occurred, please try again");
+        }
       });
   }
 );

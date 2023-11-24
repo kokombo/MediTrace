@@ -1,26 +1,54 @@
-import { Text } from "react-native";
-import { useEffect } from "react";
-import { clearErrorMessage } from "../redux/slices/user";
+import { Pressable, Text, View, StyleSheet } from "react-native";
 import { useDispatch } from "react-redux";
 import { DispatchType } from "../redux/store";
-import { useHaptic } from "../hooks";
+import { COLORS, SIZE } from "../../constants";
 
-const Error = ({ message }: { message: string }) => {
+const Error = ({
+  message,
+  onPress,
+}: {
+  message: string;
+  onPress: () => void;
+}) => {
   const dispatch: DispatchType = useDispatch();
 
-  const { triggerVibration } = useHaptic();
+  return (
+    <View style={styles.body}>
+      <View style={styles.message_wrapper}>
+        <Text>{message} </Text>
 
-  if (message) [triggerVibration()];
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      dispatch(clearErrorMessage(message));
-    }, 5000);
-
-    return () => clearTimeout(timer);
-  }, [message]);
-
-  return <Text style={{ color: "red" }}>{message} </Text>;
+        <Pressable style={styles.button} onPress={onPress}>
+          <Text style={styles.button_label}>Try again</Text>
+        </Pressable>
+      </View>
+    </View>
+  );
 };
 
 export default Error;
+
+const styles = StyleSheet.create({
+  body: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+
+  button: {
+    width: 100,
+    height: 32,
+    alignItems: "center",
+    justifyContent: "center",
+    borderRadius: 100,
+    backgroundColor: COLORS.blue,
+  },
+
+  button_label: {
+    color: COLORS.white,
+    fontSize: SIZE.xsm,
+  },
+
+  message_wrapper: {
+    gap: 4,
+  },
+});

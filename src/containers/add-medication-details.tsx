@@ -8,12 +8,7 @@ import {
 } from "react-native";
 import { MedicationModal } from "../../type";
 import { COLORS, PADDING } from "../../constants";
-import {
-  BlueButton,
-  Select,
-  CombinedDropdownInput,
-  MedicationCard,
-} from "../components";
+import { BlueButton, Select, CombinedDropdownInput } from "../components";
 import { ScrollView } from "react-native-gesture-handler";
 
 const AddMedicationDetails = ({

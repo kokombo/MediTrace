@@ -24,7 +24,7 @@ const Onboarding = () => {
 
           <Text style={styles.h2}>
             Effortlessly manage your medication regimens with ease and Simplify
-            Your Health Journey.
+            your health journey.
           </Text>
         </View>
 

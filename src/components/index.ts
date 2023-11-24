@@ -21,6 +21,8 @@ import AuthError from "./auth-error";
 import Select from "./select";
 import CombinedDropdownInput from "./combined-dropdown-input";
 import MedicationCard from "./medication-card";
+import PatientCard from "./patient-card";
+import Loading from "./loading";
 
 export {
   BlueButton,
@@ -46,4 +48,6 @@ export {
   Select,
   CombinedDropdownInput,
   MedicationCard,
+  PatientCard,
+  Loading,
 };

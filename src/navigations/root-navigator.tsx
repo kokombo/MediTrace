@@ -1,5 +1,6 @@
 import { createStackNavigator } from "@react-navigation/stack";
 import {
+  DoctorHomeScreen,
   EmailVerificationSuccess,
   Home,
   Notification,
@@ -102,6 +103,18 @@ const RootNavigator = () => {
           headerLeft: () => <GoBack />,
 
           title: "Notifications",
+
+          headerStyle: { height: 100 },
+        }}
+      />
+
+      <Stack.Screen
+        name="doctorHome"
+        component={DoctorHomeScreen}
+        options={{
+          headerLeftContainerStyle: { display: "none" },
+
+          title: "",
 
           headerStyle: { height: 100 },
         }}

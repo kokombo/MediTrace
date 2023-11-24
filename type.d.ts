@@ -80,3 +80,8 @@ type Medication = {
 type ErrorResponse = {
   message: string;
 };
+
+type Patient = {
+  id: string;
+  name: string;
+};
