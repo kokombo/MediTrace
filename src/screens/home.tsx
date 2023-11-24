@@ -1,48 +1,61 @@
-import { StyleSheet, TextInput, View } from "react-native";
-import {
-  DormantSearchFrame,
-  EmptyMedicationList,
-  BlueButton,
-} from "../components";
+import { StyleSheet, View } from "react-native";
+import { EmptyMedicationList, BlueButton } from "../components";
 import { PADDING, icon } from "../../constants";
-import { AddMedicationDetails, SearchMedication } from "../containers";
+import { AddMedicationDetails } from "../containers";
 import { useModal } from "../hooks";
+import { useSelector } from "react-redux";
+import { StateType } from "../redux/store";
+import MedicationList from "../components/medication-list";
 
 const Home = () => {
   const {
     addMedicationModalVisible,
     closeAddMedicationModal,
     openAddMedicationModal,
-    openSearchModal,
-    closeSearchModal,
-    searchModalVisible,
   } = useModal();
+
+  const { data: medication } = useSelector(
+    (state: StateType) => state.medication
+  );
 
   return (
     <View style={styles.body}>
-      <>
-        <DormantSearchFrame onPress={() => openSearchModal()} />
+      {medication?.length > 1 ? (
+        <>
+          <MedicationList />
 
-        <EmptyMedicationList />
+          <View
+            style={{
+              width: 103,
+              alignSelf: "flex-end",
+              position: "absolute",
+              bottom: 60,
+              right: 15,
+            }}
+          >
+            <BlueButton
+              label="Add"
+              icon={icon.pill}
+              onPress={() => openAddMedicationModal()}
+            />
+          </View>
+        </>
+      ) : (
+        <View style={styles.empty_list}>
+          <EmptyMedicationList />
 
-        <BlueButton
-          label="Add Medication"
-          icon={icon.pill}
-          onPress={() => openAddMedicationModal()}
-        />
-      </>
+          <BlueButton
+            label="Add Medication"
+            icon={icon.pill}
+            onPress={() => openAddMedicationModal()}
+          />
+        </View>
+      )}
 
-      <>
-        <AddMedicationDetails
-          modalVisible={addMedicationModalVisible}
-          closeModal={closeAddMedicationModal}
-        />
-
-        <SearchMedication
-          modalVisible={searchModalVisible}
-          closeModal={closeSearchModal}
-        />
-      </>
+      <AddMedicationDetails
+        modalVisible={addMedicationModalVisible}
+        closeModal={closeAddMedicationModal}
+      />
     </View>
   );
 };
@@ -53,8 +66,13 @@ const styles = StyleSheet.create({
   body: {
     flex: 1,
     paddingHorizontal: PADDING.normal,
-    justifyContent: "space-between",
-    paddingBottom: 100,
-    paddingTop: 20,
+  },
+
+  empty_list: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    gap: 105,
+    marginTop: 20,
   },
 });

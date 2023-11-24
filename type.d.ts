@@ -72,6 +72,8 @@ type SelectType = {
 };
 
 type Medication = {
+  id: string;
+  time: string;
   name: string;
   treatment: string;
   color: string;

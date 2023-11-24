@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, FlatList, ListRenderItem } from "react-native";
-import { PADDING } from "../../constants";
+import { COLORS, PADDING, SIZE } from "../../constants";
 import { Patient } from "../../type";
-import { PatientCard } from "../components";
+import { PatientCard, SearchFrame } from "../components";
 
 const data: Patient[] = [
   { id: "1", name: "Bola Tinubu" },
@@ -21,6 +21,20 @@ const DoctorHomeScreen = () => {
         keyExtractor={(item: Patient) => item?.id.toString()}
         showsVerticalScrollIndicator={false}
         contentContainerStyle={{ gap: 16 }}
+        ListHeaderComponent={
+          <View>
+            <SearchFrame value="" onChangeText={() => {}} />
+            <Text
+              style={{
+                fontSize: SIZE.mdl,
+                fontWeight: "bold",
+                color: COLORS.black,
+              }}
+            >
+              Patients
+            </Text>
+          </View>
+        }
       />
     </View>
   );

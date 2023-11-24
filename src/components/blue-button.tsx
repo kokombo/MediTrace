@@ -30,6 +30,7 @@ export default BlueButton;
 const styles = StyleSheet.create({
   button: {
     height: 56,
+    width: "100%",
 
     alignItems: "center",
     justifyContent: "center",

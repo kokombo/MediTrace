@@ -1,31 +1,54 @@
 import { FlatList, StyleSheet, Text, View, ListRenderItem } from "react-native";
-import { MedicationData } from "../../type";
-import BlueButton from "./blue-button";
-
-const data: MedicationData[] = [];
+import { Medication } from "../../type";
+import MedicationCard from "./medication-card";
+import DormantSearchFrame from "./dormant-search-frame";
+import { useModal } from "../hooks";
+import { useSelector } from "react-redux";
+import { StateType } from "../redux/store";
+import { SearchMedication } from "../containers";
+import { SIZE } from "../../constants";
 
 const MedicationList = () => {
-  const renderMedicationCard: ListRenderItem<MedicationData> = ({ item }) => (
-    <Text></Text>
+  const { openSearchModal, searchModalVisible, closeSearchModal } = useModal();
+
+  const { data } = useSelector((state: StateType) => state.medication);
+
+  const renderMedicationCard: ListRenderItem<Medication> = ({ item }) => (
+    <MedicationCard item={item} />
   );
 
   return (
-    <View>
-      <Text>MedicationList</Text>
-
+    <View style={styles.body}>
       <FlatList
         data={data}
         renderItem={renderMedicationCard}
-        keyExtractor={(item: MedicationData) => item.id?.toString()}
+        keyExtractor={(item: Medication) => item.id?.toString()}
+        contentContainerStyle={{ gap: 12 }}
+        ListHeaderComponent={
+          <View style={{ gap: 32 }}>
+            <DormantSearchFrame onPress={() => openSearchModal()} />
+
+            <Text style={{ fontSize: SIZE.base, fontWeight: "600" }}>
+              Upcoming Medication Reminders
+            </Text>
+          </View>
+        }
       />
 
-      <View style={{ width: 103, alignSelf: "flex-end" }}>
-        <BlueButton label="Add" onPress={() => {}} />
-      </View>
+      <SearchMedication
+        modalVisible={searchModalVisible}
+        closeModal={closeSearchModal}
+      />
     </View>
   );
 };
 
 export default MedicationList;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  body: {
+    flex: 1,
+    gap: 32,
+    paddingVertical: 24,
+  },
+});

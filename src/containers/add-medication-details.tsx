@@ -6,15 +6,32 @@ import {
   SafeAreaView,
   TextInput,
 } from "react-native";
+import { useState } from "react";
 import { MedicationModal } from "../../type";
 import { COLORS, PADDING } from "../../constants";
 import { BlueButton, Select, CombinedDropdownInput } from "../components";
 import { ScrollView } from "react-native-gesture-handler";
+import * as Notifications from "expo-notifications";
 
 const AddMedicationDetails = ({
   modalVisible,
   closeModal,
 }: MedicationModal) => {
+  const [medicationReminderInfo, setMedicationReminderInfo] = useState("");
+
+  const createMedicationReminder = () => {
+    Notifications.scheduleNotificationAsync({
+      content: {
+        title: "Look at that notification",
+        body: "I'm so proud of myself!",
+      },
+      trigger: {
+        seconds: 60 * 20,
+        repeats: true,
+      },
+    });
+  };
+
   return (
     <Modal
       visible={modalVisible}

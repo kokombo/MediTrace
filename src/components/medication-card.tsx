@@ -1,12 +1,26 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { Medication } from "../../type";
-import { COLORS, SIZE } from "../../constants";
+import { SIZE } from "../../constants";
+import { scheduleNotification } from "../utilities";
+import { useEffect } from "react";
 
-const MedicationCard = ({ treatment, name, color }: Medication) => {
+const MedicationCard = ({ item }: { item: Medication }) => {
+  const title = item.name;
+  const body = item.treatment;
+  const triggerTime = 20;
+
+  useEffect(() => {
+    const handleScheduleNotification = async () => {
+      await scheduleNotification(title, body, triggerTime);
+    };
+
+    handleScheduleNotification();
+  }, []);
+
   return (
     <Pressable
       style={{
-        borderColor: color,
+        borderColor: item.color,
         borderWidth: 2,
         height: 125,
         borderRadius: 10,
@@ -20,7 +34,7 @@ const MedicationCard = ({ treatment, name, color }: Medication) => {
           style={{
             width: 2,
             height: 38,
-            backgroundColor: color,
+            backgroundColor: item.color,
           }}
         />
 
@@ -32,7 +46,7 @@ const MedicationCard = ({ treatment, name, color }: Medication) => {
               textTransform: "capitalize",
             }}
           >
-            {treatment}
+            {item.treatment}
           </Text>
 
           <Text
@@ -41,14 +55,14 @@ const MedicationCard = ({ treatment, name, color }: Medication) => {
               fontSize: SIZE.sm,
             }}
           >
-            {name}
+            {item.name}
           </Text>
         </View>
       </View>
 
       <View
         style={{
-          backgroundColor: color,
+          backgroundColor: item.color,
           borderRadius: 24,
           paddingVertical: 8,
           paddingHorizontal: 16,

@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import userReducer from "./slices/user";
 import verifyEmailSlice from "./slices/verify-email-slice";
+import medicationSlice from "./slices/medication-slice";
 
 export const store = configureStore({
   reducer: {
     user: userReducer,
     verification: verifyEmailSlice,
+    medication: medicationSlice,
   },
 
   middleware: (getDefaultMiddleware) =>
