@@ -5,7 +5,7 @@ import { StateType } from "../store";
 
 const BASE_URL = "https://meditrace.onrender.com/api/v1/auth";
 
-type UserType = {
+type InitialState = {
   user: User | null;
   status: {
     register: "idle" | "loading" | "success" | "failed";
@@ -33,7 +33,7 @@ type UserLoginData = {
   password: string;
 };
 
-const initialState: UserType = {
+const initialState: InitialState = {
   user: null,
   status: {
     login: "idle",
