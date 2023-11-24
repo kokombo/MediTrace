@@ -10,10 +10,12 @@ type UserType = {
   status: {
     register: "idle" | "loading" | "success" | "failed";
     login: "idle" | "loading" | "success" | "failed";
+    uploadProfilePicture: "idle" | "loading" | "success" | "failed";
   };
   error: {
     registerError: string | null;
     loginError: string | null;
+    uploadProfilePictureError: string | null;
   };
   isErrorActive: boolean;
   picture: string | null;
@@ -36,10 +38,12 @@ const initialState: UserType = {
   status: {
     login: "idle",
     register: "idle",
+    uploadProfilePicture: "idle",
   },
   error: {
     loginError: null,
     registerError: null,
+    uploadProfilePictureError: null,
   },
   isErrorActive: false,
   picture: "",
@@ -126,7 +130,11 @@ const userSlice = createSlice({
   initialState,
   reducers: {
     clearErrorMessage: (state, action) => {
-      state.error = { registerError: "", loginError: "" };
+      state.error = {
+        registerError: "",
+        loginError: "",
+        uploadProfilePictureError: "",
+      };
       state.isErrorActive = false;
     },
   },
@@ -156,8 +164,17 @@ const userSlice = createSlice({
         state.status.login = "failed";
         state.error.loginError = action.payload as string;
       })
+      .addCase(uploadProfilePicture.pending, (state, action) => {
+        state.status.uploadProfilePicture = "loading";
+      })
       .addCase(uploadProfilePicture.fulfilled, (state, action) => {
+        state.status.uploadProfilePicture = "success";
         state.picture = action.payload;
+        state.error.uploadProfilePictureError = null;
+      })
+      .addCase(uploadProfilePicture.rejected, (state, action) => {
+        state.status.uploadProfilePicture = "failed";
+        state.error.uploadProfilePictureError = action.payload as string;
       });
   },
 });

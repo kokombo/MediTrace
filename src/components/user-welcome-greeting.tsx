@@ -6,8 +6,6 @@ import { StateType } from "../redux/store";
 const UserWelcomeGreeting = () => {
   const { user } = useSelector((state: StateType) => state.user);
 
-  console.log(user?.accessToken);
-
   return (
     <>
       {user && (

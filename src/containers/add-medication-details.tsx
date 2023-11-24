@@ -13,8 +13,8 @@ import { COLORS, PADDING } from "../../constants";
 import { BlueButton, Select, CombinedDropdownInput } from "../components";
 import { ScrollView } from "react-native-gesture-handler";
 import * as Notifications from "expo-notifications";
-import { useDispatch } from "react-redux";
-import { DispatchType } from "../redux/store";
+import { useDispatch, useSelector } from "react-redux";
+import { DispatchType, StateType } from "../redux/store";
 import { setNotification } from "../redux/slices/notification-slice";
 import { requestPermissionsAsync } from "../utilities";
 
@@ -24,6 +24,8 @@ const AddMedicationDetails = ({
 }: MedicationModal) => {
   const [medicationReminderInfo, setMedicationReminderInfo] = useState("");
 
+  const { user } = useSelector((state: StateType) => state.user);
+
   const dispatch: DispatchType = useDispatch();
 
   const createMedicationReminder = async () => {
@@ -32,8 +34,8 @@ const AddMedicationDetails = ({
     if (permission.granted) {
       await Notifications.scheduleNotificationAsync({
         content: {
-          title: "Look at that notification",
-          body: "I'm so proud of myself!",
+          title: `Hey ${user?.first_name}!, it's time to use your medication`,
+          body: "We hope you get well soon, but for now please don't miss your medication. Go use it now!",
           sound: "../../assets/sounds/notification-sound4.wav",
         },
         trigger: {

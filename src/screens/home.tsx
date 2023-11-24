@@ -10,20 +10,14 @@ import * as Notifications from "expo-notifications";
 import { useEffect } from "react";
 
 const Home = () => {
-  const { data: notifications } = useSelector(
-    (state: StateType) => state.notification
-  );
-
   useEffect(() => {
     const backgroundSubscription =
-      Notifications.addNotificationReceivedListener((notification) => {
-        console.log("notification received", notification);
-      });
+      Notifications.addNotificationReceivedListener((notification) => {});
 
     return () => {
       Notifications.removeNotificationSubscription(backgroundSubscription);
     };
-  }, [notifications]);
+  }, []);
 
   const {
     addMedicationModalVisible,
@@ -31,13 +25,13 @@ const Home = () => {
     openAddMedicationModal,
   } = useModal();
 
-  const { data: medication } = useSelector(
+  const { data: medications } = useSelector(
     (state: StateType) => state.medication
   );
 
   return (
     <View style={styles.body}>
-      {medication?.length > 1 ? (
+      {medications?.length > 1 ? (
         <>
           <MedicationList />
 

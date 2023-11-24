@@ -3,6 +3,8 @@ import { Medication } from "../../type";
 import { SIZE } from "../../constants";
 import { scheduleNotification } from "../utilities";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { StateType } from "../redux/store";
 
 const MedicationCard = ({
   item,
@@ -13,18 +15,23 @@ const MedicationCard = ({
   borderColor: string;
   miniCardBackgroundColor: string;
 }) => {
-  const title = item.name;
-  const body = item.treatment;
+  const { user } = useSelector((state: StateType) => state.user);
+
+  const title = `Hey ${
+    user?.first_name
+  }, it's time to use ${item.name.toUpperCase()}!`;
+  const body =
+    "We hope you get well soon, but for now, please don't miss your medication. GO USE IT NOW!";
   const triggerTime = 10;
   const sound = "../../assets/sounds/notification-sound1.mp3";
 
-  // useEffect(() => {
-  //   const handleScheduleNotification = async () => {
-  //     await scheduleNotification(title, body, triggerTime, sound);
-  //   };
+  useEffect(() => {
+    const handleScheduleNotification = async () => {
+      await scheduleNotification(title, body, triggerTime, sound);
+    };
 
-  //   handleScheduleNotification();
-  // }, []);
+    handleScheduleNotification();
+  }, []);
 
   return (
     <Pressable

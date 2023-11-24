@@ -22,7 +22,6 @@ SplashScreen.preventAutoHideAsync();
 
 const App = () => {
   const [appIsReady, setAppIsReady] = useState<boolean>(false);
-  const [notification, setNotification] = useState(false);
 
   const AppTheme = {
     ...DefaultTheme,
