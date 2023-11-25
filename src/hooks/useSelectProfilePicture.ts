@@ -1,12 +1,9 @@
-import { useState } from "react";
 import * as ImagePicker from "expo-image-picker";
 import { useDispatch } from "react-redux";
 import { uploadProfilePicture } from "../redux/slices/user";
 import { DispatchType } from "../redux/store";
 
 export const useSelectProfilePicture = () => {
-  const [selectedImage, setSelectedImage] = useState("");
-
   const dispatch: DispatchType = useDispatch();
 
   const pickImage = async () => {
@@ -17,8 +14,6 @@ export const useSelectProfilePicture = () => {
     });
 
     if (!res.canceled) {
-      setSelectedImage(res.assets[0].uri);
-
       if (res.assets[0].uri) {
         const file: File = {
           // @ts-ignore
@@ -32,5 +27,5 @@ export const useSelectProfilePicture = () => {
     }
   };
 
-  return { pickImage, selectedImage };
+  return { pickImage };
 };

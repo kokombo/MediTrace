@@ -6,11 +6,17 @@ import {
   SafeAreaView,
   TextInput,
   Alert,
+  Pressable,
 } from "react-native";
 import { useState } from "react";
 import { MedicationModal } from "../../type";
-import { COLORS, PADDING } from "../../constants";
-import { BlueButton, Select, CombinedDropdownInput } from "../components";
+import { COLORS, PADDING, SIZE } from "../../constants";
+import {
+  BlueButton,
+  Select,
+  CombinedDropdownInput,
+  TimePicker,
+} from "../components";
 import { ScrollView } from "react-native-gesture-handler";
 import * as Notifications from "expo-notifications";
 import { useDispatch, useSelector } from "react-redux";
@@ -18,15 +24,47 @@ import { DispatchType, StateType } from "../redux/store";
 import { setNotification } from "../redux/slices/notification-slice";
 import { requestPermissionsAsync } from "../utilities";
 
+const dummyFreqData = [
+  { value: "1", label: "1" },
+  { value: "2", label: "2" },
+  { value: "3", label: "3" },
+  { value: "4", label: "4" },
+  { value: "5", label: "5" },
+];
+
+const dummyDurData = [
+  { value: "1", label: "1" },
+  { value: "2", label: "2" },
+  { value: "3", label: "3" },
+  { value: "4", label: "4" },
+  { value: "5", label: "5" },
+  { value: "6", label: "6" },
+  { value: "7", label: "7" },
+  { value: "8", label: "8" },
+  { value: "9", label: "9" },
+];
+
 const AddMedicationDetails = ({
   modalVisible,
   closeModal,
 }: MedicationModal) => {
   const [medicationReminderInfo, setMedicationReminderInfo] = useState("");
+  const [selectedDurationOption, setSelectedDurationOption] = useState(1);
+  const [selectedFrequencyOption, setSelectedFrequencyOption] = useState(1);
 
   const { user } = useSelector((state: StateType) => state.user);
 
   const dispatch: DispatchType = useDispatch();
+
+  const renderAlarmCards = () => {
+    const Alarms: React.JSX.Element[] = [];
+
+    for (let i = 0; i < selectedFrequencyOption; i++) {
+      Alarms.push(<TimePicker key={i} />);
+    }
+
+    return Alarms;
+  };
 
   const createMedicationReminder = async () => {
     const permission = await requestPermissionsAsync();
@@ -64,8 +102,12 @@ const AddMedicationDetails = ({
       <SafeAreaView style={{ flex: 1 }}>
         <ScrollView style={styles.modal_body}>
           <View style={styles.form}>
+            <Pressable style={styles.close_form} onPress={closeModal}>
+              <Text>Close</Text>
+            </Pressable>
+
             <View style={{ gap: 16 }}>
-              <Text>Drug name</Text>
+              <Text style={styles.label}>Drug name</Text>
               <TextInput
                 style={styles.input}
                 placeholder="e.g. Amatem Fort Artemether Lumefantrine"
@@ -73,61 +115,44 @@ const AddMedicationDetails = ({
               />
             </View>
 
-            <View style={{ gap: 16 }}>
-              <Text>Drug purpose</Text>
-              <TextInput
-                style={styles.input}
-                placeholder="e.g. Malaria medication"
-                placeholderTextColor={COLORS.placeholder}
-              />
-            </View>
-
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <CombinedDropdownInput
-                label="Duration"
-                width={100}
-                data1={[
-                  { value: "a", label: "Days" },
-                  { value: "b", label: "b" },
-                  { value: "c", label: "c" },
-                ]}
-                data2={[
-                  { value: "1", label: "1" },
-                  { value: "2", label: "2" },
-                  { value: "3", label: "3" },
-                ]}
-              />
-
+            <View
+              style={{
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+              }}
+            >
               <View style={{ gap: 16 }}>
-                <Text>Drug form</Text>
-                <Select width={150} data={[{ value: "b", label: "tablet" }]} />
-              </View>
-            </View>
+                <Text style={styles.label}>Duration (in days)</Text>
 
-            <View style={{ flexDirection: "row", alignItems: "center" }}>
-              <CombinedDropdownInput
-                label="Dosage"
-                width={100}
-                data1={[
-                  { value: "a", label: "mg" },
-                  { value: "b", label: "b" },
-                  { value: "c", label: "c" },
-                ]}
-                data2={[
-                  { value: "a", label: "10" },
-                  { value: "b", label: "20" },
-                  { value: "c", label: "30" },
-                ]}
-              />
-
-              <View style={{ gap: 16 }}>
-                <Text>Frequency (daily) </Text>
-                <TextInput
-                  style={styles.input}
-                  placeholder="e.g. 1"
-                  placeholderTextColor={COLORS.placeholder}
+                <Select
+                  width={150}
+                  data={dummyDurData}
+                  selectedOption={selectedDurationOption}
+                  setSelectedOption={setSelectedDurationOption}
                 />
               </View>
+
+              <View style={{ gap: 16 }}>
+                <Text style={styles.label}>
+                  Frequency (No of times per day)
+                </Text>
+
+                <Select
+                  width={150}
+                  data={dummyFreqData}
+                  selectedOption={selectedFrequencyOption}
+                  setSelectedOption={setSelectedFrequencyOption}
+                />
+              </View>
+            </View>
+
+            <View style={{ gap: 16 }}>
+              <Text style={styles.label}>
+                Select medication notification times for each day
+              </Text>
+
+              {renderAlarmCards()}
             </View>
 
             <BlueButton
@@ -154,11 +179,25 @@ const styles = StyleSheet.create({
   input: {
     height: 50,
     backgroundColor: COLORS.cloud,
-    borderRadius: 15,
+    borderRadius: 10,
     padding: 15,
+    width: "100%",
   },
 
   form: {
     gap: 20,
+  },
+
+  alarm_card: {
+    width: 255,
+  },
+
+  close_form: {
+    alignSelf: "flex-end",
+  },
+
+  label: {
+    fontSize: SIZE.sm,
+    fontWeight: "500",
   },
 });

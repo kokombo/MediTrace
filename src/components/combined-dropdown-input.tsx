@@ -28,9 +28,9 @@ const CombinedDropdownInput = ({
           gap: -10,
         }}
       >
-        <Select data={data1} width={width} />
+        {/* <Select data={data1} width={width} />
 
-        <Select data={data2} width={width} />
+        <Select data={data2} width={width} /> */}
       </View>
     </View>
   );

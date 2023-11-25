@@ -36,6 +36,7 @@ const CreateAccount = () => {
   const navigation: NavigationProp<ParamListBase> = useNavigation();
 
   const dispatch: DispatchType = useDispatch();
+
   const { status, error } = useSelector((state: StateType) => state.user);
 
   const handleInputChange = (name: string, value: string) => {

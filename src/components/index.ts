@@ -23,6 +23,7 @@ import CombinedDropdownInput from "./combined-dropdown-input";
 import MedicationCard from "./medication-card";
 import PatientCard from "./patient-card";
 import Loading from "./loading";
+import TimePicker from "./time-picker";
 
 export {
   BlueButton,
@@ -50,4 +51,5 @@ export {
   MedicationCard,
   PatientCard,
   Loading,
+  TimePicker,
 };

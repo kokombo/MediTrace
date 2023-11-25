@@ -18,7 +18,7 @@ type InitialState = {
     uploadProfilePictureError: string | null;
   };
   isErrorActive: boolean;
-  picture: string | null;
+  picture: string;
 };
 
 type UserRegistrationData = {

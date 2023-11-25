@@ -23,7 +23,7 @@ const MedicationCard = ({
   const body =
     "We hope you get well soon, but for now, please don't miss your medication. GO USE IT NOW!";
   const triggerTime = 10;
-  const sound = "../../assets/sounds/notification-sound1.mp3";
+  const sound = "../../assets/sounds/notification-sound5.wav";
 
   useEffect(() => {
     const handleScheduleNotification = async () => {
@@ -83,6 +83,8 @@ const MedicationCard = ({
           paddingVertical: 8,
           paddingHorizontal: 16,
           width: 158,
+          alignItems: "center",
+          justifyContent: "center",
         }}
       >
         <Text style={{ fontSize: SIZE.xsm, fontWeight: "400" }}>

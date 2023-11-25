@@ -48,7 +48,7 @@ const MedicationList = () => {
             <DormantSearchFrame onPress={() => openSearchModal()} />
 
             <Text style={{ fontSize: SIZE.base, fontWeight: "600" }}>
-              Upcoming Medications Reminders
+              Upcoming Medication Reminders
             </Text>
           </View>
         }

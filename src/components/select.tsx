@@ -3,23 +3,31 @@ import { Picker } from "@react-native-picker/picker";
 import { useState } from "react";
 import { SelectType } from "../../type";
 import { COLORS, SIZE } from "../../constants";
+import { DimensionValue } from "react-native";
 
-const Select = ({ data, width }: { data: SelectType[]; width: number }) => {
-  const [selectedOption, setSelectedOption] = useState();
-
+const Select = ({
+  data,
+  width,
+  selectedOption,
+  setSelectedOption,
+}: {
+  data: SelectType[];
+  width: DimensionValue;
+  selectedOption: any;
+  setSelectedOption: (itemValue: any) => void;
+}) => {
   return (
     <Picker
       selectedValue={selectedOption}
       onValueChange={(itemValue, itemIndex) => setSelectedOption(itemValue)}
-      style={{ width: width, backgroundColor: COLORS.cloud, borderRadius: 15 }}
+      style={{ width: width, borderRadius: 15 }}
       itemStyle={{
-        color: COLORS.picker,
+        color: COLORS.black,
         fontSize: SIZE.base,
         height: 50,
         padding: 15,
-        backgroundColor: COLORS.cloud,
       }}
-      dropdownIconColor={COLORS.picker}
+      dropdownIconColor={COLORS.black}
     >
       {data?.map((item, index) => {
         return (
@@ -28,8 +36,8 @@ const Select = ({ data, width }: { data: SelectType[]; width: number }) => {
             label={item.label}
             value={item.value}
             style={{
-              color: COLORS.picker,
-              fontSize: SIZE.sm,
+              color: COLORS.black,
+              fontSize: SIZE.base,
             }}
           />
         );
