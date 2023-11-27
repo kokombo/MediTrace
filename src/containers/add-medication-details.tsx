@@ -5,44 +5,16 @@ import {
   Modal,
   SafeAreaView,
   TextInput,
-  Alert,
   Pressable,
 } from "react-native";
 import { useState } from "react";
 import { MedicationModal } from "../../type";
 import { COLORS, PADDING, SIZE } from "../../constants";
-import {
-  BlueButton,
-  Select,
-  CombinedDropdownInput,
-  TimePicker,
-} from "../components";
+import { BlueButton, Select, TimePicker } from "../components";
 import { ScrollView } from "react-native-gesture-handler";
-import * as Notifications from "expo-notifications";
 import { useDispatch, useSelector } from "react-redux";
 import { DispatchType, StateType } from "../redux/store";
-import { setNotification } from "../redux/slices/notification-slice";
-import { requestPermissionsAsync } from "../utilities";
-
-const dummyFreqData = [
-  { value: "1", label: "1" },
-  { value: "2", label: "2" },
-  { value: "3", label: "3" },
-  { value: "4", label: "4" },
-  { value: "5", label: "5" },
-];
-
-const dummyDurData = [
-  { value: "1", label: "1" },
-  { value: "2", label: "2" },
-  { value: "3", label: "3" },
-  { value: "4", label: "4" },
-  { value: "5", label: "5" },
-  { value: "6", label: "6" },
-  { value: "7", label: "7" },
-  { value: "8", label: "8" },
-  { value: "9", label: "9" },
-];
+import { DurationData, FrequencyData } from "../../constants/data";
 
 const AddMedicationDetails = ({
   modalVisible,
@@ -66,29 +38,7 @@ const AddMedicationDetails = ({
     return Alarms;
   };
 
-  const createMedicationReminder = async () => {
-    const permission = await requestPermissionsAsync();
-
-    if (permission.granted) {
-      await Notifications.scheduleNotificationAsync({
-        content: {
-          title: `Hey ${user?.first_name}!, it's time to use your medication`,
-          body: "We hope you get well soon, but for now please don't miss your medication. Go use it now!",
-          sound: "../../assets/sounds/notification-sound4.wav",
-        },
-        trigger: {
-          seconds: 5,
-        },
-      })
-        .then((res) => {
-          dispatch(setNotification(res));
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      Alert.alert("Permission is needed to set reminder");
-    }
+  const createMedicationReminder = () => {
     closeModal();
   };
 
@@ -131,7 +81,7 @@ const AddMedicationDetails = ({
 
                 <Select
                   width={150}
-                  data={dummyDurData}
+                  data={DurationData}
                   selectedOption={selectedDurationOption}
                   setSelectedOption={setSelectedDurationOption}
                 />
@@ -144,7 +94,7 @@ const AddMedicationDetails = ({
 
                 <Select
                   width={150}
-                  data={dummyFreqData}
+                  data={FrequencyData}
                   selectedOption={selectedFrequencyOption}
                   setSelectedOption={setSelectedFrequencyOption}
                 />
@@ -161,7 +111,7 @@ const AddMedicationDetails = ({
 
             <BlueButton
               label="Create Reminder"
-              onPress={async () => await createMedicationReminder()}
+              onPress={createMedicationReminder}
             />
           </View>
         </ScrollView>
