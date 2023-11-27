@@ -4,36 +4,30 @@
     "slug": "MediTrace",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "/assets/icons/meditracelogo.png",
+    "icon": "./assets/icons/meditracelogo.png",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "/assets/icons/meditracelogo.png",
+      "image": "./assets/icons/meditracelogo.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
       "infoPlist": {
-        "UIBackgroundModes": [
-          "remote-notification"
-        ]
+        "UIBackgroundModes": ["remote-notification"]
       }
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "/assets/icons/meditracelogo.png",
+        "foregroundImage": "./assets/icons/meditracelogo.png",
         "backgroundColor": "#ffffff"
       },
-      "permissions": [
-        "android.permission.RECORD_AUDIO"
-      ],
+      "permissions": ["android.permission.RECORD_AUDIO"],
       "package": "com.oluwanbowa.MediTrace"
     },
     "web": {
-      "favicon": "/assets/icons/meditracelogo.png"
+      "favicon": "./assets/icons/meditracelogo.png"
     },
     "plugins": [
       [
