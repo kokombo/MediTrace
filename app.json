@@ -42,10 +42,10 @@
           "icon": "./assets/icons/profilepicture.png",
           "color": "#ffffff",
           "sounds": [
-            "./assets/sounds/notification-sound1.mp3",
-            "./assets/sounds/notification-sound2.mp3",
-            "./assets/sounds/notification-sound4.wav",
-            "./assets/sounds/notification-sound5.wav"
+            "./assets/sounds/notificationsound1.mp3",
+            "./assets/sounds/notificationsound2.mp3",
+            "./assets/sounds/notificationsound4.wav",
+            "./assets/sounds/notificationsound5.wav"
           ]
         }
       ]

@@ -30,7 +30,7 @@ const MedicationCard = ({
   const body =
     "We hope you get well soon, but for now, please don't miss your medication. GO USE IT NOW!";
   const triggerTime = 10;
-  const sound = "../../assets/sounds/notification-sound5.wav";
+  const sound = "../../assets/sounds/notificationsound4.wav";
 
   useEffect(() => {
     const handleScheduleNotification = async () => {
