@@ -7,7 +7,7 @@
     "icon": "./assets/icons/meditracelogo.png",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/icons/meditracelogo.png",
+      "image": "",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
