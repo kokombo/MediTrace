@@ -61,10 +61,10 @@ export const createAccount = createAsyncThunk(
         if (error.response && error.response.data) {
           const errorResponse: ErrorResponse = error.response.data;
           return rejectWithValue(
-            errorResponse.message || "An error occured, please try again!"
+            errorResponse.message || "Something went wrong, please try again."
           );
         } else {
-          return rejectWithValue("An error occurred, please try again!");
+          return rejectWithValue("Something went wrong, please try again.");
         }
       });
   }
@@ -82,10 +82,10 @@ export const signIn = createAsyncThunk(
         if (error.response && error.response.data) {
           const errorResponse: ErrorResponse = error.response.data;
           return rejectWithValue(
-            errorResponse.message || "An error occured, please try again"
+            errorResponse.message || "Something went wrong, please try again."
           );
         } else {
-          return rejectWithValue("An error occurred, please try again");
+          return rejectWithValue("Something went wrong, please try again.");
         }
       });
   }
@@ -116,10 +116,10 @@ export const uploadProfilePicture = createAsyncThunk(
         if (error.response && error.response.data) {
           const errorResponse: ErrorResponse = error.response.data;
           return rejectWithValue(
-            errorResponse.message || "An error occured, please try again"
+            errorResponse.message || "Something went wrong, please try again."
           );
         } else {
-          return rejectWithValue("An error occurred, please try again");
+          return rejectWithValue("Something went wrong, please try again.");
         }
       });
   }

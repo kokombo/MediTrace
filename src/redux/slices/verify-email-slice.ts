@@ -46,10 +46,10 @@ export const verifyEmail = createAsyncThunk(
           const errorResponse: ErrorResponse = error.response.data;
 
           return rejectWithValue(
-            errorResponse.message || "Something went wrong, please try again"
+            errorResponse.message || "Something went wrong, please try again."
           );
         } else {
-          return rejectWithValue("Something went wrong, please try again");
+          return rejectWithValue("Something went wrong, please try again.");
         }
       });
   }
@@ -68,10 +68,10 @@ export const resendOTP = createAsyncThunk(
           const errorResponse: ErrorResponse = error.response.data;
 
           return rejectWithValue(
-            errorResponse.message || "Something went wrong, please try again"
+            errorResponse.message || "Something went wrong, please try again."
           );
         } else {
-          return rejectWithValue("Something went wrong, please try again");
+          return rejectWithValue("Something went wrong, please try again.");
         }
       });
   }

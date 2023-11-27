@@ -1,4 +1,4 @@
-import { View, ActivityIndicator, Modal, StyleSheet } from "react-native";
+import { View, ActivityIndicator, Modal, StyleSheet, Text } from "react-native";
 import { COLORS } from "../../constants";
 
 const Loader = () => {
@@ -7,6 +7,7 @@ const Loader = () => {
       <View style={styles.container}>
         <View style={styles.card}>
           <ActivityIndicator size={"large"} color={COLORS.blue} />
+          <Text>Please wait...</Text>
         </View>
       </View>
     </Modal>
@@ -21,7 +22,7 @@ const styles = StyleSheet.create({
     right: 0,
     bottom: 0,
     left: 0,
-    opacity: 0.5,
+    opacity: 0.4,
     backgroundColor: COLORS.black,
   },
   card: {
