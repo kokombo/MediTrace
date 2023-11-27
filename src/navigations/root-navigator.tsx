@@ -3,6 +3,7 @@ import {
   DoctorHomeScreen,
   EmailVerificationSuccess,
   Home,
+  MedicationDetails,
   Notification,
   Onboarding,
 } from "../screens";
@@ -107,6 +108,16 @@ const RootNavigator = () => {
         component={DoctorHomeScreen}
         options={{
           headerLeftContainerStyle: { display: "none" },
+
+          title: "",
+        }}
+      />
+
+      <Stack.Screen
+        name="medicationDetails"
+        component={MedicationDetails}
+        options={{
+          headerLeft: () => <GoBack />,
 
           title: "",
         }}

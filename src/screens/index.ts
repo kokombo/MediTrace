@@ -4,6 +4,7 @@ import Home from "./home";
 import EmailVerificationSuccess from "./email-verification-success";
 import Notification from "./notification";
 import DoctorHomeScreen from "./doctor-home-screen";
+import MedicationDetails from "./medication-detials";
 
 export {
   Onboarding,
@@ -12,4 +13,5 @@ export {
   EmailVerificationSuccess,
   Notification,
   DoctorHomeScreen,
+  MedicationDetails,
 };

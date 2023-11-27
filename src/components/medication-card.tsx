@@ -5,6 +5,11 @@ import { scheduleNotification } from "../utilities";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { StateType } from "../redux/store";
+import {
+  useNavigation,
+  NavigationProp,
+  ParamListBase,
+} from "@react-navigation/native";
 
 const MedicationCard = ({
   item,
@@ -15,6 +20,8 @@ const MedicationCard = ({
   borderColor: string;
   miniCardBackgroundColor: string;
 }) => {
+  const navigation: NavigationProp<ParamListBase> = useNavigation();
+
   const { user } = useSelector((state: StateType) => state.user);
 
   const title = `Hey ${
@@ -35,6 +42,7 @@ const MedicationCard = ({
 
   return (
     <Pressable
+      onPress={() => navigation.navigate("medicationDetails")}
       style={{
         borderColor: borderColor,
         borderWidth: 2,

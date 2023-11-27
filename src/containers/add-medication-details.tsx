@@ -122,7 +122,11 @@ const AddMedicationDetails = ({
                 justifyContent: "space-between",
               }}
             >
-              <View style={{ gap: 16 }}>
+              <View
+                style={{
+                  gap: 16,
+                }}
+              >
                 <Text style={styles.label}>Duration (in days)</Text>
 
                 <Select
@@ -149,7 +153,7 @@ const AddMedicationDetails = ({
 
             <View style={{ gap: 16 }}>
               <Text style={styles.label}>
-                Select medication notification times for each day
+                Select your medication notification times for each day
               </Text>
 
               {renderAlarmCards()}
