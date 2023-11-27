@@ -28,6 +28,7 @@ type Input = {
   placeholder: string;
   textContentType: any;
   onChangeText: (text: string) => void;
+  value?: string;
 };
 
 type Heading = {

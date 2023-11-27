@@ -53,7 +53,7 @@ const VerifyEmail = () => {
 
   useEffect(() => {
     if (status.verifyEmail === "success") {
-      return navigation.navigate("verified");
+      return navigation.navigate("emailVerifiedSuccess");
     }
   }, [status]);
 

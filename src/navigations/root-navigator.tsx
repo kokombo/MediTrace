@@ -6,9 +6,16 @@ import {
   MedicationDetails,
   Notification,
   Onboarding,
+  PasswordResetSuccess,
 } from "../screens";
 import { Animated } from "react-native";
-import { CreateAccount, LogIn, VerifyEmail } from "../auth";
+import {
+  CreateAccount,
+  ForgotPassword,
+  LogIn,
+  ResetPassword,
+  VerifyEmail,
+} from "../auth";
 import { GoBack, HomeHeaderLeft, NotificationBell, Star } from "../components";
 import { PADDING } from "../../constants";
 
@@ -84,7 +91,7 @@ const RootNavigator = () => {
       />
 
       <Stack.Screen
-        name="verified"
+        name="emailVerifiedSuccess"
         component={EmailVerificationSuccess}
         options={{
           headerLeftContainerStyle: { display: "none" },
@@ -120,6 +127,40 @@ const RootNavigator = () => {
           headerLeft: () => <GoBack />,
 
           title: "",
+        }}
+      />
+
+      <Stack.Screen
+        name="forgotPassword"
+        component={ForgotPassword}
+        options={{
+          headerLeft: () => <GoBack />,
+
+          headerRight: () => <Star />,
+
+          title: "",
+        }}
+      />
+
+      <Stack.Screen
+        name="resetPassword"
+        component={ResetPassword}
+        options={{
+          headerLeft: () => <GoBack />,
+
+          headerRight: () => <Star />,
+
+          title: "",
+        }}
+      />
+
+      <Stack.Screen
+        name="passwordResetSuccess"
+        component={PasswordResetSuccess}
+        options={{
+          headerLeftContainerStyle: { display: "none" },
+
+          headerRight: () => <Star />,
         }}
       />
     </Stack.Navigator>

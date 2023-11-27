@@ -32,6 +32,7 @@ const PasswordInputFrame = ({
         secureTextEntry={isPasswordVisible ? false : true}
         textContentType="password"
         placeholder={placeholder}
+        placeholderTextColor={COLORS.placeholder}
         style={[
           {
             borderColor: isErrorActive

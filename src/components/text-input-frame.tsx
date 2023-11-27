@@ -8,6 +8,7 @@ const TextInputFrame = ({
   placeholder,
   textContentType,
   onChangeText,
+  value,
 }: Input) => {
   const [isInputFocused, setIsInputFocused] = useState(false);
 
@@ -19,6 +20,8 @@ const TextInputFrame = ({
         placeholder={placeholder}
         textContentType={textContentType}
         onChangeText={onChangeText}
+        placeholderTextColor={COLORS.placeholder}
+        value={value}
         style={[
           { borderColor: isInputFocused ? COLORS.blue : COLORS.border },
           styles.input,
