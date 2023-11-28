@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { TextInputFrame, BlueButton, AuthHeader } from "../components";
 import Constants from "expo-constants";
 import { PADDING } from "../../constants";

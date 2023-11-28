@@ -2,8 +2,6 @@ import { DefaultTheme, NavigationContainer } from "@react-navigation/native";
 import { RootNavigator } from "./src/navigations";
 import * as SplashScreen from "expo-splash-screen";
 import { useState, useEffect, useCallback } from "react";
-import { Alert } from "react-native";
-import { Splash } from "./src/screens";
 import { StatusBar } from "expo-status-bar";
 import { Provider } from "react-redux";
 import { store } from "./src/redux/store";
@@ -30,7 +28,6 @@ const localAssets = [
   require("./assets/icons/pill.png"),
   require("./assets/icons/plus.png"),
   require("./assets/icons/policychecked.png"),
-  require("./assets/icons/profilepicture.png"),
   require("./assets/icons/search.png"),
   require("./assets/icons/star.png"),
   require("./assets/icons/wave.png"),
@@ -69,7 +66,7 @@ const App = () => {
 
         await new Promise((resolve) => setTimeout(resolve, 2000));
       } catch (error: any) {
-        Alert.alert(error.message);
+        return;
       } finally {
         setAppIsReady(true);
       }
