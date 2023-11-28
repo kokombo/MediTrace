@@ -34,7 +34,11 @@ const MedicationCard = ({
 
   useEffect(() => {
     const handleScheduleNotification = async () => {
-      await scheduleNotification(title, body, triggerTime, sound);
+      try {
+        await scheduleNotification(title, body, triggerTime, sound);
+      } catch (error) {
+        return;
+      }
     };
 
     handleScheduleNotification();

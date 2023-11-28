@@ -6,6 +6,7 @@ import {
   SafeAreaView,
   TextInput,
   Pressable,
+  Alert,
 } from "react-native";
 import { useState } from "react";
 import { MedicationModal } from "../../type";
@@ -45,7 +46,7 @@ const AddMedicationDetails = ({
     if (res?.granted) {
       closeModal();
     } else {
-      return;
+      Alert.alert("permission is required to created reminder");
     }
   };
 

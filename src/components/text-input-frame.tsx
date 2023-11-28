@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, TextInput } from "react-native";
-import React, { useState } from "react";
+import { useState } from "react";
 import { Input } from "../../type";
 import { COLORS, SIZE } from "../../constants";
 

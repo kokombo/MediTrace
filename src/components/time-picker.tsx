@@ -1,4 +1,4 @@
-import { Image, Platform, Pressable, StyleSheet, Text } from "react-native";
+import { Image, Pressable, StyleSheet, Text } from "react-native";
 import { useState } from "react";
 import { COLORS, SIZE, icon } from "../../constants";
 import DateTimePickerModal from "react-native-modal-datetime-picker";

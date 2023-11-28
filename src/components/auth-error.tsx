@@ -3,12 +3,9 @@ import { useEffect } from "react";
 import { clearErrorMessage } from "../redux/slices/user";
 import { useDispatch } from "react-redux";
 import { DispatchType } from "../redux/store";
-import { useHaptic } from "../hooks";
 
 const AuthError = ({ message }: { message: string | null }) => {
   const dispatch: DispatchType = useDispatch();
-
-  const { triggerVibration } = useHaptic();
 
   useEffect(() => {
     const timer = setTimeout(() => {
