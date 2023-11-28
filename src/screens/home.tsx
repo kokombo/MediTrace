@@ -14,9 +14,7 @@ const Home = () => {
     const backgroundSubscription =
       Notifications.addNotificationReceivedListener((notification) => {});
 
-    return () => {
-      Notifications.removeNotificationSubscription(backgroundSubscription);
-    };
+    return () => backgroundSubscription.remove();
   }, []);
 
   const {
