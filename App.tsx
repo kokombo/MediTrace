@@ -7,7 +7,7 @@ import { Provider } from "react-redux";
 import { store } from "./src/redux/store";
 import Toast from "react-native-toast-message";
 import * as Notifications from "expo-notifications";
-import { Asset } from "expo-asset";
+import { Alert } from "react-native";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -18,35 +18,6 @@ Notifications.setNotificationHandler({
 });
 
 SplashScreen.preventAutoHideAsync();
-
-const localAssets = [
-  require("./assets/icons/alarm.png"),
-  require("./assets/icons/backarrow.png"),
-  require("./assets/icons/bell.png"),
-  require("./assets/icons/hidepassword.png"),
-  require("./assets/icons/meditracelogo.png"),
-  require("./assets/icons/pill.png"),
-  require("./assets/icons/plus.png"),
-  require("./assets/icons/policychecked.png"),
-  require("./assets/icons/search.png"),
-  require("./assets/icons/star.png"),
-  require("./assets/icons/wave.png"),
-  require("./assets/illustrations/emailverified.png"),
-  require("./assets/illustrations/exploreapp.png"),
-  require("./assets/illustrations/medication.png"),
-  require("./assets/sounds/notificationsound1.mp3"),
-  require("./assets/sounds/notificationsound2.mp3"),
-  require("./assets/sounds/notificationsound3.mp3"),
-  require("./assets/sounds/notificationsound4.wav"),
-  require("./assets/sounds/notificationsound5.wav"),
-];
-
-const loadAssetsAsync = async () => {
-  const assetPromises = localAssets.map((localAsset) => {
-    return Asset.fromModule(localAsset).downloadAsync();
-  });
-  await Promise.all(assetPromises);
-};
 
 const App = () => {
   const [appIsReady, setAppIsReady] = useState<boolean>(false);
@@ -62,11 +33,9 @@ const App = () => {
   useEffect(() => {
     const prepareApp = async () => {
       try {
-        await loadAssetsAsync();
-
         await new Promise((resolve) => setTimeout(resolve, 2000));
       } catch (error: any) {
-        return;
+        Alert.alert(error);
       } finally {
         setAppIsReady(true);
       }

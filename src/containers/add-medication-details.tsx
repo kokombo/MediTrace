@@ -15,6 +15,7 @@ import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
 import { DispatchType, StateType } from "../redux/store";
 import { DurationData, FrequencyData } from "../../constants/data";
+import { requestPermissionsAsync } from "../utilities";
 
 const AddMedicationDetails = ({
   modalVisible,
@@ -38,8 +39,14 @@ const AddMedicationDetails = ({
     return Alarms;
   };
 
-  const createMedicationReminder = () => {
-    closeModal();
+  const createMedicationReminder = async () => {
+    const res = await requestPermissionsAsync();
+
+    if (res?.granted) {
+      closeModal();
+    } else {
+      return;
+    }
   };
 
   return (

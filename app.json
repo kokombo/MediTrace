@@ -4,7 +4,7 @@
     "slug": "MediTrace",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "",
+    "icon": "./assets/icons/meditracelogo.png",
     "userInterfaceStyle": "automatic",
     "splash": {
       "image": "",
@@ -20,14 +20,14 @@
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "",
+        "foregroundImage": "./assets/icons/meditracelogo.png",
         "backgroundColor": "#ffffff"
       },
       "permissions": ["android.permission.RECORD_AUDIO"],
       "package": "com.oluwanbowa.MediTrace"
     },
     "web": {
-      "favicon": ""
+      "favicon": "./assets/icons/meditracelogo.png"
     },
     "plugins": [
       [
@@ -39,7 +39,7 @@
       [
         "expo-notifications",
         {
-          "icon": "",
+          "icon": "./assets/icons/meditracelogo.png",
           "color": "#ffffff",
           "sounds": [
             "./assets/sounds/notificationsound1.mp3",
