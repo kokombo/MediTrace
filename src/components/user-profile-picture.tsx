@@ -1,20 +1,34 @@
-import { Pressable, Image, ActivityIndicator } from "react-native";
+import { Pressable, Image, ActivityIndicator, Alert } from "react-native";
 import { useSelector } from "react-redux";
 import { StateType } from "../redux/store";
 import { useSelectProfilePicture } from "../hooks";
 import { COLORS } from "../../constants";
 import Toast from "react-native-toast-message";
+import * as MediaLibrary from "expo-media-library";
 
 const UserProfilePicture = () => {
   const { user, picture, error, status } = useSelector(
     (state: StateType) => state.user
   );
+  const [response, requestPermission] = MediaLibrary.usePermissions();
+
+  if (response === null) {
+    requestPermission();
+  }
 
   const { pickImage } = useSelectProfilePicture();
 
+  const handlePickImage = () => {
+    if (response?.granted) {
+      pickImage();
+    } else {
+      Alert.alert("Permission is required to access media");
+    }
+  };
+
   return (
     <Pressable
-      onPress={() => pickImage()}
+      onPress={handlePickImage}
       style={{
         width: 50,
         height: 50,
