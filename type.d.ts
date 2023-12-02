@@ -55,9 +55,11 @@ type CheckBoxType = {
 };
 
 type MedicationData = {
-  id: string;
-  drugName: string;
-  time: string;
+  user_id: string;
+  name: string;
+  start_date: string;
+  duration: number;
+  time_slots: string[];
 };
 
 type MedicationModal = {
@@ -75,11 +77,21 @@ type SelectType = {
   value: string;
 };
 
+type EachMedicationAlarm = {
+  expired: boolean;
+  has_taken: boolean;
+  id: string;
+  medication_id: string;
+  time_of_day: string;
+};
+
 type Medication = {
   id: string;
-  time: string;
+  duration: number;
+  expiredTime: Date;
   name: string;
-  treatment: string;
+  start_date: string;
+  upcomingTime: EachMedicationAlarm[];
 };
 
 type ErrorResponse = {

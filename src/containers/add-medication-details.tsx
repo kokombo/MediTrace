@@ -8,8 +8,8 @@ import {
   Pressable,
   Alert,
 } from "react-native";
-import { useState } from "react";
-import { MedicationModal } from "../../type";
+import { useEffect, useState } from "react";
+import { MedicationData, MedicationModal } from "../../type";
 import { COLORS, PADDING, SIZE } from "../../constants";
 import { BlueButton, Select, TimePicker } from "../components";
 import { ScrollView } from "react-native-gesture-handler";
@@ -17,16 +17,23 @@ import { useDispatch, useSelector } from "react-redux";
 import { DispatchType, StateType } from "../redux/store";
 import { DurationData, FrequencyData } from "../../constants/data";
 import { requestPermissionsAsync } from "../utilities";
+import { addMedicationReminder } from "../redux/slices/medication-slice";
+import Toast from "react-native-toast-message";
 
 const AddMedicationDetails = ({
   modalVisible,
   closeModal,
 }: MedicationModal) => {
-  const [medicationReminderInfo, setMedicationReminderInfo] = useState("");
+  const [medicationName, setMedicationName] = useState("");
   const [selectedDurationOption, setSelectedDurationOption] = useState(1);
   const [selectedFrequencyOption, setSelectedFrequencyOption] = useState(1);
+  const [timeSlots, setTimeSlots] = useState<string[]>([]);
 
   const { user } = useSelector((state: StateType) => state.user);
+
+  const { status, error } = useSelector((state: StateType) => state.medication);
+
+  console.log(status.addMedication, error.addMedicationError);
 
   const dispatch: DispatchType = useDispatch();
 
@@ -34,21 +41,58 @@ const AddMedicationDetails = ({
     const Alarms: React.JSX.Element[] = [];
 
     for (let i = 0; i < selectedFrequencyOption; i++) {
-      Alarms.push(<TimePicker key={i} />);
+      Alarms.push(<TimePicker key={i} timeSlots={timeSlots} />);
     }
 
     return Alarms;
   };
 
-  const createMedicationReminder = async () => {
-    const res = await requestPermissionsAsync();
+  const canAddMedicationReminder = Boolean(
+    medicationName &&
+      selectedDurationOption &&
+      selectedFrequencyOption &&
+      timeSlots.length > 0
+  );
 
-    if (res?.granted) {
-      closeModal();
+  const medicationReminderInfo: MedicationData = {
+    user_id: user?.id as string,
+    name: medicationName,
+    start_date: "27th November, 2023",
+    duration: Number(selectedDurationOption),
+    time_slots: timeSlots,
+  };
+
+  const createMedicationReminder = async () => {
+    const permissionResponse = await requestPermissionsAsync();
+
+    if (permissionResponse?.granted) {
+      dispatch(addMedicationReminder(medicationReminderInfo));
     } else {
-      Alert.alert("permission is required to created reminder");
+      Alert.alert("permission is required to create a medication reminder");
     }
   };
+
+  useEffect(() => {
+    if (status.addMedication === "success") {
+      Toast.show({
+        type: "success",
+        text1: "Medication Added!",
+        text2: "You've successfully added a new medication reminder",
+      });
+
+      closeModal();
+
+      setTimeSlots([]);
+    }
+
+    if (status.addMedication === "failed") {
+      Toast.show({
+        type: "error",
+        text1: `${error.addMedicationError}`,
+        text2: "Please try again",
+      });
+    }
+  }, [status]);
 
   return (
     <Modal
@@ -60,16 +104,25 @@ const AddMedicationDetails = ({
       <SafeAreaView style={{ flex: 1 }}>
         <ScrollView style={styles.modal_body}>
           <View style={styles.form}>
-            <Pressable style={styles.close_form} onPress={closeModal}>
+            <Pressable
+              style={styles.close_form}
+              onPress={() => {
+                closeModal();
+                setTimeSlots([]);
+              }}
+            >
               <Text>Close</Text>
             </Pressable>
 
             <View style={{ gap: 16 }}>
               <Text style={styles.label}>Drug name</Text>
+
               <TextInput
                 style={styles.input}
                 placeholder="e.g. Amatem Fort Artemether Lumefantrine"
                 placeholderTextColor={COLORS.placeholder}
+                value={medicationName}
+                onChangeText={setMedicationName}
               />
             </View>
 
@@ -120,6 +173,9 @@ const AddMedicationDetails = ({
             <BlueButton
               label="Create Reminder"
               onPress={createMedicationReminder}
+              disabled={
+                status.addMedication === "loading" || !canAddMedicationReminder
+              }
             />
           </View>
         </ScrollView>

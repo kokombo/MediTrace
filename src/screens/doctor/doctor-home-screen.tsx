@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, FlatList, ListRenderItem } from "react-native";
-import { COLORS, PADDING, SIZE } from "../../constants";
-import { Patient } from "../../type";
-import { PatientCard, SearchFrame } from "../components";
+import { COLORS, PADDING, SIZE } from "../../../constants";
+import { Patient } from "../../../type";
+import { PatientCard, SearchFrame } from "../../components";
 
 const data: Patient[] = [
   { id: "1", name: "Bola Tinubu" },
@@ -24,6 +24,7 @@ const DoctorHomeScreen = () => {
         ListHeaderComponent={
           <View>
             <SearchFrame value="" onChangeText={() => {}} />
+
             <Text
               style={{
                 fontSize: SIZE.mdl,

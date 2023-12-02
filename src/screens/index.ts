@@ -1,11 +1,12 @@
-import Onboarding from "./onboarding";
-import Splash from "./splash";
-import Home from "./home";
-import EmailVerificationSuccess from "./email-verification-success";
-import Notification from "./notification";
-import DoctorHomeScreen from "./doctor-home-screen";
-import MedicationDetails from "./medication-detials";
-import PasswordResetSuccess from "./password-reset-success";
+import Onboarding from "./patient/onboarding";
+import Splash from "./general/splash";
+import Home from "./patient/home";
+import EmailVerificationSuccess from "./general/email-verification-success";
+import Notification from "./patient/notification";
+import DoctorHomeScreen from "./doctor/doctor-home-screen";
+import MedicationDetails from "./patient/medication-detials";
+import PasswordResetSuccess from "./general/password-reset-success";
+import PatientDetails from "./doctor/patient-details";
 
 export {
   Onboarding,
@@ -16,4 +17,5 @@ export {
   DoctorHomeScreen,
   MedicationDetails,
   PasswordResetSuccess,
+  PatientDetails,
 };

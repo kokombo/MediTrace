@@ -1,13 +1,13 @@
-import { Image, StyleSheet, Text, View } from "react-native";
-import { BlueButton } from "../components";
-import { PADDING, SIZE, icon } from "../../constants";
+import { StyleSheet, Text, View, Image } from "react-native";
+import { BlueButton } from "../../components";
+import { icon, SIZE, PADDING } from "../../../constants";
 import {
   useNavigation,
   NavigationProp,
   ParamListBase,
 } from "@react-navigation/native";
 
-const EmailVerificationSuccess = () => {
+const PasswordResetSuccess = () => {
   const navigation: NavigationProp<ParamListBase> = useNavigation();
 
   return (
@@ -20,27 +20,27 @@ const EmailVerificationSuccess = () => {
 
       <View style={{ alignItems: "center", gap: 18, maxWidth: 279 }}>
         <Text style={{ fontSize: SIZE.mdl, fontWeight: "700" }}>
-          Email Verified
+          Password Changed!
         </Text>
         <Text
           style={{ textAlign: "center", fontSize: SIZE.base, lineHeight: 24 }}
         >
-          Congradulations, your email has been verified. You can start using the
-          app.
+          You have successfully changed your password, you can continue to login
+          now.
         </Text>
       </View>
 
       <View style={{ width: "100%" }}>
         <BlueButton
-          label="Continue"
-          onPress={() => navigation.navigate("home")}
+          label="Continue to login"
+          onPress={() => navigation.navigate("login")}
         />
       </View>
     </View>
   );
 };
 
-export default EmailVerificationSuccess;
+export default PasswordResetSuccess;
 
 const styles = StyleSheet.create({
   body: {

@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
-import { PADDING } from "../../constants";
+import { PADDING } from "../../../constants";
 
 const Notification = () => {
   return (

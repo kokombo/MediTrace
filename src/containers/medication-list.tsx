@@ -1,17 +1,18 @@
 import { FlatList, StyleSheet, Text, View, ListRenderItem } from "react-native";
 import { Medication } from "../../type";
-import MedicationCard from "./medication-card";
-import DormantSearchFrame from "./dormant-search-frame";
+import { MedicationCard, DormantSearchFrame } from "../components";
 import { useModal } from "../hooks";
 import { useSelector } from "react-redux";
 import { StateType } from "../redux/store";
-import { SearchMedication } from "../containers";
+import SearchMedication from "./search-medication";
 import { SIZE } from "../../constants";
 
 const MedicationList = () => {
   const { openSearchModal, searchModalVisible, closeSearchModal } = useModal();
 
-  const { data } = useSelector((state: StateType) => state.medication);
+  const { data: medications } = useSelector(
+    (state: StateType) => state.medication
+  );
 
   const renderMedicationCard: ListRenderItem<Medication> = ({
     item,
@@ -38,7 +39,7 @@ const MedicationList = () => {
   return (
     <View style={styles.body}>
       <FlatList
-        data={data}
+        data={medications}
         renderItem={renderMedicationCard}
         keyExtractor={(item: Medication) => item.id?.toString()}
         showsVerticalScrollIndicator={false}

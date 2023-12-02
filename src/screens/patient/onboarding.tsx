@@ -1,6 +1,6 @@
 import { StyleSheet, View, Text, Image } from "react-native";
-import { BlueButton, WhiteButton } from "../components";
-import { COLORS, PADDING, SIZE, icon } from "../../constants";
+import { BlueButton, WhiteButton } from "../../components";
+import { COLORS, PADDING, SIZE, icon } from "../../../constants";
 import {
   NavigationProp,
   useNavigation,

@@ -27,9 +27,12 @@ const MedicationCard = ({
   const title = `Hey ${
     user?.first_name
   }, it's time to use ${item.name.toUpperCase()}!`;
+
   const body =
     "We hope you get well soon, but for now, please don't miss your medication. GO USE IT NOW!";
+
   const triggerTime = 10;
+
   const sound = "../../assets/sounds/notificationsound4.wav";
 
   useEffect(() => {
@@ -74,7 +77,7 @@ const MedicationCard = ({
               textTransform: "capitalize",
             }}
           >
-            {item.treatment}
+            {item.name}
           </Text>
 
           <Text

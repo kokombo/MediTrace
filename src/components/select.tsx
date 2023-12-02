@@ -12,8 +12,8 @@ const Select = ({
 }: {
   data: SelectType[];
   width: DimensionValue;
-  selectedOption: any;
-  setSelectedOption: (itemValue: any) => void;
+  selectedOption: number;
+  setSelectedOption: (itemValue: number) => void;
 }) => {
   return (
     <Picker

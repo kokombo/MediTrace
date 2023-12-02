@@ -58,6 +58,8 @@ const VerifyEmail = () => {
   }, [status]);
 
   const resendOTPToUser = () => {
+    dispatch(resendOTP({ email: user?.email! }));
+
     triggerVibration();
 
     if (status.resendOTP === "success") {
@@ -65,8 +67,6 @@ const VerifyEmail = () => {
         text1: "Another code has been sent to",
         text2: `${user?.email}`,
       });
-
-      dispatch(resendOTP({ email: user?.email! }));
 
       setTime(60);
     }

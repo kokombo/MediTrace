@@ -3,7 +3,7 @@ import { useState } from "react";
 import { COLORS, SIZE, icon } from "../../constants";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
 
-const TimePicker = () => {
+const TimePicker = ({ timeSlots }: { timeSlots: string[] }) => {
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
   const [selectedTime, setSelectedTime] = useState(new Date());
 
@@ -18,6 +18,9 @@ const TimePicker = () => {
   const handleConfirm = (time: Date) => {
     hideDatePicker();
     setSelectedTime(time);
+    timeSlots.push(
+      time.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" })
+    );
   };
 
   return (
@@ -50,7 +53,12 @@ const TimePicker = () => {
         isDarkModeEnabled={true}
       />
 
-      <Text style={styles.text}>{selectedTime.toLocaleTimeString()}</Text>
+      <Text style={styles.text}>
+        {selectedTime.toLocaleTimeString([], {
+          hour: "2-digit",
+          minute: "2-digit",
+        })}
+      </Text>
     </Pressable>
   );
 };

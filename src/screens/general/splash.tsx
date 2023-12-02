@@ -1,5 +1,5 @@
 import { StyleSheet, View, Image } from "react-native";
-import { icon } from "../../constants";
+import { icon } from "../../../constants";
 
 const Splash = () => {
   return (

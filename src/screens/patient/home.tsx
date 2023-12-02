@@ -1,11 +1,10 @@
 import { StyleSheet, View } from "react-native";
-import { EmptyMedicationList, BlueButton } from "../components";
-import { PADDING, icon } from "../../constants";
-import { AddMedicationDetails } from "../containers";
-import { useModal } from "../hooks";
+import { EmptyMedicationList, BlueButton } from "../../components";
+import { PADDING, icon } from "../../../constants";
+import { AddMedicationDetails, MedicationList } from "../../containers";
+import { useModal } from "../../hooks";
 import { useSelector } from "react-redux";
-import { StateType } from "../redux/store";
-import MedicationList from "../components/medication-list";
+import { StateType } from "../../redux/store";
 import * as Notifications from "expo-notifications";
 import { useEffect } from "react";
 
@@ -26,6 +25,8 @@ const Home = () => {
   const { data: medications } = useSelector(
     (state: StateType) => state.medication
   );
+
+  console.log(medications);
 
   return (
     <View style={styles.body}>

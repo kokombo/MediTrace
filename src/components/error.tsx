@@ -1,6 +1,4 @@
 import { Pressable, Text, View, StyleSheet } from "react-native";
-import { useDispatch } from "react-redux";
-import { DispatchType } from "../redux/store";
 import { COLORS, SIZE } from "../../constants";
 
 const Error = ({
@@ -10,8 +8,6 @@ const Error = ({
   message: string;
   onPress: () => void;
 }) => {
-  const dispatch: DispatchType = useDispatch();
-
   return (
     <View style={styles.body}>
       <View style={styles.message_wrapper}>

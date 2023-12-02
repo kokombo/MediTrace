@@ -3,7 +3,6 @@ import { useSelector } from "react-redux";
 import { StateType } from "../redux/store";
 import { useSelectProfilePicture } from "../hooks";
 import { COLORS } from "../../constants";
-import Toast from "react-native-toast-message";
 import * as MediaLibrary from "expo-media-library";
 
 const UserProfilePicture = () => {

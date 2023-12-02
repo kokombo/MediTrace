@@ -7,6 +7,7 @@ import {
   Notification,
   Onboarding,
   PasswordResetSuccess,
+  PatientDetails,
 } from "../screens";
 import { Animated } from "react-native";
 import {
@@ -161,6 +162,16 @@ const RootNavigator = () => {
           headerLeftContainerStyle: { display: "none" },
 
           headerRight: () => <Star />,
+        }}
+      />
+
+      <Stack.Screen
+        name="patientDetails"
+        component={PatientDetails}
+        options={{
+          headerLeft: () => <GoBack />,
+
+          title: "",
         }}
       />
     </Stack.Navigator>

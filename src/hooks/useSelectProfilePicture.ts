@@ -2,8 +2,6 @@ import * as ImagePicker from "expo-image-picker";
 import { useDispatch } from "react-redux";
 import { uploadProfilePicture } from "../redux/slices/user";
 import { DispatchType } from "../redux/store";
-import * as MediaLibrary from "expo-media-library";
-import { Alert } from "react-native";
 
 export const useSelectProfilePicture = () => {
   const dispatch: DispatchType = useDispatch();
