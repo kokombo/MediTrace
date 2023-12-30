@@ -55,7 +55,7 @@ const LogIn = () => {
       if (user !== null && user?.email_confirmed) {
         return navigation.navigate("home");
       } else {
-        dispatch(resendOTP({ email: user?.email as string }));
+        dispatch(resendOTP({ email: user?.email! }));
 
         return navigation.navigate("verifyEmail");
       }

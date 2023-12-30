@@ -33,8 +33,6 @@ const AddMedicationDetails = ({
 
   const { status, error } = useSelector((state: StateType) => state.medication);
 
-  console.log(status.addMedication, error.addMedicationError);
-
   const dispatch: DispatchType = useDispatch();
 
   const renderAlarmCards = () => {
@@ -57,7 +55,7 @@ const AddMedicationDetails = ({
   const medicationReminderInfo: MedicationData = {
     user_id: user?.id as string,
     name: medicationName,
-    start_date: "27th November, 2023",
+    start_date: new Date().toLocaleString(),
     duration: Number(selectedDurationOption),
     time_slots: timeSlots,
   };

@@ -29,11 +29,12 @@ const initialState: InitialState = {
   },
 };
 
-// https://meditrace.onrender.com/api/v1/medications
-
 export const addMedicationReminder = createAsyncThunk(
   "medication/addMedicationReminder",
-  async (medicationReminderInfo: MedicationData, { rejectWithValue }) => {
+  async (
+    medicationReminderInfo: MedicationData,
+    { rejectWithValue }
+  ): Promise<Medication> => {
     return axios
       .post(`${BASE_URL}/medications`, medicationReminderInfo)
       .then((res) => {

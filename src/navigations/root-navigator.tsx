@@ -49,7 +49,7 @@ const RootNavigator = () => {
         },
       }}
     >
-      <Stack.Screen name="onboarding" component={Onboarding} options={{}} />
+      <Stack.Screen name="onboarding" component={Onboarding} />
 
       <Stack.Screen
         name="createAccount"

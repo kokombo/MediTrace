@@ -21,17 +21,17 @@ type InitialState = {
   picture: string;
 };
 
-type UserRegistrationData = {
-  first_name: string;
-  last_name: string;
-  email: string;
-  password: string;
-};
-
 type UserLoginData = {
   email: string;
   password: string;
 };
+
+interface UserRegistrationData extends UserLoginData {
+  first_name: string;
+  last_name: string;
+};
+
+
 
 const initialState: InitialState = {
   user: null,
@@ -51,7 +51,10 @@ const initialState: InitialState = {
 
 export const createAccount = createAsyncThunk(
   "user/createAccount",
-  async (userData: UserRegistrationData, { rejectWithValue }) => {
+  async (
+    userData: UserRegistrationData,
+    { rejectWithValue }
+  ): Promise<User> => {
     return await axios
       .post(`${BASE_URL}/register`, userData)
       .then((res) => {
@@ -72,7 +75,7 @@ export const createAccount = createAsyncThunk(
 
 export const signIn = createAsyncThunk(
   "user/signIn",
-  async (userData: UserLoginData, { rejectWithValue }) => {
+  async (userData: UserLoginData, { rejectWithValue }): Promise<User> => {
     return await axios
       .post(`${BASE_URL}/login`, userData)
       .then((res) => {
@@ -93,7 +96,7 @@ export const signIn = createAsyncThunk(
 
 export const uploadProfilePicture = createAsyncThunk(
   "user/uploadProfilePicture",
-  async (file: File, { getState, rejectWithValue }) => {
+  async (file: File, { getState, rejectWithValue }): Promise<string> => {
     const state = getState() as StateType;
 
     const token = state.user.user?.accessToken;
@@ -107,6 +110,7 @@ export const uploadProfilePicture = createAsyncThunk(
         headers: {
           "Content-Type": "multipart/form-data",
           Authorization: `Bearer ${token}`,
+          
         },
       })
       .then((res) => {

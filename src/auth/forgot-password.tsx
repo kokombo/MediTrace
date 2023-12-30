@@ -1,10 +1,17 @@
 import { StyleSheet, Text, View } from "react-native";
-import { AuthHeader, TextInputFrame, BlueButton, AuthCTA } from "../components";
+import {
+  AuthHeader,
+  TextInputFrame,
+  BlueButton,
+  AuthCTA,
+  AuthError,
+  Loader,
+} from "../components";
 import { PADDING, SIZE } from "../../constants";
 import { resendOTP } from "../redux/slices/verify-email-slice";
-import { useDispatch } from "react-redux";
-import { DispatchType } from "../redux/store";
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { DispatchType, StateType } from "../redux/store";
+import { useEffect, useState } from "react";
 import {
   useNavigation,
   NavigationProp,
@@ -19,16 +26,26 @@ const ForgotPassword = () => {
 
   const dispatch: DispatchType = useDispatch();
 
+  const { status, error } = useSelector(
+    (state: StateType) => state.verification
+  );
+
   const canSendCode = Boolean(email);
 
   const sendResetPasswordCode = () => {
     dispatch(resendOTP({ email }));
-
-    navigation.navigate("resetPassword");
   };
+
+  useEffect(() => {
+    if (status.resendOTP === "success") {
+      return navigation.navigate("resetPassword");
+    }
+  }, [status]);
 
   return (
     <View style={styles.body}>
+      {status.resendOTP === "loading" && <Loader />}
+
       <View style={{ gap: 12 }}>
         <AuthHeader heading="Forgot Password?" />
 
@@ -42,13 +59,19 @@ const ForgotPassword = () => {
         </Text>
       </View>
 
-      <TextInputFrame
-        label="Email"
-        placeholder="Enter your email address"
-        textContentType={"emailAddress"}
-        value={email}
-        onChangeText={setEmail}
-      />
+      <View>
+        <TextInputFrame
+          label="Email"
+          placeholder="Enter your email address"
+          textContentType={"emailAddress"}
+          value={email}
+          onChangeText={setEmail}
+        />
+
+        <View style={{ position: "absolute", bottom: -20 }}>
+          <AuthError message={error.resendOTPError} />
+        </View>
+      </View>
 
       <BlueButton
         label="Send verification code"

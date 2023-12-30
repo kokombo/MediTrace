@@ -55,22 +55,24 @@ const VerifyEmail = () => {
     if (status.verifyEmail === "success") {
       return navigation.navigate("emailVerifiedSuccess");
     }
-  }, [status]);
+  }, [status.verifyEmail]);
 
   const resendOTPToUser = () => {
     dispatch(resendOTP({ email: user?.email! }));
 
     triggerVibration();
 
+    setTime(60);
+  };
+
+  useEffect(() => {
     if (status.resendOTP === "success") {
       Toast.show({
         text1: "Another code has been sent to",
         text2: `${user?.email}`,
       });
-
-      setTime(60);
     }
-  };
+  }, [status.resendOTP]);
 
   return (
     <View style={styles.body}>
