@@ -1,5 +1,4 @@
 import { FlatList, StyleSheet, Text, View, ListRenderItem } from "react-native";
-import { Medication } from "../../type";
 import { MedicationCard, DormantSearchFrame } from "../components";
 import { useModal } from "../hooks";
 import { useSelector } from "react-redux";
@@ -10,9 +9,7 @@ import { SIZE } from "../../constants";
 const MedicationList = () => {
   const { openSearchModal, searchModalVisible, closeSearchModal } = useModal();
 
-  const { data: medications } = useSelector(
-    (state: StateType) => state.medication
-  );
+  const { medications } = useSelector((state: StateType) => state.medication);
 
   const renderMedicationCard: ListRenderItem<Medication> = ({
     item,

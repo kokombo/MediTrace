@@ -22,9 +22,7 @@ const Home = () => {
     openAddMedicationModal,
   } = useModal();
 
-  const { data: medications } = useSelector(
-    (state: StateType) => state.medication
-  );
+  const { medications } = useSelector((state: StateType) => state.medication);
 
   return (
     <View style={styles.body}>

@@ -32,7 +32,7 @@ const UserProfilePicture = () => {
         width: 50,
         height: 50,
         borderRadius: 100,
-        backgroundColor: COLORS.white,
+        backgroundColor: COLORS.cloud,
         alignItems: "center",
         justifyContent: "center",
       }}

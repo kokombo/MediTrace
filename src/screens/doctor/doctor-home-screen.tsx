@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, FlatList, ListRenderItem } from "react-native";
 import { COLORS, PADDING, SIZE } from "../../../constants";
-import { Patient } from "../../../type";
 import { PatientCard, SearchFrame } from "../../components";
 
 const data: Patient[] = [

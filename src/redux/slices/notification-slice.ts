@@ -1,5 +1,4 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { Notification } from "../../../type";
 
 type InitialState = {
   data: Notification[];
@@ -17,7 +16,6 @@ const notificationSlice = createSlice({
       state.data.push(action.payload);
     },
   },
-  extraReducers(builder) {},
 });
 
 export const { setNotification } = notificationSlice.actions;

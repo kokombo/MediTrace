@@ -8,8 +8,7 @@ import {
   Pressable,
   Alert,
 } from "react-native";
-import { useEffect, useState } from "react";
-import { MedicationData, MedicationModal } from "../../type";
+import { useState } from "react";
 import { COLORS, PADDING, SIZE } from "../../constants";
 import { BlueButton, Select, TimePicker } from "../components";
 import { ScrollView } from "react-native-gesture-handler";
@@ -17,8 +16,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { DispatchType, StateType } from "../redux/store";
 import { DurationData, FrequencyData } from "../../constants/data";
 import { requestPermissionsAsync } from "../utilities";
-import { addMedicationReminder } from "../redux/slices/medication-slice";
 import Toast from "react-native-toast-message";
+import { setMedication } from "../redux/slices/medication-slice";
 
 const AddMedicationDetails = ({
   modalVisible,
@@ -30,8 +29,6 @@ const AddMedicationDetails = ({
   const [timeSlots, setTimeSlots] = useState<string[]>([]);
 
   const { user } = useSelector((state: StateType) => state.user);
-
-  const { status, error } = useSelector((state: StateType) => state.medication);
 
   const dispatch: DispatchType = useDispatch();
 
@@ -64,33 +61,12 @@ const AddMedicationDetails = ({
     const permissionResponse = await requestPermissionsAsync();
 
     if (permissionResponse?.granted) {
-      dispatch(addMedicationReminder(medicationReminderInfo));
+      dispatch(setMedication(medicationReminderInfo));
+      closeModal();
     } else {
       Alert.alert("permission is required to create a medication reminder");
     }
   };
-
-  useEffect(() => {
-    if (status.addMedication === "success") {
-      Toast.show({
-        type: "success",
-        text1: "Medication Added!",
-        text2: "You've successfully added a new medication reminder",
-      });
-
-      closeModal();
-
-      setTimeSlots([]);
-    }
-
-    if (status.addMedication === "failed") {
-      Toast.show({
-        type: "error",
-        text1: `${error.addMedicationError}`,
-        text2: "Please try again",
-      });
-    }
-  }, [status]);
 
   return (
     <Modal
@@ -171,9 +147,7 @@ const AddMedicationDetails = ({
             <BlueButton
               label="Create Reminder"
               onPress={createMedicationReminder}
-              disabled={
-                status.addMedication === "loading" || !canAddMedicationReminder
-              }
+              disabled={!canAddMedicationReminder}
             />
           </View>
         </ScrollView>

@@ -6,8 +6,7 @@ import {
   SafeAreaView,
   Pressable,
 } from "react-native";
-import { MedicationModal } from "../../type";
-import { COLORS, PADDING } from "../../constants";
+import { PADDING } from "../../constants";
 import { SearchFrame } from "../components";
 import { useState } from "react";
 
