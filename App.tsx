@@ -8,6 +8,7 @@ import { store } from "./src/redux/store";
 import Toast from "react-native-toast-message";
 import * as Notifications from "expo-notifications";
 import { Alert } from "react-native";
+import { preloadIcons } from "./src/utilities";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -20,7 +21,7 @@ Notifications.setNotificationHandler({
 SplashScreen.preventAutoHideAsync();
 
 const App = () => {
-  const [appIsReady, setAppIsReady] = useState<boolean>(false);
+  const [appIsReady, setAppIsReady] = useState(false);
 
   const AppTheme = {
     ...DefaultTheme,
@@ -33,6 +34,7 @@ const App = () => {
   useEffect(() => {
     const prepareApp = async () => {
       try {
+        preloadIcons();
         await new Promise((resolve) => setTimeout(resolve, 2000));
       } catch (error: any) {
         Alert.alert(error);

@@ -9,7 +9,7 @@ import {
   Loader,
   AuthError,
 } from "../components";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import { PADDING, icon } from "../../constants";
 import Constants from "expo-constants";
 import {

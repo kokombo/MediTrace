@@ -7,9 +7,8 @@
     "icon": "./assets/icons/meditracelogo.png",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/icons/meditracelogo.png",
       "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "backgroundColor": "#4285F4"
     },
     "assetBundlePatterns": ["**/*"],
     "ios": {
