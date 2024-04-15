@@ -19,11 +19,9 @@ import { useResendOTP } from "../hooks";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
-
-  const navigation: NavigationProp<ParamListBase> = useNavigation();
-
   const canSendCode = Boolean(email);
 
+  const navigation: NavigationProp<ParamListBase> = useNavigation();
   const { sendOTP, isError, isPending, isSuccess, error } = useResendOTP();
 
   useEffect(() => {

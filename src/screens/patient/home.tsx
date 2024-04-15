@@ -26,8 +26,6 @@ const Home = () => {
     (state: StateType) => state.medication
   );
 
-  console.log(medications);
-
   return (
     <View style={styles.body}>
       {medications?.length > 1 ? (

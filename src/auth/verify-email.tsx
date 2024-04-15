@@ -19,9 +19,8 @@ import {
   NavigationProp,
   ParamListBase,
 } from "@react-navigation/native";
-import { verifyEmail, resendOTP } from "../redux/slices/verify-email-slice";
-import { useDispatch, useSelector } from "react-redux";
-import { DispatchType, StateType } from "../redux/store";
+import { useSelector } from "react-redux";
+import { StateType } from "../redux/store";
 import { useCountdownTimer, useHaptic, useResendOTP } from "../hooks";
 import Toast from "react-native-toast-message";
 import axios, { AxiosError } from "axios";
@@ -36,17 +35,13 @@ const VerifyEmail = () => {
   });
 
   const navigation: NavigationProp<ParamListBase> = useNavigation();
-
   const canClickVerifyButton = Boolean(value.length === 4);
 
   const { newTime, setTime } = useCountdownTimer(60);
-
   const { triggerVibration } = useHaptic();
-
   const { sendOTP, isSuccess: OTPResent } = useResendOTP();
 
   const { user } = useSelector((state: StateType) => state.user);
-
   const verificationDetails = { otp: value, email: user?.email! };
 
   const verifyEmailRequest = async (
@@ -65,7 +60,7 @@ const VerifyEmail = () => {
     isPending: verifyingEmail,
     isError,
     error,
-  } = useMutation<String, AxiosError<string>, EmailVerificationData>({
+  } = useMutation<string, AxiosError<string>, EmailVerificationData>({
     mutationKey: ["verifyEmail"],
     mutationFn: verifyEmailRequest,
     onSuccess: () => {

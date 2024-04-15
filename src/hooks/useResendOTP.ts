@@ -11,7 +11,7 @@ export const useResendOTP = () => {
   };
 
   const { mutateAsync, isError, isPending, isSuccess, error } = useMutation<
-    String,
+    string,
     AxiosError<string>,
     string
   >({

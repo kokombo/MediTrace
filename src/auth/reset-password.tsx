@@ -15,7 +15,6 @@ const ResetPassword = () => {
   const [confirmPassword, setComfirmPassword] = useState("");
 
   const navigation: NavigationProp<ParamListBase> = useNavigation();
-
   const canChangePassword = Boolean(code && password && confirmPassword);
 
   const changeUserPassword = () => {

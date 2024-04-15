@@ -4,12 +4,12 @@ import { StateType } from "../redux/store";
 import { useSelectProfilePicture } from "../hooks";
 import { COLORS } from "../../constants";
 import * as MediaLibrary from "expo-media-library";
+import { useUploadProfilePicture } from "../hooks/useUploadProfilePicture";
 
 const UserProfilePicture = () => {
-  const { user, picture, error, status } = useSelector(
-    (state: StateType) => state.user
-  );
+  const { user } = useSelector((state: StateType) => state.user);
   const [response, requestPermission] = MediaLibrary.usePermissions();
+  const { isPending, data: picture } = useUploadProfilePicture();
 
   if (response === null) {
     requestPermission();
@@ -37,7 +37,7 @@ const UserProfilePicture = () => {
         justifyContent: "center",
       }}
     >
-      {status.uploadProfilePicture === "loading" ? (
+      {isPending ? (
         <ActivityIndicator size={"small"} color={COLORS.blue} />
       ) : (
         <Image
