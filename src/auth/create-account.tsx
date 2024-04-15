@@ -10,18 +10,28 @@ import {
   AuthError,
 } from "../components";
 import { PADDING } from "../../constants";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Constants from "expo-constants";
 import {
   useNavigation,
   NavigationProp,
   ParamListBase,
 } from "@react-navigation/native";
-import { createAccount } from "../redux/slices/user";
-import { useDispatch, useSelector } from "react-redux";
-import { DispatchType, StateType } from "../redux/store";
+import axios, { AxiosError } from "axios";
+import { useMutation } from "@tanstack/react-query";
+import { setUser } from "../redux/slices/user";
+import { DispatchType } from "../redux/store";
+import { useDispatch } from "react-redux";
 
-const initialState = {
+type SignupData = {
+  first_name: string;
+  last_name: string;
+  email: string;
+  password: string;
+  role: string;
+};
+
+const initialState: SignupData = {
   first_name: "",
   last_name: "",
   email: "",
@@ -31,13 +41,10 @@ const initialState = {
 
 const CreateAccount = () => {
   const [userData, setUserData] = useState(initialState);
-  const [acceptPolicy, setAcceptPolicy] = useState<boolean>(false);
+  const [acceptPolicy, setAcceptPolicy] = useState(false);
 
   const navigation: NavigationProp<ParamListBase> = useNavigation();
-
   const dispatch: DispatchType = useDispatch();
-
-  const { status, error } = useSelector((state: StateType) => state.user);
 
   const handleInputChange = (name: string, value: string) => {
     setUserData((prevData) => ({ ...prevData, [name]: value }));
@@ -51,19 +58,35 @@ const CreateAccount = () => {
       acceptPolicy
   );
 
-  const SignUpAUser = () => {
-    dispatch(createAccount(userData));
+  const signUpRequest = async (userData: SignupData) => {
+    const res = await axios.post(
+      "https://meditrace.onrender.com/api/v1/auth/register",
+      userData
+    );
+
+    return res.data;
   };
 
-  useEffect(() => {
-    if (status.register === "success") {
-      return navigation.navigate("verifyEmail");
-    }
-  }, [status]);
+  const { mutateAsync, isPending, isError, error } = useMutation<
+    User,
+    AxiosError<string>,
+    SignupData
+  >({
+    mutationKey: ["signup"],
+    mutationFn: signUpRequest,
+    onSuccess: (user) => {
+      dispatch(setUser(user));
+      navigation.navigate("verifyEmail");
+    },
+  });
+
+  const signUp = async () => {
+    await mutateAsync(userData);
+  };
 
   return (
     <View style={styles.body}>
-      {status.register === "loading" && <Loader />}
+      {isPending && <Loader />}
 
       <AuthHeader heading="Create account" />
 
@@ -100,16 +123,14 @@ const CreateAccount = () => {
           isChecked={acceptPolicy}
         />
 
-        {status.register === "failed" && error.registerError ? (
-          <AuthError message={error.registerError} />
-        ) : null}
+        {isError && <AuthError message={error.response?.data} />}
       </View>
 
-      <View style={{ marginTop: 40 }}>
+      <View style={{ marginTop: 20 }}>
         <BlueButton
           label="Sign up"
-          onPress={SignUpAUser}
-          disabled={status.register === "loading" || !canSignUp}
+          onPress={signUp}
+          disabled={!canSignUp || isPending}
         />
       </View>
 

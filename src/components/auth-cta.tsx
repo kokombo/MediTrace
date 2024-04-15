@@ -1,6 +1,5 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { COLORS, SIZE } from "../../constants";
-import { AuthCTAType } from "../../type";
 
 const AuthCTA = ({ label, cta, onPress }: AuthCTAType) => {
   return (
@@ -26,13 +25,13 @@ const styles = StyleSheet.create({
 
   label: {
     color: COLORS.lightblack,
-    fontSize: SIZE.sm,
+    fontSize: SIZE.base,
     fontWeight: "400",
   },
 
   cta: {
     color: COLORS.blue,
-    fontSize: SIZE.sm,
+    fontSize: SIZE.base,
     fontWeight: "600",
     textDecorationLine: "underline",
   },

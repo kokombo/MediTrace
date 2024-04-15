@@ -9,7 +9,7 @@ import {
   Loader,
   AuthError,
 } from "../components";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { PADDING, icon } from "../../constants";
 import Constants from "expo-constants";
 import {
@@ -17,12 +17,19 @@ import {
   NavigationProp,
   ParamListBase,
 } from "@react-navigation/native";
-import { signIn } from "../redux/slices/user";
-import { useDispatch, useSelector } from "react-redux";
-import { DispatchType, StateType } from "../redux/store";
-import { resendOTP } from "../redux/slices/verify-email-slice";
+import axios, { AxiosError } from "axios";
+import { useMutation } from "@tanstack/react-query";
+import { useResendOTP } from "../hooks";
+import { DispatchType } from "../redux/store";
+import { useDispatch } from "react-redux";
+import { setUser } from "../redux/slices/user";
 
-const initalState = {
+type SignupData = {
+  email: string;
+  password: string;
+};
+
+const initalState: SignupData = {
   email: "",
   password: "",
 };
@@ -34,37 +41,49 @@ const LogIn = () => {
 
   const dispatch: DispatchType = useDispatch();
 
-  const { status, error, isErrorActive, user } = useSelector(
-    (state: StateType) => state.user
-  );
-
   const handleInputChange = (name: string, value: string) => {
     setUserData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const canLogin = Boolean(userData.email && userData.password);
 
-  const signAUserIn = () => {
-    dispatch(signIn(userData));
+  const { sendOTP } = useResendOTP();
+
+  const signInRequest = async (userData: SignupData) => {
+    const res = await axios.post(
+      "https://meditrace.onrender.com/api/v1/auth/login",
+      userData
+    );
+
+    return res.data;
   };
 
-  useEffect(() => {
-    if (status.login === "success") {
-      setUserData((prev) => ({ ...prev, password: "" }));
+  const { mutateAsync, isPending, isError, error } = useMutation<
+    User,
+    AxiosError<string>,
+    SignupData
+  >({
+    mutationKey: ["signin"],
+    mutationFn: signInRequest,
+    onSuccess: (user) => {
+      dispatch(setUser(user));
 
-      if (user !== null && user?.email_confirmed) {
-        return navigation.navigate("home");
+      if (user.email_confirmed) {
+        navigation.navigate("home");
       } else {
-        dispatch(resendOTP({ email: user?.email! }));
-
-        return navigation.navigate("verifyEmail");
+        sendOTP(user.email);
+        navigation.navigate("verifyEmail");
       }
-    }
-  }, [user, status]);
+    },
+  });
+
+  const signIn = async () => {
+    await mutateAsync(userData);
+  };
 
   return (
     <View style={styles.body}>
-      {status.login === "loading" && <Loader />}
+      {isPending && <Loader />}
 
       <View style={styles.welcome_wrapper}>
         <AuthHeader heading="Welcome Back!" />
@@ -84,25 +103,25 @@ const LogIn = () => {
           label="password"
           placeholder="Enter your password"
           onChangeText={(text) => handleInputChange("password", text)}
-          isErrorActive={isErrorActive}
+          isErrorActive={isError}
         />
 
-        {status.login === "failed" && error.loginError ? (
+        {isError && (
           <View style={{ position: "absolute", bottom: 15 }}>
-            <AuthError message={error.loginError} />
+            <AuthError message={error.response?.data} />
           </View>
-        ) : null}
+        )}
 
         <View style={{ alignSelf: "flex-end" }}>
           <ForgetPassword />
         </View>
       </View>
 
-      <View style={{ marginTop: 40 }}>
+      <View style={{ marginTop: 20 }}>
         <BlueButton
           label="Log in"
-          onPress={signAUserIn}
-          disabled={status.login === "loading" || !canLogin}
+          onPress={signIn}
+          disabled={!canLogin || isPending}
         />
       </View>
 

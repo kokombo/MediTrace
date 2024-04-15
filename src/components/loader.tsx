@@ -32,6 +32,7 @@ const styles = StyleSheet.create({
     backgroundColor: COLORS.white,
     alignItems: "center",
     justifyContent: "center",
+    zIndex: 100,
   },
 });
 export default Loader;

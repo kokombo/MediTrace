@@ -8,9 +8,6 @@ import {
   Loader,
 } from "../components";
 import { PADDING, SIZE } from "../../constants";
-import { resendOTP } from "../redux/slices/verify-email-slice";
-import { useDispatch, useSelector } from "react-redux";
-import { DispatchType, StateType } from "../redux/store";
 import { useEffect, useState } from "react";
 import {
   useNavigation,
@@ -18,33 +15,26 @@ import {
   ParamListBase,
 } from "@react-navigation/native";
 import Constants from "expo-constants";
+import { useResendOTP } from "../hooks";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
 
   const navigation: NavigationProp<ParamListBase> = useNavigation();
 
-  const dispatch: DispatchType = useDispatch();
-
-  const { status, error } = useSelector(
-    (state: StateType) => state.verification
-  );
-
   const canSendCode = Boolean(email);
 
-  const sendResetPasswordCode = () => {
-    dispatch(resendOTP({ email }));
-  };
+  const { sendOTP, isError, isPending, isSuccess, error } = useResendOTP();
 
   useEffect(() => {
-    if (status.resendOTP === "success") {
-      return navigation.navigate("resetPassword");
+    if (isSuccess) {
+      navigation.navigate("resetPassword");
     }
-  }, [status]);
+  }, [isSuccess]);
 
   return (
     <View style={styles.body}>
-      {status.resendOTP === "loading" && <Loader />}
+      {isPending && <Loader />}
 
       <View style={{ gap: 12 }}>
         <AuthHeader heading="Forgot Password?" />
@@ -68,14 +58,16 @@ const ForgotPassword = () => {
           onChangeText={setEmail}
         />
 
-        <View style={{ position: "absolute", bottom: -20 }}>
-          <AuthError message={error.resendOTPError} />
-        </View>
+        {isError && (
+          <View style={{ position: "absolute", bottom: -20 }}>
+            <AuthError message={error?.response?.data} />
+          </View>
+        )}
       </View>
 
       <BlueButton
         label="Send verification code"
-        onPress={sendResetPasswordCode}
+        onPress={() => sendOTP(email)}
         disabled={!canSendCode}
       />
 

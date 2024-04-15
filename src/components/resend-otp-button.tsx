@@ -1,7 +1,7 @@
 import { Pressable, StyleSheet, Text } from "react-native";
 import { SIZE } from "../../constants";
 
-const ResendOTP = ({
+const ResendOTPButton = ({
   label,
   onPress,
 }: {
@@ -15,6 +15,4 @@ const ResendOTP = ({
   );
 };
 
-export default ResendOTP;
-
-const styles = StyleSheet.create({});
+export default ResendOTPButton;

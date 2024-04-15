@@ -1,21 +1,17 @@
 import { Text } from "react-native";
 import { useEffect } from "react";
-import { clearErrorMessage } from "../redux/slices/user";
 import { useDispatch } from "react-redux";
 import { DispatchType } from "../redux/store";
+import { SIZE } from "../../constants";
 
-const AuthError = ({ message }: { message: string | null }) => {
-  const dispatch: DispatchType = useDispatch();
-
+const AuthError = ({ message }: { message: string | undefined }) => {
   useEffect(() => {
-    const timer = setTimeout(() => {
-      dispatch(clearErrorMessage(message));
-    }, 7000);
+    const timer = setTimeout(() => {}, 7000);
 
     return () => clearTimeout(timer);
   }, [message]);
 
-  return <Text style={{ color: "red" }}>{message}</Text>;
+  return <Text style={{ color: "red", fontSize: SIZE.base }}>{message}</Text>;
 };
 
 export default AuthError;

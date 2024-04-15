@@ -24,6 +24,7 @@ import MedicationCard from "./medication-card";
 import PatientCard from "./patient-card";
 import Loading from "./loading";
 import TimePicker from "./time-picker";
+import ResendOTPButton from "./resend-otp-button";
 
 export {
   BlueButton,
@@ -52,4 +53,5 @@ export {
   PatientCard,
   Loading,
   TimePicker,
+  ResendOTPButton,
 };

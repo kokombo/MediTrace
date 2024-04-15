@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, TextInput } from "react-native";
 import { useState } from "react";
-import { Input } from "../../type";
 import { COLORS, SIZE } from "../../constants";
 
 const TextInputFrame = ({
@@ -52,7 +51,7 @@ const styles = StyleSheet.create({
   },
 
   label: {
-    fontSize: SIZE.sm,
+    fontSize: SIZE.base,
     fontWeight: "500",
     color: COLORS.black,
     textTransform: "capitalize",

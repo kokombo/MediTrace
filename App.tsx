@@ -9,6 +9,7 @@ import Toast from "react-native-toast-message";
 import * as Notifications from "expo-notifications";
 import { Alert } from "react-native";
 import { preloadIcons } from "./src/utilities";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 Notifications.setNotificationHandler({
   handleNotification: async () => ({
@@ -22,6 +23,8 @@ SplashScreen.preventAutoHideAsync();
 
 const App = () => {
   const [appIsReady, setAppIsReady] = useState(false);
+
+  const client = new QueryClient();
 
   const AppTheme = {
     ...DefaultTheme,
@@ -57,13 +60,15 @@ const App = () => {
   if (!appIsReady) return null;
 
   return (
-    <NavigationContainer theme={AppTheme}>
-      <Provider store={store}>
-        <RootNavigator />
-        <Toast />
-        <StatusBar style="auto" />
-      </Provider>
-    </NavigationContainer>
+    <QueryClientProvider client={client}>
+      <NavigationContainer theme={AppTheme}>
+        <Provider store={store}>
+          <RootNavigator />
+          <Toast />
+          <StatusBar style="auto" />
+        </Provider>
+      </NavigationContainer>
+    </QueryClientProvider>
   );
 };
 

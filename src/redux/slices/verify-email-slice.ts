@@ -1,5 +1,4 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import { ErrorResponse } from "../../../type";
 import axios from "axios";
 
 const BASE_URL = "https://meditrace.onrender.com/api/v1/auth";
@@ -14,11 +13,6 @@ type InitialState = {
     verifyEmailError: string | null;
     resendOTPError: string | null;
   };
-};
-
-type EmailVerificationData = {
-  otp: string;
-  email: string;
 };
 
 const initialState: InitialState = {
@@ -43,7 +37,7 @@ export const verifyEmail = createAsyncThunk(
       })
       .catch((error) => {
         if (error.response && error.response.data) {
-          const errorResponse: ErrorResponse = error.response.data;
+          const errorResponse = error.response.data;
 
           return rejectWithValue(
             errorResponse.message || "Something went wrong, please try again."
@@ -65,7 +59,7 @@ export const resendOTP = createAsyncThunk(
       })
       .catch((error) => {
         if (error.response && error.response.data) {
-          const errorResponse: ErrorResponse = error.response.data;
+          const errorResponse = error.response.data;
 
           return rejectWithValue(
             errorResponse.message || "Something went wrong, please try again."

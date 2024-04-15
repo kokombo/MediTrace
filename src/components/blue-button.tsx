@@ -1,5 +1,4 @@
 import { Pressable, StyleSheet, Text, Image } from "react-native";
-import { Button } from "../../type";
 import { COLORS, SIZE } from "../../constants";
 
 const BlueButton = ({ onPress, label, icon, disabled }: Button) => {
@@ -31,7 +30,6 @@ const styles = StyleSheet.create({
   button: {
     height: 56,
     width: "100%",
-
     alignItems: "center",
     justifyContent: "center",
     borderRadius: 10,

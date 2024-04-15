@@ -8,7 +8,6 @@ import {
 } from "react-native";
 import { COLORS, icon, SIZE } from "../../constants";
 import { useState } from "react";
-import { PasswordInput } from "../../type";
 
 const PasswordInputFrame = ({
   label,

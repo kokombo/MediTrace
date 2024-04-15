@@ -10,6 +10,7 @@ export const COLORS = {
   red: "#FF0000",
   cloud: "#F8F8F6",
   picker: "#7D7D7D",
+  modalblack: "rgba(0, 0, 0, 0.5)",
 };
 
 export const SIZE = {

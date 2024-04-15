@@ -1,5 +1,10 @@
 import { StyleSheet, Text, View } from "react-native";
-import { AuthError, AuthHeader, BlueButton } from "../components";
+import {
+  AuthError,
+  AuthHeader,
+  BlueButton,
+  ResendOTPButton,
+} from "../components";
 import {
   CodeField,
   Cursor,
@@ -17,9 +22,10 @@ import {
 import { verifyEmail, resendOTP } from "../redux/slices/verify-email-slice";
 import { useDispatch, useSelector } from "react-redux";
 import { DispatchType, StateType } from "../redux/store";
-import ResendOTP from "./resend-otp";
-import { useCountdownTimer, useHaptic } from "../hooks";
+import { useCountdownTimer, useHaptic, useResendOTP } from "../hooks";
 import Toast from "react-native-toast-message";
+import axios, { AxiosError } from "axios";
+import { useMutation } from "@tanstack/react-query";
 
 const VerifyEmail = () => {
   const [value, setValue] = useState("");
@@ -29,50 +35,62 @@ const VerifyEmail = () => {
     setValue,
   });
 
+  const navigation: NavigationProp<ParamListBase> = useNavigation();
+
+  const canClickVerifyButton = Boolean(value.length === 4);
+
   const { newTime, setTime } = useCountdownTimer(60);
 
   const { triggerVibration } = useHaptic();
 
-  const navigation: NavigationProp<ParamListBase> = useNavigation();
-
-  const dispatch: DispatchType = useDispatch();
-
-  const canClickVerifyButton = Boolean(value.length === 4);
-
-  const { status, error } = useSelector(
-    (state: StateType) => state.verification
-  );
+  const { sendOTP, isSuccess: OTPResent } = useResendOTP();
 
   const { user } = useSelector((state: StateType) => state.user);
 
   const verificationDetails = { otp: value, email: user?.email! };
 
-  const verifyUserEmail = () => {
-    dispatch(verifyEmail(verificationDetails));
+  const verifyEmailRequest = async (
+    verificationDetails: EmailVerificationData
+  ) => {
+    const res = await axios.post(
+      "https://meditrace.onrender.com/api/v1/auth/verify_otp",
+      verificationDetails
+    );
+
+    return res.data;
   };
 
-  useEffect(() => {
-    if (status.verifyEmail === "success") {
-      return navigation.navigate("emailVerifiedSuccess");
-    }
-  }, [status.verifyEmail]);
+  const {
+    mutateAsync,
+    isPending: verifyingEmail,
+    isError,
+    error,
+  } = useMutation<String, AxiosError<string>, EmailVerificationData>({
+    mutationKey: ["verifyEmail"],
+    mutationFn: verifyEmailRequest,
+    onSuccess: () => {
+      navigation.navigate("emailVerifiedSuccess");
+    },
+  });
 
-  const resendOTPToUser = () => {
-    dispatch(resendOTP({ email: user?.email! }));
+  const verifyUserEmail = async () => {
+    await mutateAsync(verificationDetails);
+  };
 
+  const resendOTP = () => {
+    sendOTP(user?.email!);
     triggerVibration();
-
     setTime(60);
   };
 
   useEffect(() => {
-    if (status.resendOTP === "success") {
+    if (OTPResent) {
       Toast.show({
         text1: "Another code has been sent to",
         text2: `${user?.email}`,
       });
     }
-  }, [status.resendOTP]);
+  }, [OTPResent]);
 
   return (
     <View style={styles.body}>
@@ -132,9 +150,7 @@ const VerifyEmail = () => {
           )}
         />
 
-        {status.verifyEmail === "failed" && error.verifyEmailError ? (
-          <AuthError message={error.verifyEmailError} />
-        ) : null}
+        {isError && <AuthError message={error.response?.data} />}
       </View>
 
       <View style={{ gap: 24 }}>
@@ -146,7 +162,7 @@ const VerifyEmail = () => {
           }}
         >
           {newTime === "00" ? (
-            <ResendOTP label="Resend Code" onPress={resendOTPToUser} />
+            <ResendOTPButton label="Resend Code" onPress={resendOTP} />
           ) : (
             <Text
               style={{
@@ -162,7 +178,7 @@ const VerifyEmail = () => {
         <BlueButton
           label="Verify"
           onPress={verifyUserEmail}
-          disabled={status.verifyEmail === "loading" || !canClickVerifyButton}
+          disabled={!canClickVerifyButton || verifyingEmail}
         />
       </View>
     </View>

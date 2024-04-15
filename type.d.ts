@@ -1,6 +1,3 @@
-import { ImageProps, ImageSourcePropType } from "react-native";
-import { NavigationProp } from "@react-navigation/native";
-
 type User = {
   id: string;
   first_name: string;
@@ -94,10 +91,6 @@ type Medication = {
   upcomingTime: EachMedicationAlarm[];
 };
 
-type ErrorResponse = {
-  message: string;
-};
-
 type Patient = {
   id: string;
   name: string;
@@ -105,4 +98,9 @@ type Patient = {
 
 type Notification = {
   notification: string;
+};
+
+type EmailVerificationData = {
+  otp: string;
+  email: string;
 };
