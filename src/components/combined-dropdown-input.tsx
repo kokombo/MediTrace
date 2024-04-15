@@ -1,9 +1,4 @@
-import { StyleSheet, Text, View, TextInput } from "react-native";
-import { Picker } from "@react-native-picker/picker";
-import { useState } from "react";
-import { SelectType } from "../../type";
-import { COLORS, SIZE } from "../../constants";
-import Select from "./select";
+import { StyleSheet, Text, View } from "react-native";
 
 const CombinedDropdownInput = ({
   data1,

@@ -1,5 +1,4 @@
 import { StyleSheet, Text, View } from "react-native";
-import { Heading } from "../../type";
 import { COLORS, SIZE } from "../../constants";
 
 const AuthHeader = ({ heading }: Heading) => {

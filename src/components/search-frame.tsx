@@ -1,6 +1,5 @@
 import { StyleSheet, TextInput, View } from "react-native";
 import { COLORS, SIZE } from "../../constants";
-import { Search } from "../../type";
 
 const SearchFrame = ({ value, onChangeText }: Search) => {
   return (

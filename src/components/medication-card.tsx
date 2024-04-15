@@ -1,5 +1,4 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
-import { Medication } from "../../type";
 import { SIZE } from "../../constants";
 import { scheduleNotification } from "../utilities";
 import { useEffect } from "react";
@@ -31,14 +30,24 @@ const MedicationCard = ({
   const body =
     "We hope you get well soon, but for now, please don't miss your medication. GO USE IT NOW!";
 
-  const triggerTime = 10;
+  // const trigger = new Date(Date.now() + 60 * 60 * 1000);
+  // trigger.setMinutes(0);
+  // trigger.setSeconds(0);
 
-  const sound = "../../assets/sounds/notificationsound4.wav";
+  const triggerTime = 5;
+
+  const sound = "notificationsound4.wav";
 
   useEffect(() => {
     const handleScheduleNotification = async () => {
       try {
-        await scheduleNotification(title, body, triggerTime, sound);
+        await scheduleNotification(
+          title,
+          body,
+          triggerTime,
+          sound,
+          "medicationAlert"
+        );
       } catch (error) {
         return;
       }

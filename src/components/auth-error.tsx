@@ -1,7 +1,5 @@
 import { Text } from "react-native";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
-import { DispatchType } from "../redux/store";
 import { SIZE } from "../../constants";
 
 const AuthError = ({ message }: { message: string | undefined }) => {

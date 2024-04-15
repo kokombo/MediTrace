@@ -4,7 +4,8 @@ export const scheduleNotification = async (
   title: string,
   body: string,
   triggerTime: number,
-  sound: string
+  sound: string,
+  channelId: string
 ) => {
   try {
     await Notifications.scheduleNotificationAsync({
@@ -15,6 +16,7 @@ export const scheduleNotification = async (
       },
       trigger: {
         seconds: triggerTime,
+        channelId: channelId,
       },
     });
   } catch (error) {

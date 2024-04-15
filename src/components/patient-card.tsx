@@ -1,6 +1,5 @@
 import { Pressable, StyleSheet, Text, View, Image } from "react-native";
 import { COLORS, SIZE, icon } from "../../constants";
-import { Patient } from "../../type";
 
 const PatientCard = ({ patient }: { patient: Patient }) => {
   return (

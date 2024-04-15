@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View } from "react-native";
 import CheckBox from "expo-checkbox";
-import { CheckBoxType } from "../../type";
 import { COLORS, SIZE } from "../../constants";
 
 const CheckPrivacyPolicy = ({

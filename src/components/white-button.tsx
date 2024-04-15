@@ -1,5 +1,4 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
-import { Button } from "../../type";
+import { Pressable, StyleSheet, Text } from "react-native";
 import { COLORS, SIZE } from "../../constants";
 
 const WhiteButton = ({ onPress, label }: Button) => {

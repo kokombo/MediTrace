@@ -1,6 +1,5 @@
 import { StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import { SelectType } from "../../type";
 import { COLORS, SIZE } from "../../constants";
 import { DimensionValue } from "react-native";
 
