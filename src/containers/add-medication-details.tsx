@@ -18,6 +18,7 @@ import { DurationData, FrequencyData } from "../../constants/data";
 import { requestPermissionsAsync } from "../utilities";
 import Toast from "react-native-toast-message";
 import { setMedication } from "../redux/slices/medication-slice";
+import { v4 as uuidv4 } from "uuid";
 
 const AddMedicationDetails = ({
   modalVisible,
@@ -61,7 +62,7 @@ const AddMedicationDetails = ({
     const permissionResponse = await requestPermissionsAsync();
 
     if (permissionResponse?.granted) {
-      dispatch(setMedication(medicationReminderInfo));
+      dispatch(setMedication({ ...medicationReminderInfo, id: uuidv4() }));
       closeModal();
     } else {
       Alert.alert("permission is required to create a medication reminder");
