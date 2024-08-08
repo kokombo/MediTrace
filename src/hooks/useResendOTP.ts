@@ -1,5 +1,5 @@
 import { useMutation } from "@tanstack/react-query";
-import axios, { AxiosError } from "axios";
+import axios, { type AxiosError } from "axios";
 
 export const useResendOTP = () => {
   const resendOTPRequest = async (email: string) => {

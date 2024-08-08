@@ -39,8 +39,8 @@ const App = () => {
       try {
         preloadIcons();
         await new Promise((resolve) => setTimeout(resolve, 2000));
-      } catch (error: any) {
-        Alert.alert(error);
+      } catch (error) {
+        Alert.alert(`${error}`);
       } finally {
         setAppIsReady(true);
       }

@@ -1,14 +1,11 @@
-import { Pressable, StyleSheet, Text, View } from "react-native";
+import { Pressable, Text, View } from "react-native";
 import { SIZE } from "../../constants";
 import { scheduleNotification } from "../utilities";
 import { useEffect } from "react";
 import { useSelector } from "react-redux";
-import { StateType } from "../redux/store";
-import {
-  useNavigation,
-  NavigationProp,
-  ParamListBase,
-} from "@react-navigation/native";
+import type { StateType } from "../redux/store";
+import { useNavigation } from "@react-navigation/native";
+import type { NavigationType } from "../types/types";
 
 const MedicationCard = ({
   item,
@@ -19,7 +16,7 @@ const MedicationCard = ({
   borderColor: string;
   miniCardBackgroundColor: string;
 }) => {
-  const navigation: NavigationProp<ParamListBase> = useNavigation();
+  const navigation: NavigationType = useNavigation();
 
   const { user } = useSelector((state: StateType) => state.user);
 
@@ -54,7 +51,7 @@ const MedicationCard = ({
     };
 
     handleScheduleNotification();
-  }, []);
+  }, [title]);
 
   return (
     <Pressable
@@ -120,5 +117,3 @@ const MedicationCard = ({
 };
 
 export default MedicationCard;
-
-const styles = StyleSheet.create({});

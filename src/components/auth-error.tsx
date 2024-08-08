@@ -1,15 +1,19 @@
 import { Text } from "react-native";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { SIZE } from "../../constants";
 
 const AuthError = ({ message }: { message: string | undefined }) => {
+  const [errorMessage, setErrorMessage] = useState(message);
+
   useEffect(() => {
-    const timer = setTimeout(() => {}, 7000);
+    const timer = setTimeout(() => setErrorMessage(""), 7000);
 
     return () => clearTimeout(timer);
-  }, [message]);
+  }, []);
 
-  return <Text style={{ color: "red", fontSize: SIZE.base }}>{message}</Text>;
+  return (
+    <Text style={{ color: "red", fontSize: SIZE.base }}>{errorMessage}</Text>
+  );
 };
 
 export default AuthError;

@@ -1,7 +1,7 @@
 import { Pressable, Text, View, StyleSheet } from "react-native";
 import { COLORS, SIZE } from "../../constants";
 
-const Error = ({
+const CustomError = ({
   message,
   onPress,
 }: {
@@ -21,7 +21,7 @@ const Error = ({
   );
 };
 
-export default Error;
+export default CustomError;
 
 const styles = StyleSheet.create({
   body: {

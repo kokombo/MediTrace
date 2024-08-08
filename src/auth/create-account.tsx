@@ -12,16 +12,13 @@ import {
 import { PADDING } from "../../constants";
 import { useState } from "react";
 import Constants from "expo-constants";
-import {
-  useNavigation,
-  NavigationProp,
-  ParamListBase,
-} from "@react-navigation/native";
-import axios, { AxiosError } from "axios";
+import { useNavigation } from "@react-navigation/native";
+import axios, { type AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { setUser } from "../redux/slices/user";
-import { DispatchType } from "../redux/store";
+import type { DispatchType } from "../redux/store";
 import { useDispatch } from "react-redux";
+import type { NavigationType } from "../types/types";
 
 type SignupData = {
   first_name: string;
@@ -43,7 +40,7 @@ const CreateAccount = () => {
   const [userData, setUserData] = useState(initialState);
   const [acceptPolicy, setAcceptPolicy] = useState(false);
 
-  const navigation: NavigationProp<ParamListBase> = useNavigation();
+  const navigation: NavigationType = useNavigation();
   const dispatch: DispatchType = useDispatch();
 
   const handleInputChange = (name: string, value: string) => {

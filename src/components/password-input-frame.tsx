@@ -28,7 +28,7 @@ const PasswordInputFrame = ({
 
       <TextInput
         onChangeText={onChangeText}
-        secureTextEntry={isPasswordVisible ? false : true}
+        secureTextEntry={!isPasswordVisible}
         textContentType="password"
         placeholder={placeholder}
         placeholderTextColor={COLORS.placeholder}

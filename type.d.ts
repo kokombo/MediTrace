@@ -10,24 +10,6 @@ type User = {
   role: string;
 };
 
-type Button = {
-  label: string;
-  onPress: () =>
-    | void
-    | NavigationProp<ReactNavigation.RootParamList>
-    | Promise<void>;
-  icon?: ImageSourcePropType;
-  disabled?: boolean;
-};
-
-type Input = {
-  label: string;
-  placeholder: string;
-  textContentType: any;
-  onChangeText: (text: string) => void;
-  value?: string;
-};
-
 type Heading = {
   heading: string;
 };

@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 
 const MedicationDetails = () => {
-  return <View></View>;
+  return <View />;
 };
 
 export default MedicationDetails;

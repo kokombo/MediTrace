@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View } from "react-native";
 import { COLORS, SIZE } from "../../constants";
 import { useSelector } from "react-redux";
-import { StateType } from "../redux/store";
+import type { StateType } from "../redux/store";
 
 const UserWelcomeGreeting = () => {
   const { user } = useSelector((state: StateType) => state.user);

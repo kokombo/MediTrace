@@ -1,4 +1,10 @@
-import { StyleSheet, Text, View, FlatList, ListRenderItem } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  type ListRenderItem,
+} from "react-native";
 import { COLORS, PADDING, SIZE } from "../../../constants";
 import { PatientCard, SearchFrame } from "../../components";
 

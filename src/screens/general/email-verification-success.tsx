@@ -1,14 +1,11 @@
 import { Image, StyleSheet, Text, View } from "react-native";
 import { BlueButton } from "../../components";
 import { PADDING, SIZE, icon } from "../../../constants";
-import {
-  useNavigation,
-  NavigationProp,
-  ParamListBase,
-} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+import type { NavigationType } from "../../types/types";
 
 const EmailVerificationSuccess = () => {
-  const navigation: NavigationProp<ParamListBase> = useNavigation();
+  const navigation: NavigationType = useNavigation();
 
   return (
     <View style={styles.body}>

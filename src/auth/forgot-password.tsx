@@ -9,26 +9,23 @@ import {
 } from "../components";
 import { PADDING, SIZE } from "../../constants";
 import { useEffect, useState } from "react";
-import {
-  useNavigation,
-  NavigationProp,
-  ParamListBase,
-} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import Constants from "expo-constants";
 import { useResendOTP } from "../hooks";
+import type { NavigationType } from "../types/types";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
   const canSendCode = Boolean(email);
 
-  const navigation: NavigationProp<ParamListBase> = useNavigation();
+  const navigation: NavigationType = useNavigation();
   const { sendOTP, isError, isPending, isSuccess, error } = useResendOTP();
 
   useEffect(() => {
     if (isSuccess) {
       navigation.navigate("resetPassword");
     }
-  }, [isSuccess]);
+  }, [isSuccess, navigation.navigate]);
 
   return (
     <View style={styles.body}>

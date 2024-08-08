@@ -1,7 +1,8 @@
 import { Pressable, StyleSheet, Text } from "react-native";
 import { COLORS, SIZE } from "../../constants";
+import type { ButtonType } from "../types/types";
 
-const WhiteButton = ({ onPress, label }: Button) => {
+const WhiteButton = ({ onPress, label }: ButtonType) => {
   return (
     <Pressable onPress={onPress} style={styles.button}>
       <Text style={styles.label}>{label} </Text>

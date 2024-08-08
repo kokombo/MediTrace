@@ -1,6 +1,6 @@
-import axios, { AxiosError } from "axios";
+import axios, { type AxiosError } from "axios";
 import { useSelector } from "react-redux";
-import { StateType } from "../redux/store";
+import type { StateType } from "../redux/store";
 import { useMutation } from "@tanstack/react-query";
 
 export const useUploadProfilePicture = () => {

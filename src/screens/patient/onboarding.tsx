@@ -1,14 +1,11 @@
 import { StyleSheet, View, Text, Image } from "react-native";
 import { BlueButton, WhiteButton } from "../../components";
 import { COLORS, PADDING, SIZE, icon } from "../../../constants";
-import {
-  NavigationProp,
-  useNavigation,
-  ParamListBase,
-} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+import type { NavigationType } from "../../types/types";
 
 const Onboarding = () => {
-  const navigation: NavigationProp<ParamListBase> = useNavigation();
+  const navigation: NavigationType = useNavigation();
 
   return (
     <View style={styles.body}>

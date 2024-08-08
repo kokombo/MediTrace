@@ -5,7 +5,7 @@ export const useSelectProfilePicture = () => {
   const { uploadProfilePicture } = useUploadProfilePicture();
 
   const pickImage = async () => {
-    let res = await ImagePicker.launchImageLibraryAsync({
+    const res = await ImagePicker.launchImageLibraryAsync({
       allowsEditing: true,
       quality: 1,
       mediaTypes: ImagePicker.MediaTypeOptions.Images,

@@ -1,7 +1,8 @@
 import { Pressable, StyleSheet, Text, Image } from "react-native";
 import { COLORS, SIZE } from "../../constants";
+import type { ButtonType } from "../types/types";
 
-const BlueButton = ({ onPress, label, icon, disabled }: Button) => {
+const BlueButton = ({ onPress, label, icon, disabled }: ButtonType) => {
   return (
     <Pressable
       onPress={onPress}
@@ -13,7 +14,7 @@ const BlueButton = ({ onPress, label, icon, disabled }: Button) => {
     >
       {icon && (
         <Image
-          source={icon!}
+          source={icon}
           resizeMode="contain"
           style={{ height: 24, width: 24 }}
         />

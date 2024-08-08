@@ -1,14 +1,11 @@
 import { StyleSheet, Text, View, Image } from "react-native";
 import { BlueButton } from "../../components";
 import { icon, SIZE, PADDING } from "../../../constants";
-import {
-  useNavigation,
-  NavigationProp,
-  ParamListBase,
-} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+import type { NavigationType } from "../../types/types";
 
 const PasswordResetSuccess = () => {
-  const navigation: NavigationProp<ParamListBase> = useNavigation();
+  const navigation: NavigationType = useNavigation();
 
   return (
     <View style={styles.body}>

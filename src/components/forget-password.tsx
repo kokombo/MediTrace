@@ -1,13 +1,10 @@
 import { Pressable, StyleSheet, Text, View } from "react-native";
 import { COLORS, SIZE } from "../../constants";
-import {
-  useNavigation,
-  NavigationProp,
-  ParamListBase,
-} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
+import type { NavigationType } from "../types/types";
 
 const ForgetPassword = () => {
-  const navigation: NavigationProp<ParamListBase> = useNavigation();
+  const navigation: NavigationType = useNavigation();
 
   return (
     <Pressable onPress={() => navigation.navigate("forgotPassword")}>

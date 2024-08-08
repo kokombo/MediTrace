@@ -1,7 +1,7 @@
 import { StyleSheet } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { COLORS, SIZE } from "../../constants";
-import { DimensionValue } from "react-native";
+import type { DimensionValue } from "react-native";
 
 const Select = ({
   data,
@@ -30,7 +30,7 @@ const Select = ({
       {data?.map((item, index) => {
         return (
           <Picker.Item
-            key={index}
+            key={index.toString()}
             label={item.label}
             value={item.value}
             style={{

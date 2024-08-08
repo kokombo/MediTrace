@@ -1,8 +1,14 @@
-import { FlatList, StyleSheet, Text, View, ListRenderItem } from "react-native";
+import {
+  FlatList,
+  StyleSheet,
+  Text,
+  View,
+  type ListRenderItem,
+} from "react-native";
 import { MedicationCard, DormantSearchFrame } from "../components";
 import { useModal } from "../hooks";
 import { useSelector } from "react-redux";
-import { StateType } from "../redux/store";
+import type { StateType } from "../redux/store";
 import SearchMedication from "./search-medication";
 import { SIZE } from "../../constants";
 

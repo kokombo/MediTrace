@@ -13,10 +13,9 @@ import { COLORS, PADDING, SIZE } from "../../constants";
 import { BlueButton, Select, TimePicker } from "../components";
 import { ScrollView } from "react-native-gesture-handler";
 import { useDispatch, useSelector } from "react-redux";
-import { DispatchType, StateType } from "../redux/store";
+import type { DispatchType, StateType } from "../redux/store";
 import { DurationData, FrequencyData } from "../../constants/data";
 import { requestPermissionsAsync } from "../utilities";
-import Toast from "react-native-toast-message";
 import { setMedication } from "../redux/slices/medication-slice";
 import { v4 as uuidv4 } from "uuid";
 

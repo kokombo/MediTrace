@@ -1,6 +1,7 @@
 import { StyleSheet, Text, View, TextInput } from "react-native";
 import { useState } from "react";
 import { COLORS, SIZE } from "../../constants";
+import type { InputType } from "../types/types";
 
 const TextInputFrame = ({
   label,
@@ -8,7 +9,7 @@ const TextInputFrame = ({
   textContentType,
   onChangeText,
   value,
-}: Input) => {
+}: InputType) => {
   const [isInputFocused, setIsInputFocused] = useState(false);
 
   return (

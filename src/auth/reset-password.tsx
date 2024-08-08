@@ -2,19 +2,16 @@ import { StyleSheet, View } from "react-native";
 import { TextInputFrame, BlueButton, AuthHeader } from "../components";
 import Constants from "expo-constants";
 import { PADDING } from "../../constants";
-import {
-  useNavigation,
-  NavigationProp,
-  ParamListBase,
-} from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { useState } from "react";
+import type { NavigationType } from "../types/types";
 
 const ResetPassword = () => {
   const [code, setCode] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setComfirmPassword] = useState("");
 
-  const navigation: NavigationProp<ParamListBase> = useNavigation();
+  const navigation: NavigationType = useNavigation();
   const canChangePassword = Boolean(code && password && confirmPassword);
 
   const changeUserPassword = () => {

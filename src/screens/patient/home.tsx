@@ -4,7 +4,7 @@ import { PADDING, icon } from "../../../constants";
 import { AddMedicationDetails, MedicationList } from "../../containers";
 import { useModal } from "../../hooks";
 import { useSelector } from "react-redux";
-import { StateType } from "../../redux/store";
+import type { StateType } from "../../redux/store";
 import * as Notifications from "expo-notifications";
 import { useEffect } from "react";
 

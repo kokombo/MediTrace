@@ -12,17 +12,14 @@ import {
 import { useState } from "react";
 import { PADDING, icon } from "../../constants";
 import Constants from "expo-constants";
-import {
-  useNavigation,
-  NavigationProp,
-  ParamListBase,
-} from "@react-navigation/native";
-import axios, { AxiosError } from "axios";
+import { useNavigation } from "@react-navigation/native";
+import axios, { type AxiosError } from "axios";
 import { useMutation } from "@tanstack/react-query";
 import { useResendOTP } from "../hooks";
-import { DispatchType } from "../redux/store";
+import type { DispatchType } from "../redux/store";
 import { useDispatch } from "react-redux";
 import { setUser } from "../redux/slices/user";
+import type { NavigationType } from "../types/types";
 
 type SignupData = {
   email: string;
@@ -38,7 +35,7 @@ const LogIn = () => {
   const [userData, setUserData] = useState(initalState);
   const canLogin = Boolean(userData.email && userData.password);
 
-  const navigation: NavigationProp<ParamListBase> = useNavigation();
+  const navigation: NavigationType = useNavigation();
   const dispatch: DispatchType = useDispatch();
   const { sendOTP } = useResendOTP();
 

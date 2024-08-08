@@ -6,7 +6,6 @@ const HomeHeaderLeft = () => {
   return (
     <View style={{ flexDirection: "row", gap: 16, alignItems: "center" }}>
       <UserProfilePicture />
-
       <UserWelcomeGreeting />
     </View>
   );

@@ -1,6 +1,6 @@
 import { Pressable, Image, ActivityIndicator, Alert } from "react-native";
 import { useSelector } from "react-redux";
-import { StateType } from "../redux/store";
+import type { StateType } from "../redux/store";
 import { useSelectProfilePicture } from "../hooks";
 import { COLORS } from "../../constants";
 import * as MediaLibrary from "expo-media-library";
